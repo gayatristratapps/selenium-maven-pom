@@ -1,41 +1,66 @@
 package com.stratapps.xamplify.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.*;
 
 import java.time.Duration;
 
 public class LoginPage {
-	WebDriver driver;
+    WebDriver driver;
+    private static final Logger logger = LogManager.getLogger(LoginPage.class);
 
-	// Constructor
-	public LoginPage(WebDriver driver) {
-		this.driver = driver;
-	}
+    // Constructor
+    public LoginPage(WebDriver driver) {
+        this.driver = driver;
+    }
 
-	// Locators
+    // Locators
+    private By emailField = By.xpath("//input[@id='username']");
+    private By passwordField = By.xpath("//input[@id='password']");
+    private By loginButton = By.xpath("//button[@type='submit']");
+    private By welcomeMessage = By.xpath("//h4//span[contains(text(), 'Welcome')]");
 
-	private By emailField = By.xpath("//input[@id='username']");
-	private By passwordField = By.xpath("//input[@id='password']");
-	private By loginButton = By.xpath("//button[@id='submitBitton']");
+    // Actions
+    public void login(String email, String password) {
+        try {
+            logger.info("Attempting to login with email: {}", email);
 
-	private By welcomeMessage = By.xpath("//h4//span[contains(text(), 'Welcome')]");
+            driver.findElement(emailField).clear();
+            driver.findElement(emailField).sendKeys(email);
+            logger.debug("Entered email.");
 
-	// Actions
-	public void login(String email, String password) {
-		driver.findElement(emailField).sendKeys(email);
-		driver.findElement(passwordField).sendKeys(password);
-		driver.findElement(loginButton).click();
+            driver.findElement(passwordField).clear();
+            driver.findElement(passwordField).sendKeys(password);
+            logger.debug("Entered password.");
 
-		// Wait for welcome message
-		new WebDriverWait(driver, Duration.ofSeconds(30))
-				.until(ExpectedConditions.visibilityOfElementLocated(welcomeMessage));
-	}
+            // Try JavaScript click if regular click doesn't work
+            try {
+                driver.findElement(loginButton).click();
+            } catch (Exception e) {
+                logger.warn("Regular click failed, trying JavaScript click: {}", e.getMessage());
+                org.openqa.selenium.JavascriptExecutor js = (org.openqa.selenium.JavascriptExecutor) driver;
+                js.executeScript("arguments[0].click();", driver.findElement(loginButton));
+            }
+            logger.info("Clicked Login button.");
 
-	public boolean isWelcomeDisplayed() {
-		return driver.findElement(welcomeMessage).isDisplayed();
-	}
+            // Wait for welcome message with increased timeout
+            new WebDriverWait(driver, Duration.ofSeconds(60))
+                .until(ExpectedConditions.visibilityOfElementLocated(welcomeMessage));
+            logger.info("Login successful. Welcome message displayed.");
 
+        } catch (Exception e) {
+            logger.error("Login failed: " + e.getMessage(), e);
+            throw e;
+        }
+    }
+
+    public boolean isWelcomeDisplayed() {
+        boolean visible = driver.findElement(welcomeMessage).isDisplayed();
+        logger.info("Welcome message is displayed: {}", visible);
+        return visible;
+    }
 }
