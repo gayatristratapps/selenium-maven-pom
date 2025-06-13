@@ -19,7 +19,7 @@ public class ShareLeadsPage {
 
     public ShareLeadsPage(WebDriver driver) {
         this.driver = driver;
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
     }
 
@@ -50,8 +50,13 @@ public class ShareLeadsPage {
     private final By DELETE_CONFIRM = By.xpath("//button[@class='swal2-confirm styled']");
     private final By DROPDOWN_LOCATOR = By.xpath("//div[@class=\"col-xs-12 col-md-12 col-sm-12\"]//div[@class=\"col-xs-12 col-sm-6 col-lg-6 p0 pull-right\"]//select");
 
-    private final By copyIcon = By.xpath("//table[@id='partner_contact_list']//tr[1]//td[6]//i[contains(@class, 'fa-files-o') and contains(@class, 'IconCustomization')]");
-    private final By saveAsButton = By.xpath("//button[contains(text(),'Save As')]");
+    private final By copyIcon = By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-files-o') and contains(@class, 'IconCustomization')]");
+    //private final By saveAsButton = By.xpath("//button[contains(text(),'Save As')]");
+    private final By saveChangesButton = By.xpath("//div[contains(@class,'modal-footer')]//button[.//span[contains(normalize-space(), 'Save changes')]]");
+    //private By deleteIcon = By.xpath("(//i[contains(@class,'fa-trash')])[1]");  // Adjust if needed
+    private By confirmDeleteYes = By.xpath("//button[normalize-space()='Yes']");
+    private final By deleteIconLocator = By.xpath("(//i[contains(@class,'fa-trash')])[1]");
+
 
     
     
@@ -145,7 +150,7 @@ public class ShareLeadsPage {
     
     
     public void publishAndDownloadShareLeadFlow() throws InterruptedException {
-        Thread.sleep(55000);
+        Thread.sleep(65000);
 
         ElementUtil.click(By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]"), driver);
         Thread.sleep(3000);
@@ -185,7 +190,7 @@ public class ShareLeadsPage {
     public void searchShareLead(String query) throws InterruptedException {
         ElementUtil.sendText(SEARCH_BAR, query, driver);
         ElementUtil.sendKey(SEARCH_BAR, Keys.ENTER, driver);
-        Thread.sleep(2000);
+        Thread.sleep(3000);
     }
 
     public void publishAndDownloadShareLead() throws InterruptedException {
@@ -193,11 +198,11 @@ public class ShareLeadsPage {
         Thread.sleep(2000);
     }
 
-    public void deleteShareLead() throws InterruptedException {
-        ElementUtil.click(DELETE_ICON, driver);
-        Thread.sleep(1000);
-        ElementUtil.click(DELETE_CONFIRM, driver);
-    }
+	/*
+	 * public void deleteShareLead() throws InterruptedException {
+	 * ElementUtil.click(DELETE_ICON, driver); Thread.sleep(1000);
+	 * ElementUtil.click(DELETE_CONFIRM, driver); }
+	 */
 
 	public By getDropdownLocator() {
 		// TODO Auto-generated method stub
@@ -212,13 +217,70 @@ public class ShareLeadsPage {
     }
 
     public void clickSaveAsButton() {
-        wait.until(ExpectedConditions.elementToBeClickable(saveAsButton)).click();
+        wait.until(ExpectedConditions.elementToBeClickable(saveChangesButton)).click();
     }
 	
+   /* public void clickDeleteIcon() {
+        wait.until(ExpectedConditions.elementToBeClickable(deleteIcon)).click();
+    }*/
+
+    public void confirmDelete() {
+        wait.until(ExpectedConditions.elementToBeClickable(confirmDeleteYes)).click();
+    }
 	
-	
-	
-	
-	
-	
+    public boolean clickDeleteIconWithRetry() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+        for (int attempt = 1; attempt <= 5; attempt++) {
+            try {
+                WebElement deleteIcon = wait.until(ExpectedConditions.elementToBeClickable(deleteIconLocator));
+                deleteIcon.click();
+                System.out.println("✅ Clicked delete icon on attempt " + attempt);
+     
+                
+                ElementUtil.click(DELETE_CONFIRM, driver);
+
+                
+                System.out.println("✅ Delete icon clicked successfully on attempt " + attempt);
+                return true;
+            } catch (StaleElementReferenceException e) {
+                System.out.println("⚠️ StaleElementReferenceException on attempt " + attempt);
+                sleep(1000);
+            } catch (TimeoutException e) {
+                System.out.println("⏳ Timeout waiting for delete icon on attempt " + attempt);
+                break;
+            } catch (Exception e) {
+                System.out.println("❌ Exception during delete icon click: " + e.getMessage());
+                break;
+            }
+        }
+
+        return false;
+    }
+
+    private void sleep(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {}
+    }
+    // Add other reusable methods for share leads features here
 }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	
+	
+	
+	

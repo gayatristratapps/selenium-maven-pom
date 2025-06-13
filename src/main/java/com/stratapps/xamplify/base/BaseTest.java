@@ -57,11 +57,10 @@ public class BaseTest {
 
     @AfterClass
     public void tearDown() {
-        // Only close the browser in the last test class
-        // For now, we're not closing it at all as per your commented code
+        // Keep the browser open between tests
         if (driver != null) {
             logger.info("Test completed, browser remains open");
-            // driver.quit();  // Uncomment this when ready
+            // Do not quit the driver to keep the browser open
         }
     }
 }

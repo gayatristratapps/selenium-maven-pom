@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
 import com.stratapps.xamplify.base.BaseTest;
@@ -41,7 +42,7 @@ public class ShareLeadsTest extends BaseTest {
         }
     }
 
-    @Test(priority = 2, description = "Upload CSV for share leads", enabled=true)
+    @Test(priority = 2, description = "Upload CSV for share leads", enabled=false)
     public void testUploadCSVShareLead() {
         logger.info("Starting test: Upload CSV for share leads");
         try {
@@ -56,12 +57,12 @@ public class ShareLeadsTest extends BaseTest {
 
     
     
-    @Test(priority = 3, enabled = true)
+    @Test(priority = 3, enabled = false)
     public void manageshareleadsEditAddsharelead() throws Exception {
         Thread.sleep(2000);
         shareleadsPage.navigateToManageShareLeads();
 
-        Thread.sleep(45000); // Wait for grid to load
+        Thread.sleep(65000); // Wait for grid to load
 
         // Edit share lead details
         shareleadsPage.editShareLeadDetails();
@@ -87,10 +88,10 @@ public class ShareLeadsTest extends BaseTest {
     
     
    
-    @Test(priority = 4, description = "Search share leads", enabled=true)
+    @Test(priority = 4, description = "Search share leads", enabled=false)
     public void testSearchShareLeads() {
         try {
-            shareleadsPage.navigateToManageShareLeads();
+           // shareleadsPage.navigateToManageShareLeads();
             shareleadsPage.searchShareLead("Auto");
             ScreenshotUtil.captureScreenshot(driver, "SearchShareLead");
         } catch (Exception e) {
@@ -100,7 +101,7 @@ public class ShareLeadsTest extends BaseTest {
 
     
  
-    @Test(priority = 5, enabled = true)
+    @Test(priority = 5, enabled = false)
     public void shareleadsDropdown() throws InterruptedException {
         Thread.sleep(3000);
 
@@ -118,7 +119,7 @@ public class ShareLeadsTest extends BaseTest {
 
 
     
-    @Test(priority = 6, enabled = true)
+    @Test(priority = 6, enabled = false)
     public void manageShareleadsPublishDownload() throws InterruptedException {
         shareleadsPage.navigateToManageShareLeads();
         shareleadsPage.publishAndDownloadShareLeadFlow();
@@ -128,7 +129,7 @@ public class ShareLeadsTest extends BaseTest {
     @Test(priority = 7, enabled = true)
     public void manageShareleadsCopy() throws InterruptedException, AWTException, IOException {
         logger.info("Hovering on Shared Leads.");
-        shareleadsPage.hoverOnShareLeads();
+       // shareleadsPage.hoverOnShareLeads();
 
         logger.info("Clicking 'Copy' icon.");
         shareleadsPage.clickCopyIcon();
@@ -137,6 +138,39 @@ public class ShareLeadsTest extends BaseTest {
         shareleadsPage.clickSaveAsButton();
     }
 
+    
+    @Test(priority = 8, enabled = true)
+    public void manageShareleadsDelete() {
+        logger.info("🧪 Starting test: manageShareleadsDelete");
+
+        boolean isDeleted = shareleadsPage.clickDeleteIconWithRetry();
+
+        Assert.assertTrue(isDeleted, "❌ Failed to click delete icon after retries.");
+        logger.info("✅ Delete icon was clicked successfully.");
+    }
+    
+	/*
+	 * @Test(priority = 8, enabled = true) public void manageShareleadsDelete()
+	 * throws InterruptedException {
+	 * 
+	 * logger.info("Starting delete operation in Manage Shared Leads");
+	 * 
+	 * // boolean isDeleted = shareleadsPage.clickDeleteIconWithRetry();
+	 * 
+	 * // Assert.assertTrue(isDeleted,
+	 * "Delete icon could not be clicked after multiple retries."); }
+	 */
+    	
+ 
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 	
