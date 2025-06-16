@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Xamplify Test Suite" preserve-order="true">
+
+<listeners>
+    <listener class-name="com.stratapps.xamplify.listeners.TestListener" />
+</listeners>
+
+
   <test name="Share Leads Tests">
     <classes>
       <class name="com.stratapps.xamplify.tests.ShareLeadsTest">

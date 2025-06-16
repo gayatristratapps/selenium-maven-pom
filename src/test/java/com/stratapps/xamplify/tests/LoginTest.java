@@ -8,8 +8,10 @@ import org.testng.annotations.Test;
 import com.stratapps.xamplify.base.BaseTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 
 public class LoginTest extends BaseTest {
+    public WebDriver driver; // ✅ Make it public so listener can access it
 
     private static final Logger logger = LogManager.getLogger(LoginTest.class);
 
@@ -21,8 +23,8 @@ public class LoginTest extends BaseTest {
         LoginPage loginPage = new LoginPage(driver);
         
         // Get credentials from config file
-        String username = ConfigReader.get("username");
-        String password = ConfigReader.get("password");
+        String username = ConfigReader.getProperty("username");
+        String password = ConfigReader.getProperty("password");
         
         logger.debug("Using username from config: {}", username);
         
