@@ -17,11 +17,6 @@ public class ElementUtil {
 
 	
 	
-	
-	
-	
-	
-	
     public static WebElement getById(WebDriver driver, String id) {
         return driver.findElement(By.id(id));
     }

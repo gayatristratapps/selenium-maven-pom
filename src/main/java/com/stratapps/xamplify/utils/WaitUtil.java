@@ -14,15 +14,6 @@ public class WaitUtil {
 	
 	
 	
-	/*
-	 * public static WebElement waitForElementToBeClickable(WebDriver driver, By
-	 * locator, int seconds) { return new WebDriverWait(driver,
-	 * seconds).until(ExpectedConditions.elementToBeClickable(locator)); }
-	 */
-    
-	
-	
-	
 	
 	
 	
@@ -40,11 +31,19 @@ public class WaitUtil {
     }
     
     
+   
+    
     
     public static WebElement waitForVisibility(WebDriver driver, By locator, int timeoutInSeconds) {
         return new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     
+    
+    public static void waitForInvisibilityOfElement(By locator, WebDriver driver, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
     
     /**
      * Wait for element to be visible

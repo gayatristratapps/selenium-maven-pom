@@ -5,8 +5,13 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.time.Duration;
 
 import com.stratapps.xamplify.base.BaseTest;
 import com.stratapps.xamplify.pages.LoginPage;
@@ -19,6 +24,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	private ShareLeadsPage shareleadsPage;
 	private static final Logger logger = LogManager.getLogger(ShareLeadsTest.class);
+	private WebDriverWait wait;
 
 	@BeforeClass
 	public void setUpClass() {
@@ -26,10 +32,11 @@ public class ShareLeadsTest extends BaseTest {
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
 		shareleadsPage = new ShareLeadsPage(driver);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		logger.info("ShareleadsTest setup completed");
 	}
 
-	@Test(priority = 1, description = "Create share lead one at a time", enabled = false)
+	@Test(priority = 1, description = "Create share lead one at a time", enabled = true)
 	public void testCreateOneAtATimeShareLead() {
 		logger.info("Starting test: Create share lead one at a time");
 		try {
@@ -126,7 +133,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.info("✅ Delete icon was clicked successfully.");
 	}
 
-	@Test(priority = 9, enabled = true)
+	@Test(priority = 9, enabled = false)
 	public void testManageShareleadsAllTilesFilterSearch() throws InterruptedException {
 		shareleadsPage.navigateToManageShareLeads();
 		Thread.sleep(55000); // Optional: Replace with explicit wait if needed
@@ -137,53 +144,48 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.sendValue("qa");
 		shareleadsPage.applyFilter();
 	}
-	
-	
-	  @Test(priority = 10, enabled = true)
-	    public void manageShareleadsAlltilesSortEmailreports() throws Exception {
-	        
-		    shareleadsPage.sortByIndex(1); // Use appropriate index for email sorting
-		    shareleadsPage.EmailReport();
-		  //shareleadsPage.sortTilesAndEmailReport();
-	      
-	    }
 
-	    @Test(priority = 11, enabled = false)
-	    public void manageShareleadstilesExportexcel() throws Exception {
-	    
-	    	
-	    	shareleadsPage.gearIconFromTiles();
-	    	 
-	    	shareleadsPage.enterListName("AutoSlist");
-	        Thread.sleep(1000);
-	        
-	        shareleadsPage.selectLegalBasis("Legitimate interest - prospect/lead");
-	        Thread.sleep(1000);
-	        
-	        shareleadsPage.clickSave();
-	        Thread.sleep(1000);
-	    	
-	    	
-	    	
-	    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test(priority = 10, enabled = false)
+	public void manageShareleadsAlltilesSortEmailreports() throws Exception {
+
+		shareleadsPage.sortByIndex(1); // Use appropriate index for email sorting
+		shareleadsPage.EmailReport();
+
+	}
+
+	@Test(priority = 11, enabled = false)
+	public void manageShareleadsAlltileCreateList() throws Exception {
+
+		shareleadsPage.gearIconFromTiles();
+
+		shareleadsPage.enterListName("AutoSlist");
+
+		shareleadsPage.selectLegalBasis("Legitimate interest - prospect/lead");
+
+		shareleadsPage.clickSave();
+
+	}
+
+	@Test(priority = 12, enabled = false)
+	public void manageShareleadsValidtiles() throws Exception {
+		// Navigate to Manage Share Leads and wait for page to load
+		shareleadsPage.navigateToManageShareLeads();
+
+		shareleadsPage.clickValidTile();
+
+		shareleadsPage.clickFilterIcon();
+		shareleadsPage.selectFieldName("Job Title");
+		shareleadsPage.selectCondition("Contains");
+		shareleadsPage.sendValue("qa");
+		shareleadsPage.applyFilter();
+
+		shareleadsPage.EmailReport();
+
+		shareleadsPage.sortBy("Email (A-Z)");
+
+		shareleadsPage.searchList("Test1");
+
+	}
 
 	@AfterClass
 	public void tearDownClass() {

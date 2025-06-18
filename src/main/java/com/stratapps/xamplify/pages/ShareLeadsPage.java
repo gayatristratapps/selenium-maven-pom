@@ -4,6 +4,7 @@ import com.stratapps.xamplify.utils.ActionUtil;
 import com.stratapps.xamplify.utils.CSVUtil;
 import com.stratapps.xamplify.utils.ElementUtil;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
+import com.stratapps.xamplify.utils.WaitUtil;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -11,6 +12,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,9 +81,15 @@ public class ShareLeadsPage {
     private By deleteButton = By.id("delete_button");
 
 	
-	
-	
-	
+    private  By validTile = By.xpath("//div[normalize-space()='Valid']");
+    
+    private By backdrop = By.cssSelector("div.backdrop");
+
+   
+    private By exportExcelButton = By.id("export-excel");
+
+    private By sortByDropdown = By.xpath("//select[contains(@class,'SeclectBoxPaddingsAbj')]");
+    
 	
 	
 	
@@ -142,6 +150,8 @@ public class ShareLeadsPage {
 	public void navigateToManageShareLeads() throws InterruptedException {
 		Thread.sleep(1000);
 		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, MANAGE_SHARE_LEADS);
+		
+
 	}
 
 	public void editShareLeadDetails() throws InterruptedException {
@@ -166,13 +176,33 @@ public class ShareLeadsPage {
 	}
 
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
-		Thread.sleep(65000);
+		/*
+		 * Thread.sleep(65000);
+		 * 
+		 * ElementUtil.click(By.xpath(
+		 * "//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]"
+		 * ), driver); Thread.sleep(3000);
+		 */
 
-		ElementUtil.click(By.xpath(
-				"//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]"),
-				driver);
-		Thread.sleep(3000);
+		
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(65));
 
+	    // Wait for the page to fully load
+	    wait.until(driver -> ((JavascriptExecutor) driver)
+	        .executeScript("return document.readyState").equals("complete"));
+
+		
+	   
+	    // Wait for the publish/share icon in the first row to be clickable
+	    By publishIcon = By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]");
+	    WebElement icon = wait.until(ExpectedConditions.elementToBeClickable(publishIcon));
+
+	    // Click the icon
+	    icon.click();
+		
+	    Thread.sleep(2000);
+		
+		
 		ElementUtil.sendText(By.xpath("(//input[@id='sort-text'])[1]"), "PartnerAuto", driver);
 		Thread.sleep(2000);
 		ElementUtil.sendKey(By.xpath("(//input[@id='sort-text'])[1]"), Keys.ENTER, driver);
@@ -189,10 +219,10 @@ public class ShareLeadsPage {
 		Thread.sleep(1000);
 		ElementUtil.click(By.xpath("//div[@id='partnerCompaniesPopup']//button[contains(text(),\"Close\")]"), driver);
 
-		Thread.sleep(55000);
+		Thread.sleep(58000);
 		ElementUtil.click(By.xpath("(//i[@class=\"fa fa-eye table-eye-circle IconCustomization\"])[1]"), driver);
 		Thread.sleep(2000);
-		ElementUtil.click(By.xpath("//div[@id=\"listSharedDetailsModal\"]//a[@class=\"close-circle\"]"), driver);
+		ElementUtil.click(By.xpath("//div[contains(@class,'d-flex') and contains(@class,'justify-content-between')] //a[contains(@class,'close-circle')]"), driver);
 		Thread.sleep(3000);
 
 		ElementUtil.click(By.xpath("(//i[@class='fa fa-download IconCustomization'])[1]"), driver);
@@ -264,11 +294,14 @@ public class ShareLeadsPage {
 	}
 
 	public void clickAllTile() throws InterruptedException {
+
+	
 		ElementUtil.click(allTile, driver);
 		Thread.sleep(3000);
 	}
 
 	public void clickFilterIcon() throws InterruptedException {
+		Thread.sleep(4000);
 		ElementUtil.click(filterIcon, driver);
 		Thread.sleep(2000);
 	}
@@ -335,14 +368,14 @@ public class ShareLeadsPage {
     
     
     public void EmailReport() throws InterruptedException {
-    
+    	Thread.sleep(1000); 
     ElementUtil.click(emailReportButton, driver);
 
     }
     
     private By campaignNameInput = By.id("campaignName");
-    private By legalBasisDropdown = By.xpath("//input[@aria-label='Legal basis']"); // update if needed
-    private By saveButton = By.xpath("//button[contains(text(),'Save')]"); // update with actual value or property
+    private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
+    private By saveButton = By.xpath("(//div[@id='saveAsModal']//button)[3]"); // update with actual value or property
     
     
     private By manageshFilterSelect= By.xpath("//input[@id='checkAllExistingContacts']");
@@ -361,7 +394,9 @@ public class ShareLeadsPage {
 
         
     }
-    public void enterListName(String baseName) {
+    public void enterListName(String baseName) throws InterruptedException {
+    	Thread.sleep(2000);    
+    	baseName="test";
         String nameWithTimestamp = baseName + System.currentTimeMillis();
         ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
     }
@@ -377,14 +412,102 @@ public class ShareLeadsPage {
     
     
     
+    public void clickValidTile() {
+    	
+
+    	WaitUtil.waitForPageToLoad(driver, 60);
+
+    	// Wait for backdrop (overlay/spinner) to disappear
+        WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+        
+        // Wait for the tile to be visible
+        WaitUtil.waitForVisibility(driver, validTile, 60);
+
+        // Now click safely
+        ElementUtil.click(validTile, driver);
+        
+ 
+  	
+    }
+
+	/*
+	 * public void exportToExcel() { ElementUtil.click(exportExcelButton, driver); }
+	 */
+	
+    
+    public void sortBy(String visibleText) {
+    	
+    	
+    //	 By dropdownLocator = By.xpath("//select[contains(@class,'form-control') and contains(@class,'SelectBoxPaddingsAbJ')]");
+
+    	    List<String> sortOptions = new ArrayList<>();
+
+    	    // Step 1: Collect all dropdown option texts initially
+    	    Select initialSelect = new Select(driver.findElement(sortByDropdown));
+    	    for (WebElement option : initialSelect.getOptions()) {
+    	        String optionText = option.getText().trim();
+    	        if (!optionText.equalsIgnoreCase("Sort by") && !optionText.isEmpty()) {
+    	            sortOptions.add(optionText);
+    	        }
+    	    }
+
+    	    // Step 2: Iterate through the options by visible text
+    	    for (String optionText : sortOptions) {
+    	        WaitUtil.waitForVisibility(driver, sortByDropdown, 40);
+    	        Select select = new Select(driver.findElement(sortByDropdown));
+    	        select.selectByVisibleText(optionText);
+
+    	        System.out.println("Selected Sort Option: " + optionText);
+
+    	        // Optional: Wait for list to update (use AJAX or full load wait)
+    	        WaitUtil.waitForPageToLoad(driver, 40);
+    	        // Optionally: Wait for specific element/table to become stale and reload
+    	    }
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+			/*
+			 * WaitUtil.waitForVisibility(driver, sortByDropdown, 50); WebElement dropdown =
+			 * driver.findElement(sortByDropdown); Select select = new Select(dropdown);
+			 * //select.selectByVisibleText(visibleText);
+			 * 
+			 * List<WebElement> options = select.getOptions(); for (WebElement option :
+			 * options) { String optionText = option.getText().trim();
+			 * 
+			 * 
+			 * System.out.println("Selecting sort option: " + optionText);
+			 * select.selectByVisibleText(optionText);
+			 * 
+			 * }
+			 */
+        
+        
+    }
+
+    public void searchList(String searchTerm) {
+        WaitUtil.waitForVisibility(driver, searchInput, 50);
+        WebElement searchBox = driver.findElement(searchInput);
+        searchBox.clear();
+        searchBox.sendKeys(searchTerm);
+        searchBox.sendKeys(Keys.ENTER);  // Or trigger a button if needed
+    }
+  
     
     
-        
-        
-        
-        
-       // ElementUtil.click(deleteButton, driver);
-        // Add excel download handling logic here if applicable
+    
+    
+    
+    
+    
 }
 	
 	

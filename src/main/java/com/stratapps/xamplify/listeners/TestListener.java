@@ -6,11 +6,11 @@ import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.EmailUtil;
 import com.stratapps.xamplify.utils.ExtentManager;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
-import com.stratapps.xamplify.utils.ElementUtil;
 
 import org.openqa.selenium.WebDriver;
 import org.testng.*;
 
+import java.io.FileWriter;
 import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -21,17 +21,14 @@ public class TestListener implements ITestListener, ISuiteListener {
     public static long suiteStartTime;
     public static long suiteEndTime;
 
-    // Called when suite starts
     @Override
     public void onStart(ISuite suite) {
         suiteStartTime = System.currentTimeMillis();
     }
 
-    // Called when each test starts
     @Override
     public void onTestStart(ITestResult result) {
-        ExtentTest test = ExtentManager.getInstance()
-                .createTest(result.getMethod().getMethodName());
+        ExtentTest test = ExtentManager.getInstance().createTest(result.getMethod().getMethodName());
         extentTest.set(test);
     }
 
@@ -48,16 +45,12 @@ public class TestListener implements ITestListener, ISuiteListener {
         WebDriver driver = null;
 
         if (testClass instanceof BaseTest) {
-            driver = ((BaseTest) testClass).getDriver(); // ✅ get WebDriver
+            driver = ((BaseTest) testClass).getDriver();
         }
 
         if (driver != null) {
             String screenshotPath = ScreenshotUtil.captureScreenshot(driver, result.getName());
-
-            // Add to Extent report
             extentTest.get().addScreenCaptureFromPath(screenshotPath);
-
-            // ✅ Store screenshot path in BaseTest's global list
             BaseTest.failedScreenshotPaths.add(screenshotPath);
         }
     }
@@ -67,7 +60,6 @@ public class TestListener implements ITestListener, ISuiteListener {
         extentTest.get().skip("Test skipped");
     }
 
-    // Called when suite finishes
     @Override
     public void onFinish(ISuite suite) {
         suiteEndTime = System.currentTimeMillis();
@@ -80,28 +72,53 @@ public class TestListener implements ITestListener, ISuiteListener {
         StringBuilder failedTests = new StringBuilder();
         StringBuilder skippedTests = new StringBuilder();
 
+        Map<String, int[]> methodSummary = new LinkedHashMap<>();
+
         for (ISuiteResult result : suite.getResults().values()) {
             ITestContext context = result.getTestContext();
 
-            // Count totals
             passedCount += context.getPassedTests().size();
             failedCount += context.getFailedTests().size();
             skippedCount += context.getSkippedTests().size();
 
             for (ITestResult r : context.getPassedTests().getAllResults()) {
                 passedTests.append("  - ").append(r.getMethod().getMethodName()).append("\n");
+                addToMethodSummary(methodSummary, r, 1, 0, 0);
             }
 
             for (ITestResult r : context.getFailedTests().getAllResults()) {
                 failedTests.append("  - ").append(r.getMethod().getMethodName()).append("\n");
+                addToMethodSummary(methodSummary, r, 0, 1, 0);
             }
 
             for (ITestResult r : context.getSkippedTests().getAllResults()) {
                 skippedTests.append("  - ").append(r.getMethod().getMethodName()).append("\n");
+                addToMethodSummary(methodSummary, r, 0, 0, 1);
             }
         }
 
-        // Time formatting
+        // Write detailed summary to CSV
+        try (FileWriter writer = new FileWriter("TestExecutionSummary.csv")) {
+            writer.append("Name,Passed,Failed,Skipped,Others,Passed %\n");
+            for (Map.Entry<String, int[]> entry : methodSummary.entrySet()) {
+                int passed = entry.getValue()[0];
+                int failed = entry.getValue()[1];
+                int skipped = entry.getValue()[2];
+                int others = 0;
+                int total = passed + failed + skipped;
+                double passedPercentage = total == 0 ? 0 : ((double) passed / total) * 100;
+
+                writer.append(entry.getKey()).append(",")
+                        .append(String.valueOf(passed)).append(",")
+                        .append(String.valueOf(failed)).append(",")
+                        .append(String.valueOf(skipped)).append(",")
+                        .append(String.valueOf(others)).append(",")
+                        .append(String.format("%.2f%%", passedPercentage)).append("\n");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         String startTimeStr = sdf.format(new Date(suiteStartTime));
         String endTimeStr = sdf.format(new Date(suiteEndTime));
@@ -109,7 +126,6 @@ public class TestListener implements ITestListener, ISuiteListener {
         long durationMinutes = (durationMillis / 1000) / 60;
         long durationSeconds = (durationMillis / 1000) % 60;
 
-        // Machine, browser, and environment info
         String machine = "Unknown";
         try {
             machine = InetAddress.getLocalHost().getHostName();
@@ -120,39 +136,43 @@ public class TestListener implements ITestListener, ISuiteListener {
         String browser = ConfigReader.getProperty("browser.name");
         String environment = ConfigReader.getProperty("env.name");
 
-        // Email body construction
         StringBuilder emailBody = new StringBuilder();
-        emailBody.append("📋 Test Summary:\n")
-                .append("✅ Passed: ").append(passedCount).append("\n")
-                .append("❌ Failed: ").append(failedCount).append("\n")
-                .append("⏭️ Skipped: ").append(skippedCount).append("\n\n")
-                .append("🕒 Start Time: ").append(startTimeStr).append("\n")
-                .append("🕓 End Time: ").append(endTimeStr).append("\n")
-                .append("⏱️ Duration: ").append(durationMinutes).append(" min ").append(durationSeconds).append(" sec\n\n")
-                .append("💻 Machine: ").append(machine).append("\n")
-                .append("🌐 Browser: ").append(browser != null ? browser : "Not Set").append("\n")
-                .append("🏷️ Environment: ").append(environment != null ? environment : "Not Set").append("\n\n")
+        emailBody.append("\uD83D\uDCCB Test Summary:\n")
+                .append("\u2705 Passed: ").append(passedCount).append("\n")
+                .append("\u274C Failed: ").append(failedCount).append("\n")
+                .append("\u23ED️ Skipped: ").append(skippedCount).append("\n\n")
+                .append("\uD83D\uDD52 Start Time: ").append(startTimeStr).append("\n")
+                .append("\uD83D\uDD53 End Time: ").append(endTimeStr).append("\n")
+                .append("\u23F1️ Duration: ").append(durationMinutes).append(" min ").append(durationSeconds).append(" sec\n\n")
+                .append("\uD83D\uDCBB Machine: ").append(machine).append("\n")
+                .append("\uD83C\uDF10 Browser: ").append(browser != null ? browser : "Not Set").append("\n")
+                .append("\uD83C\uDFF7️ Environment: ").append(environment != null ? environment : "Not Set").append("\n\n")
+                .append("\uD83D\uDCC6 Execution details exported to TestExecutionSummary.csv\n\n")
+                .append("\uD83D\uDCCC Please find the attached test execution report and any screenshots.");
 
-                .append("✅ Passed Tests:\n").append(passedTests.length() > 0 ? passedTests.toString() : "  - None\n").append("\n")
-                .append("❌ Failed Tests:\n").append(failedTests.length() > 0 ? failedTests.toString() : "  - None\n").append("\n")
-                .append("⏭️ Skipped Tests:\n").append(skippedTests.length() > 0 ? skippedTests.toString() : "  - None\n").append("\n")
-
-                .append("📎 Please find the attached test execution report and any screenshots.");
-
-        String subject = "📧 Automation Test Report - Summary";
+        String subject = "\uD83D\uDCE7 Automation Test Report - Summary";
         String reportPath = ExtentManager.getReportPath();
 
-        // Flush the Extent report
         ExtentManager.flushReport();
 
-		
-		  EmailUtil.sendReportEmailWithAttachments(
-		  "agayatri@stratapps.com,gayatri@xamplify.com", // 🔁 Add more as needed
-		  subject, emailBody.toString(), reportPath, BaseTest.failedScreenshotPaths );
-		 
+        EmailUtil.sendReportEmailWithAttachments(
+                "agayatri@stratapps.com",
+                subject,
+                emailBody.toString(),
+                reportPath,
+                BaseTest.failedScreenshotPaths
+        );
     }
 
-    // Unused but required methods
+    private void addToMethodSummary(Map<String, int[]> summary, ITestResult result, int p, int f, int s) {
+        String key = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
+        summary.putIfAbsent(key, new int[3]);
+        int[] counts = summary.get(key);
+        counts[0] += p;
+        counts[1] += f;
+        counts[2] += s;
+    }
+
     @Override public void onStart(ITestContext context) {}
     @Override public void onFinish(ITestContext context) {}
     @Override public void onTestFailedButWithinSuccessPercentage(ITestResult result) {}
