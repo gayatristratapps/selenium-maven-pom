@@ -502,12 +502,79 @@ public class ShareLeadsPage {
     }
   
     
+
+    public boolean isExcludeTileEnabled() {
+        try {
+            By excludeTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
+            WebElement excludeTile = WaitUtil.waitForElementPresent(driver, excludeTileLocator, 40);
+            return excludeTile.isEnabled();
+        } catch (TimeoutException e) {
+            System.out.println("Exclude tile not present: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void clickExcludeTile() {
+        try {
+            By excludeTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
+            WebElement excludeTile = WaitUtil.waitForElementClickable(driver, excludeTileLocator, 40);
+            excludeTile.click();
+        } catch (TimeoutException e) {
+            System.out.println("Exclude tile not clickable: " + e.getMessage());
+        }
+    }
+
     
     
+    private final By undeliverableTile = By.xpath("(//button[contains(@class, 'yellow-gold')])[2]");
+
+    public boolean isUndeliverableTileEnabled() {
+        try {
+            WebElement tile = WaitUtil.waitForElementPresent(driver, undeliverableTile, 30);
+            return tile.isEnabled();
+        } catch (TimeoutException e) {
+            System.out.println("Undeliverable tile not present: " + e.getMessage());
+            return false;
+        }
+    }
+
+    
+    public void clickUndeliverableTile() {
+        try {
+            By UndeliverableTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
+            WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UndeliverableTileLocator, 40);
+            excludeTile.click();
+        } catch (TimeoutException e) {
+            System.out.println("UndeliverableTile tile not clickable: " + e.getMessage());
+        }
+    }
+
+    
+
+    private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
+
+    public boolean isunsubscribeTileEnabled() {
+        try {
+            WebElement tile = WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30);
+            return tile.isEnabled();
+        } catch (TimeoutException e) {
+            System.out.println("unsubscribeTile tile not present: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void clickUnsubscribeTile() {
+        try {
+            By UnsubscribeTileLocator = By.xpath("//button[@class='btn-block dashboard-stat red']");
+            WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UnsubscribeTileLocator, 40);
+            excludeTile.click();
+        } catch (TimeoutException e) {
+        	  System.out.println("Unsubscribe tile count is 0 & button is disabled, cannot click.");
+        }
+    }
     
     
-    
-    
+
 }
 	
 	

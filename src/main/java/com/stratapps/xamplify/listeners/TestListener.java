@@ -72,7 +72,8 @@ public class TestListener implements ITestListener, ISuiteListener {
         StringBuilder failedTests = new StringBuilder();
         StringBuilder skippedTests = new StringBuilder();
 
-        Map<String, int[]> methodSummary = new LinkedHashMap<>();
+        // New: Grouped by class name
+        Map<String, int[]> classSummary = new LinkedHashMap<>();
 
         for (ISuiteResult result : suite.getResults().values()) {
             ITestContext context = result.getTestContext();
@@ -81,26 +82,15 @@ public class TestListener implements ITestListener, ISuiteListener {
             failedCount += context.getFailedTests().size();
             skippedCount += context.getSkippedTests().size();
 
-            for (ITestResult r : context.getPassedTests().getAllResults()) {
-                passedTests.append("  - ").append(r.getMethod().getMethodName()).append("\n");
-                addToMethodSummary(methodSummary, r, 1, 0, 0);
-            }
-
-            for (ITestResult r : context.getFailedTests().getAllResults()) {
-                failedTests.append("  - ").append(r.getMethod().getMethodName()).append("\n");
-                addToMethodSummary(methodSummary, r, 0, 1, 0);
-            }
-
-            for (ITestResult r : context.getSkippedTests().getAllResults()) {
-                skippedTests.append("  - ").append(r.getMethod().getMethodName()).append("\n");
-                addToMethodSummary(methodSummary, r, 0, 0, 1);
-            }
+            accumulateClassSummary(classSummary, context.getPassedTests().getAllResults(), 1, 0, 0);
+            accumulateClassSummary(classSummary, context.getFailedTests().getAllResults(), 0, 1, 0);
+            accumulateClassSummary(classSummary, context.getSkippedTests().getAllResults(), 0, 0, 1);
         }
 
-        // Write detailed summary to CSV
+        // Write class-level summary to CSV
         try (FileWriter writer = new FileWriter("TestExecutionSummary.csv")) {
-            writer.append("Name,Passed,Failed,Skipped,Others,Passed %\n");
-            for (Map.Entry<String, int[]> entry : methodSummary.entrySet()) {
+            writer.append("Name\tPassed\tFailed\tSkipped\tOthers\tPassed %\n");
+            for (Map.Entry<String, int[]> entry : classSummary.entrySet()) {
                 int passed = entry.getValue()[0];
                 int failed = entry.getValue()[1];
                 int skipped = entry.getValue()[2];
@@ -108,12 +98,12 @@ public class TestListener implements ITestListener, ISuiteListener {
                 int total = passed + failed + skipped;
                 double passedPercentage = total == 0 ? 0 : ((double) passed / total) * 100;
 
-                writer.append(entry.getKey()).append(",")
-                        .append(String.valueOf(passed)).append(",")
-                        .append(String.valueOf(failed)).append(",")
-                        .append(String.valueOf(skipped)).append(",")
-                        .append(String.valueOf(others)).append(",")
-                        .append(String.format("%.2f%%", passedPercentage)).append("\n");
+                writer.append(entry.getKey()).append("\t")
+                        .append(String.valueOf(passed)).append("\t")
+                        .append(String.valueOf(failed)).append("\t")
+                        .append(String.valueOf(skipped)).append("\t")
+                        .append(String.valueOf(others)).append("\t")
+                        .append(String.format("%.3f%%", passedPercentage)).append("\n");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -164,13 +154,15 @@ public class TestListener implements ITestListener, ISuiteListener {
         );
     }
 
-    private void addToMethodSummary(Map<String, int[]> summary, ITestResult result, int p, int f, int s) {
-        String key = result.getTestClass().getName() + "." + result.getMethod().getMethodName();
-        summary.putIfAbsent(key, new int[3]);
-        int[] counts = summary.get(key);
-        counts[0] += p;
-        counts[1] += f;
-        counts[2] += s;
+    private void accumulateClassSummary(Map<String, int[]> summary, Set<ITestResult> results, int p, int f, int s) {
+        for (ITestResult result : results) {
+            String className = result.getTestClass().getName();
+            summary.putIfAbsent(className, new int[3]);
+            int[] counts = summary.get(className);
+            counts[0] += p;
+            counts[1] += f;
+            counts[2] += s;
+        }
     }
 
     @Override public void onStart(ITestContext context) {}

@@ -49,7 +49,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 2, description = "Upload CSV for share leads", enabled = false)
+	@Test(priority = 2, description = "Upload CSV for share leads", enabled = true)
 	public void testUploadCSVShareLead() {
 		logger.info("Starting test: Upload CSV for share leads");
 		try {
@@ -62,7 +62,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 3, enabled = false)
+	@Test(priority = 3, enabled = true)
 	public void manageshareleadsEditAddsharelead() throws Exception {
 		Thread.sleep(2000);
 		shareleadsPage.navigateToManageShareLeads();
@@ -81,7 +81,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.debug("Done creation sharelead using edit option through csv");
 	}
 
-	@Test(priority = 4, description = "Search share leads", enabled = false)
+	@Test(priority = 4, description = "Search share leads", enabled = true)
 	public void testSearchShareLeads() {
 		try {
 			// shareleadsPage.navigateToManageShareLeads();
@@ -92,7 +92,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 5, enabled = false)
+	@Test(priority = 5, enabled = true)
 	public void shareleadsDropdown() throws InterruptedException {
 		Thread.sleep(3000);
 
@@ -106,13 +106,13 @@ public class ShareLeadsTest extends BaseTest {
 		Thread.sleep(2000);
 	}
 
-	@Test(priority = 6, enabled = false)
+	@Test(priority = 6, enabled = true)
 	public void manageShareleadsPublishDownload() throws InterruptedException {
 		shareleadsPage.navigateToManageShareLeads();
 		shareleadsPage.publishAndDownloadShareLeadFlow();
 	}
 
-	@Test(priority = 7, enabled = false)
+	@Test(priority = 7, enabled = true)
 	public void manageShareleadsCopy() throws InterruptedException, AWTException, IOException {
 		logger.info("Hovering on Shared Leads.");
 
@@ -123,7 +123,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.clickSaveAsButton();
 	}
 
-	@Test(priority = 8, enabled = false)
+	@Test(priority = 8, enabled = true)
 	public void manageShareleadsDelete() {
 		logger.info("🧪 Starting test: manageShareleadsDelete");
 
@@ -133,7 +133,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.info("✅ Delete icon was clicked successfully.");
 	}
 
-	@Test(priority = 9, enabled = false)
+	@Test(priority = 9, enabled = true)
 	public void testManageShareleadsAllTilesFilterSearch() throws InterruptedException {
 		shareleadsPage.navigateToManageShareLeads();
 		Thread.sleep(55000); // Optional: Replace with explicit wait if needed
@@ -145,7 +145,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.applyFilter();
 	}
 
-	@Test(priority = 10, enabled = false)
+	@Test(priority = 10, enabled = true)
 	public void manageShareleadsAlltilesSortEmailreports() throws Exception {
 
 		shareleadsPage.sortByIndex(1); // Use appropriate index for email sorting
@@ -153,7 +153,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 11, enabled = false)
+	@Test(priority = 11, enabled = true)
 	public void manageShareleadsAlltileCreateList() throws Exception {
 
 		shareleadsPage.gearIconFromTiles();
@@ -166,7 +166,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 12, enabled = false)
+	@Test(priority = 12, enabled = true)
 	public void manageShareleadsValidtiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -184,6 +184,66 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.sortBy("Email (A-Z)");
 
 		shareleadsPage.searchList("Test1");
+
+	}
+
+	@Test(priority = 13, enabled = true)
+	public void manageShareleadsExcludetiles() throws Exception {
+		// Navigate to Manage Share Leads and wait for page to load
+		shareleadsPage.navigateToManageShareLeads();
+
+		// Attempt to click the Exclude tile only if it's enabled
+		if (shareleadsPage.isExcludeTileEnabled()) {
+			shareleadsPage.clickExcludeTile();
+
+			shareleadsPage.clickFilterIcon();
+			shareleadsPage.selectFieldName("Job Title");
+			shareleadsPage.selectCondition("Contains");
+			shareleadsPage.sendValue("qa");
+			shareleadsPage.applyFilter();
+
+			shareleadsPage.EmailReport();
+
+			shareleadsPage.sortBy("Email (A-Z)");
+
+			shareleadsPage.searchList("Test1");
+
+		} else {
+			System.out.println("Excluded count is 0 & button is disabled, cannot click.");
+		}
+	}
+
+	@Test(priority = 14, enabled = true)
+	public void manageShareleadsUndeliverabletiles() throws Exception {
+		// Navigate to Manage Share Leads and wait for page to load
+		shareleadsPage.navigateToManageShareLeads();
+		if (shareleadsPage.isUndeliverableTileEnabled()) {
+			shareleadsPage.clickUndeliverableTile();
+			shareleadsPage.applyFilter();
+
+			shareleadsPage.EmailReport();
+		}
+
+		else {
+			System.out.println("Undeliverable count is 0 & button is disabled, cannot click.");
+		}
+
+	}
+
+	@Test(priority = 15, enabled = true)
+	public void manageShareleadsUnsubscribetiles() throws Exception {
+		// Navigate to Manage Share Leads and wait for page to load
+		shareleadsPage.navigateToManageShareLeads();
+
+		if (shareleadsPage.isunsubscribeTileEnabled()) {
+			shareleadsPage.clickUnsubscribeTile();
+
+			shareleadsPage.applyFilter();
+
+			shareleadsPage.EmailReport();
+		} else {
+			System.out.println("Unsubscribetile count is 0 & button is disabled, cannot click.");
+		}
 
 	}
 
