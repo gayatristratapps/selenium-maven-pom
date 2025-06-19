@@ -127,4 +127,21 @@ public class WaitUtil {
         wait.until(webDriver -> ((org.openqa.selenium.JavascriptExecutor) webDriver)
                 .executeScript("return jQuery.active == 0"));
     }
+
+
+    public static void waitForDropdownToBeReady(WebDriver driver, By locator, int timeoutSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+            .until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+
+    
+    public static void waitForLoaderToDisappear(WebDriver driver, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("backdrop")));
+    }
+
+   
+
+
 }

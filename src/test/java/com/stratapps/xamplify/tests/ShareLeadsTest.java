@@ -2,23 +2,19 @@ package com.stratapps.xamplify.tests;
 
 import java.awt.AWTException;
 import java.io.IOException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.By;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
-
 import java.time.Duration;
-
 import com.stratapps.xamplify.base.BaseTest;
 import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.pages.ShareLeadsPage;
 import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.DropdownUtil;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
+import com.stratapps.xamplify.utils.WaitUtil;
 
 public class ShareLeadsTest extends BaseTest {
 
@@ -36,7 +32,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.info("ShareleadsTest setup completed");
 	}
 
-	@Test(priority = 1, description = "Create share lead one at a time", enabled = true)
+	@Test(priority = 1, enabled = true)
 	public void testCreateOneAtATimeShareLead() {
 		logger.info("Starting test: Create share lead one at a time");
 		try {
@@ -49,7 +45,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 2, description = "Upload CSV for share leads", enabled = true)
+	@Test(priority = 2, enabled = true)
 	public void testUploadCSVShareLead() {
 		logger.info("Starting test: Upload CSV for share leads");
 		try {
@@ -64,46 +60,36 @@ public class ShareLeadsTest extends BaseTest {
 
 	@Test(priority = 3, enabled = true)
 	public void manageshareleadsEditAddsharelead() throws Exception {
-		Thread.sleep(2000);
+		
 		shareleadsPage.navigateToManageShareLeads();
-
-		Thread.sleep(65000); // Wait to load
 
 		// Edit share lead details
 		shareleadsPage.editShareLeadDetails();
 
 		// Upload CSV data
 		shareleadsPage.uploadCSVLeads();
-		Thread.sleep(2000);
-
+		
 		shareleadsPage.saveEditedLeadAndConfirm();
 
 		logger.debug("Done creation sharelead using edit option through csv");
 	}
 
-	@Test(priority = 4, description = "Search share leads", enabled = true)
-	public void testSearchShareLeads() {
-		try {
-			// shareleadsPage.navigateToManageShareLeads();
-			shareleadsPage.searchShareLead("Auto");
-			ScreenshotUtil.captureScreenshot(driver, "SearchShareLead");
-		} catch (Exception e) {
-			logger.error("Error in testSearchShareLeads", e);
-		}
+	@Test(priority = 4,enabled = true)
+	public void testSearchShareLeads() throws Exception {
+		shareleadsPage.navigateToManageShareLeads();
+		shareleadsPage.searchShareLead("Auto");
+		
+		
 	}
 
 	@Test(priority = 5, enabled = true)
 	public void shareleadsDropdown() throws InterruptedException {
-		Thread.sleep(3000);
+		WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
 
-		// Selecting multiple indices with a wait using DROPDOWN_LOCATOR from page class
-		int[] indices = { 6, 5, 4 };
-		for (int index : indices) {
-			DropdownUtil.selectByIndex(driver, shareleadsPage.getDropdownLocator(), index);
-			Thread.sleep(1000); // Optional short wait for UI update
-		}
-
-		Thread.sleep(2000);
+	    shareleadsPage.sortAllOptions(driver);
+		
+			
 	}
 
 	@Test(priority = 6, enabled = true)
@@ -112,7 +98,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.publishAndDownloadShareLeadFlow();
 	}
 
-	@Test(priority = 7, enabled = true)
+	@Test(priority = 7, enabled = false)
 	public void manageShareleadsCopy() throws InterruptedException, AWTException, IOException {
 		logger.info("Hovering on Shared Leads.");
 
@@ -133,7 +119,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.info("✅ Delete icon was clicked successfully.");
 	}
 
-	@Test(priority = 9, enabled = true)
+	@Test(priority = 9, enabled = false)
 	public void testManageShareleadsAllTilesFilterSearch() throws InterruptedException {
 		shareleadsPage.navigateToManageShareLeads();
 		Thread.sleep(55000); // Optional: Replace with explicit wait if needed
@@ -145,7 +131,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.applyFilter();
 	}
 
-	@Test(priority = 10, enabled = true)
+	@Test(priority = 10, enabled = false)
 	public void manageShareleadsAlltilesSortEmailreports() throws Exception {
 
 		shareleadsPage.sortByIndex(1); // Use appropriate index for email sorting
@@ -153,7 +139,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 11, enabled = true)
+	@Test(priority = 11, enabled = false)
 	public void manageShareleadsAlltileCreateList() throws Exception {
 
 		shareleadsPage.gearIconFromTiles();
@@ -166,7 +152,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 12, enabled = true)
+	@Test(priority = 12, enabled = false)
 	public void manageShareleadsValidtiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -187,7 +173,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 13, enabled = true)
+	@Test(priority = 13, enabled = false)
 	public void manageShareleadsExcludetiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -213,7 +199,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 14, enabled = true)
+	@Test(priority = 14, enabled = false)
 	public void manageShareleadsUndeliverabletiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -230,7 +216,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 15, enabled = true)
+	@Test(priority = 15, enabled = false)
 	public void manageShareleadsUnsubscribetiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();

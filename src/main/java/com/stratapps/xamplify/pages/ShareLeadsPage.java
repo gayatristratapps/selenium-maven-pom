@@ -46,6 +46,7 @@ public class ShareLeadsPage {
 	private final By SHARE_LEADS_ADD = By.xpath("//div[@id='addContactModal']//button[2]");
 	private final By SHARE_LEADS_SAVE = By.xpath("//button[@id=\"sample_editable_1_new\"]/span");
 	private final By SHARE_LEADS_ACCEPT = By.xpath("//div[@id=\"tcModal\"]//button[2]");
+	
 	private final By SH_CSV_CLICK = By.xpath("//input[@type='file']");
 	private final By SEARCH_BAR = By.xpath("//div[@id='manageContacts']//input");
 	private final By EDIT_BUTTON = By.xpath("(//*[@id='partner_contact_list']//a[2]/i)[1]");
@@ -66,33 +67,31 @@ public class ShareLeadsPage {
 	private final By deleteIconLocator = By.xpath("(//i[contains(@class,'fa-trash')])[1]");
 
 	private By allTile = By.xpath("//div[contains(text(),'All')]");
-	
+
 	private By filterIcon = By.xpath("//i[contains(@class,'fa-filter')]");
-	
+
 	private By conditionDropdown = By.xpath("(//select[contains(@class,'form-control')])[2]");
 	private By valueInput = By.xpath("//input[@placeholder='value*']");
 	private By submitButton = By.xpath("//button[contains(text(),'Submit')]");
 
-    private By searchInput = By.xpath("//input[@placeholder='Search']");
-    private By sortDropdown = By.xpath("(//div[contains(@class, 'portlet-title')]//select )[1]");
-    private By emailReportButton = By.xpath("//i[contains(@class, 'fa-file')]");
-    private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
-    private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
-    private By deleteButton = By.id("delete_button");
+	private By searchInput = By.xpath("//input[@placeholder='Search']");
+	//private By sortDropdown = By.xpath("(//div[contains(@class, 'portlet-title')]//select )[1]");
+	private By emailReportButton = By.xpath("//i[contains(@class, 'fa-file')]");
+	private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
+	private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
+	private By deleteButton = By.id("delete_button");
+
+	private By validTile = By.xpath("//div[normalize-space()='Valid']");
+
+	private By backdrop = By.cssSelector("div.backdrop");
+
+	private By exportExcelButton = By.id("export-excel");
+
+	private By sortByDropdown1 = By.xpath("//select[contains(@class,'SeclectBoxPaddingsAbj')]");
 
 	
-    private  By validTile = By.xpath("//div[normalize-space()='Valid']");
-    
-    private By backdrop = By.cssSelector("div.backdrop");
-
-   
-    private By exportExcelButton = By.id("export-excel");
-
-    private By sortByDropdown = By.xpath("//select[contains(@class,'SeclectBoxPaddingsAbj')]");
-    
 	
-	
-	
+	private By sortByDropdown = By.xpath("//div[contains(@class, 'search-css')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
 	public void hoverOnShareLeads() throws InterruptedException {
 		Thread.sleep(3000);
 		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, ADD_SHARE_LEADS);
@@ -107,33 +106,39 @@ public class ShareLeadsPage {
 		ElementUtil.sendText(SH_COMPANY, "Xamplify", driver);
 		ElementUtil.sendText(SH_LEGAL_BASIS, "Legitimate interest - prospect/lead", driver);
 		ElementUtil.sendKey(SH_LEGAL_BASIS, Keys.ENTER, driver);
-		ElementUtil.getById(driver, "title").sendKeys("QA Engineer");
-		ElementUtil.getById(driver, "address").sendKeys("123 Street");
-		ElementUtil.getById(driver, "city").sendKeys("Hyderabad");
-		ElementUtil.getById(driver, "state").sendKeys("Telangana");
-		ElementUtil.getById(driver, "zip").sendKeys("500001");
+
+		ElementUtil.sendText(By.id("title"), "QA Engineer", driver);
+
+		ElementUtil.sendText(By.id("address"), "123 Street", driver);
+
+		ElementUtil.sendText(By.id("city"), "Hyderabad", driver);
+
+		ElementUtil.sendText(By.id("state"), "Telangana", driver);
+
+		ElementUtil.sendText(By.id("zip"), "500001", driver);
 
 		WebElement scrollableDiv = driver.findElement(SH_SCROLL);
 		ActionUtil.scrollInsideElement(driver, scrollableDiv, 500);
 
-		driver.findElement(SH_FLAG).click();
-		Thread.sleep(1000);
-		driver.findElement(SH_FLAG_CODE).sendKeys("+91");
-		Thread.sleep(1000);
-		driver.findElement(SH_FLAG_CODE_SELECT).click();
-		driver.findElement(SH_MOBILE_NO).sendKeys("9876543210");
+		ElementUtil.click(SH_FLAG, driver);
 
-		driver.findElement(SHARE_LEADS_ADD).click();
+		ElementUtil.sendText(SH_FLAG_CODE, "+91", driver);
+
+		ElementUtil.click(SH_FLAG_CODE_SELECT, driver);
+
+		ElementUtil.sendText(SH_MOBILE_NO, "9876543210", driver);
+
+		ElementUtil.click(SHARE_LEADS_ADD, driver);
+
 	}
 
 	public void uploadCSVLeads() throws Exception {
-		// FIXED: Replaced with proper String[] array for CSV rows
-
+	
 		List<String[]> data = Arrays.asList(
-				new String[] { "Auto", "Test", "Company", "Engineer", "auto.test@test.com", "Street", "City", "ST",
-						"12345", "Country", "+91 1234567890" },
+				new String[] {"Auto", "Test", "Company", "Engineer", "auto.test@test.com", "Street", "City", "ST",
+						"12345", "Country", "+91 1234567890"},
 				new String[] { "John", "Doe", "TestCorp", "QA", "john.doe@test.com", "456 Road", "Town", "ST", "56789",
-						"Country", "+91 1231231234" });
+						"Country", "+91 1231231234"});
 
 		String path = CSVUtil.generateCSV(data);
 		driver.findElement(SH_CSV_CLICK).sendKeys(path);
@@ -143,23 +148,40 @@ public class ShareLeadsPage {
 
 	public void clickSaveAndAccept() throws InterruptedException {
 		ElementUtil.click(SHARE_LEADS_SAVE, driver);
+		
 		Thread.sleep(1000);
 		ElementUtil.click(SHARE_LEADS_ACCEPT, driver);
+		Thread.sleep(500);
 	}
 
 	public void navigateToManageShareLeads() throws InterruptedException {
 		Thread.sleep(1000);
 		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, MANAGE_SHARE_LEADS);
-		
 
 	}
 
 	public void editShareLeadDetails() throws InterruptedException {
-		Thread.sleep(5000);
-		ElementUtil.click(EDIT_BUTTON, driver);
+	//	Thread.sleep(5000);
+		
+		WaitUtil.waitForPageToLoad(driver, 70);
+		
+		
+		// Wait for backdrop (overlay/spinner) to disappear
+				WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+				// Wait for the tile to be visible
+				WaitUtil.waitForVisibility(driver, EDIT_BUTTON, 60);
+
+				// Now click safely
+				ElementUtil.click(EDIT_BUTTON, driver);
+		
+		
+		
+		
+		//ElementUtil.click(EDIT_BUTTON, driver);
 		Thread.sleep(2000);
 		ElementUtil.click(EDIT_ICON, driver);
-		ElementUtil.getById(driver, "lastName").sendKeys("1");
+		ElementUtil.getById(driver, "lastName").sendKeys("L1");
 		WebElement mobileField = driver.findElement(SH_MOBILE_NO);
 		mobileField.clear();
 		mobileField.sendKeys("+91 9876543210");
@@ -167,40 +189,59 @@ public class ShareLeadsPage {
 	}
 
 	public void saveEditedLeadAndConfirm() throws InterruptedException {
+		Thread.sleep(2000);
 		ElementUtil.getById(driver, "save&delete_button").click();
 		ElementUtil.getById(driver, "save_button").click();
 		Thread.sleep(2000);
-
-		ElementUtil.click(By.xpath("//div[@id=\"tcModal\"]//button[2]"), driver);
+		ElementUtil.click(SHARE_LEADS_ACCEPT, driver);
 		Thread.sleep(1000);
 	}
 
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
+		
 		/*
-		 * Thread.sleep(65000);
+		 * WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(85));
 		 * 
-		 * ElementUtil.click(By.xpath(
+		 * // Wait for the page to fully load wait.until( driver ->
+		 * ((JavascriptExecutor)
+		 * driver).executeScript("return document.readyState").equals("complete"));
+		 * 
+		 * // Wait for the publish/share icon in the first row to be clickable By
+		 * publishIcon = By.xpath(
 		 * "//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]"
-		 * ), driver); Thread.sleep(3000);
+		 * ); WebElement icon =
+		 * wait.until(ExpectedConditions.elementToBeClickable(publishIcon));
+		 * 
+		 * // Click the icon icon.click();
+		 * 
+		 * Thread.sleep(2000);
 		 */
 
 		
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(65));
-
-	    // Wait for the page to fully load
-	    wait.until(driver -> ((JavascriptExecutor) driver)
-	        .executeScript("return document.readyState").equals("complete"));
-
 		
-	   
-	    // Wait for the publish/share icon in the first row to be clickable
-	    By publishIcon = By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]");
-	    WebElement icon = wait.until(ExpectedConditions.elementToBeClickable(publishIcon));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(85));
 
-	    // Click the icon
-	    icon.click();
-		
-	    Thread.sleep(2000);
+		// Wait for document ready
+		wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+
+		// Wait for loader to disappear (backdrop or spinner)
+		WaitUtil.waitForLoaderToDisappear(driver, 60);
+
+		// Wait for table to appear
+		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("partner_contact_list")));
+
+		// Check rows
+		List<WebElement> rows = driver.findElements(By.xpath("//table[@id='partner_contact_list']//tr"));
+		if (rows.size() <= 1) {
+		    throw new RuntimeException("No rows available in ShareLeads table. Cannot proceed with publish icon click.");
+		}
+
+		// Wait for share icon to be clickable
+		By publishIcon = By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]");
+		WebElement icon = wait.until(ExpectedConditions.elementToBeClickable(publishIcon));
+
+		// Click it
+		icon.click();
 		
 		
 		ElementUtil.sendText(By.xpath("(//input[@id='sort-text'])[1]"), "PartnerAuto", driver);
@@ -222,7 +263,9 @@ public class ShareLeadsPage {
 		Thread.sleep(58000);
 		ElementUtil.click(By.xpath("(//i[@class=\"fa fa-eye table-eye-circle IconCustomization\"])[1]"), driver);
 		Thread.sleep(2000);
-		ElementUtil.click(By.xpath("//div[contains(@class,'d-flex') and contains(@class,'justify-content-between')] //a[contains(@class,'close-circle')]"), driver);
+		ElementUtil.click(By.xpath(
+				"//div[contains(@class,'d-flex') and contains(@class,'justify-content-between')] //a[contains(@class,'close-circle')]"),
+				driver);
 		Thread.sleep(3000);
 
 		ElementUtil.click(By.xpath("(//i[@class='fa fa-download IconCustomization'])[1]"), driver);
@@ -230,6 +273,29 @@ public class ShareLeadsPage {
 	}
 
 	public void searchShareLead(String query) throws InterruptedException {
+		
+		
+		
+		WaitUtil.waitForPageToLoad(driver, 60);
+
+		// Wait for backdrop (overlay/spinner) to disappear
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, SEARCH_BAR, 60);
+
+		// Now click safely
+		//ElementUtil.click(validTile, driver);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		ElementUtil.sendText(SEARCH_BAR, query, driver);
 		ElementUtil.sendKey(SEARCH_BAR, Keys.ENTER, driver);
 		Thread.sleep(3000);
@@ -240,10 +306,7 @@ public class ShareLeadsPage {
 		Thread.sleep(2000);
 	}
 
-	public By getDropdownLocator() {
-		// TODO Auto-generated method stub
-		return DROPDOWN_LOCATOR;
-	}
+
 
 	// Actions
 	public void clickCopyIcon() {
@@ -295,7 +358,6 @@ public class ShareLeadsPage {
 
 	public void clickAllTile() throws InterruptedException {
 
-	
 		ElementUtil.click(allTile, driver);
 		Thread.sleep(3000);
 	}
@@ -327,255 +389,241 @@ public class ShareLeadsPage {
 		ElementUtil.click(submitButton, driver);
 		Thread.sleep(3000);
 	}
-	
-	 // Actions
 
-    public void filterSearch(String searchText) {
-        ElementUtil.sendText(searchInput, searchText, driver);
-        ElementUtil.sendKey(searchInput, Keys.ENTER, driver);
-    }
+	// Actions
 
-    
-    
-    public void sortByIndex(int index) {
-        try {
-            WebElement dropdown = driver.findElement(By.id("sortDropdown")); // Use actual dropdown ID
-            Select select = new Select(dropdown);
-            select.selectByIndex(index);
-            //logger.info("Selected sort option by index: " + index);
-        } catch (Exception e) {
-             e.getMessage();
-        }
-    }
-    
-    
-    
-    
-    public void sortTilesAndEmailReport() throws InterruptedException {
-        List<String> sortOptions = Arrays.asList("Email (A-Z)", "Email (Z-A)", "First name (ASC)", "First name (DESC)", "Last name (ASC)");
-        for (String option : sortOptions) {
-            ElementUtil.selectDropdownByVisibleText(sortDropdown, option, driver);
-            try {
-                Thread.sleep(2000); // wait for UI to update
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        Thread.sleep(1000); // wait for UI to update
+	public void filterSearch(String searchText) {
+		ElementUtil.sendText(searchInput, searchText, driver);
+		ElementUtil.sendKey(searchInput, Keys.ENTER, driver);
+	}
 
-      //  ElementUtil.click(emailReportButton, driver);
-    }
-    
-    
-    public void EmailReport() throws InterruptedException {
-    	Thread.sleep(1000); 
-    ElementUtil.click(emailReportButton, driver);
+	public void sortByIndex(int index) {
+		try {
+			WebElement dropdown = driver.findElement(By.id("sortDropdown")); // Use actual dropdown ID
+			Select select = new Select(dropdown);
+			select.selectByIndex(index);
+			// logger.info("Selected sort option by index: " + index);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+	}
 
-    }
-    
-    private By campaignNameInput = By.id("campaignName");
-    private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
-    private By saveButton = By.xpath("(//div[@id='saveAsModal']//button)[3]"); // update with actual value or property
-    
-    
-    private By manageshFilterSelect= By.xpath("//input[@id='checkAllExistingContacts']");
+	public void sortTilesAndEmailReport() throws InterruptedException {
+		List<String> sortOptions = Arrays.asList("Email (A-Z)", "Email (Z-A)", "First name (ASC)", "First name (DESC)",
+				"Last name (ASC)");
+		for (String option : sortOptions) {
+			ElementUtil.selectDropdownByVisibleText(sortByDropdown, option, driver);
+			try {
+				Thread.sleep(2000); // wait for UI to update
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		Thread.sleep(1000); // wait for UI to update
 
-    
-    
-    
-    
-    
-    
-    public void gearIconFromTiles() {
-        ElementUtil.click(manageshFilterSelect, driver);
+		// ElementUtil.click(emailReportButton, driver);
+	}
 
-        ElementUtil.click(gearIcon, driver);
-        ElementUtil.click(newlist, driver);
+	public void EmailReport() throws InterruptedException {
+		Thread.sleep(1000);
+		ElementUtil.click(emailReportButton, driver);
 
-        
-    }
-    public void enterListName(String baseName) throws InterruptedException {
-    	Thread.sleep(2000);    
-    	baseName="test";
-        String nameWithTimestamp = baseName + System.currentTimeMillis();
-        ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
-    }
+	}
 
-    public void selectLegalBasis(String option) {
-        ElementUtil.sendTextdriver(driver, legalBasisDropdown, option);
-        ElementUtil.sendKeydriver(driver, legalBasisDropdown, Keys.ENTER);
-    }
+	private By campaignNameInput = By.id("campaignName");
+	private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
+	private By saveButton = By.xpath("(//div[@id='saveAsModal']//button)[3]"); // update with actual value or property
 
-    public void clickSave() {
-        ElementUtil.click(saveButton, driver);
-    }
-    
-    
-    
-    public void clickValidTile() {
-    	
+	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
 
-    	WaitUtil.waitForPageToLoad(driver, 60);
+	public void gearIconFromTiles() {
+		ElementUtil.click(manageshFilterSelect, driver);
 
-    	// Wait for backdrop (overlay/spinner) to disappear
-        WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		ElementUtil.click(gearIcon, driver);
+		ElementUtil.click(newlist, driver);
 
-        
-        // Wait for the tile to be visible
-        WaitUtil.waitForVisibility(driver, validTile, 60);
+	}
 
-        // Now click safely
-        ElementUtil.click(validTile, driver);
-        
- 
-  	
-    }
+	public void enterListName(String baseName) throws InterruptedException {
+		Thread.sleep(2000);
+		baseName = "test";
+		String nameWithTimestamp = baseName + System.currentTimeMillis();
+		ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
+	}
+
+	public void selectLegalBasis(String option) {
+		ElementUtil.sendTextdriver(driver, legalBasisDropdown, option);
+		ElementUtil.sendKeydriver(driver, legalBasisDropdown, Keys.ENTER);
+	}
+
+	public void clickSave() {
+		ElementUtil.click(saveButton, driver);
+	}
+
+	public void clickValidTile() {
+
+		WaitUtil.waitForPageToLoad(driver, 60);
+
+		// Wait for backdrop (overlay/spinner) to disappear
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, validTile, 60);
+
+		// Now click safely
+		ElementUtil.click(validTile, driver);
+
+	}
 
 	/*
 	 * public void exportToExcel() { ElementUtil.click(exportExcelButton, driver); }
 	 */
+
+	public void sortBy(String visibleText) {
+
+		// By dropdownLocator = By.xpath("//select[contains(@class,'form-control') and
+		// contains(@class,'SelectBoxPaddingsAbJ')]");
+
+		List<String> sortOptions = new ArrayList<>();
+
+		// Step 1: Collect all dropdown option texts initially
+		Select initialSelect = new Select(driver.findElement(sortByDropdown));
+		for (WebElement option : initialSelect.getOptions()) {
+			String optionText = option.getText().trim();
+			if (!optionText.equalsIgnoreCase("Sort by") && !optionText.isEmpty()) {
+				sortOptions.add(optionText);
+			}
+		}
+
+		// Step 2: Iterate through the options by visible text
+		for (String optionText : sortOptions) {
+			WaitUtil.waitForVisibility(driver, sortByDropdown, 40);
+			Select select = new Select(driver.findElement(sortByDropdown));
+			select.selectByVisibleText(optionText);
+
+			System.out.println("Selected Sort Option: " + optionText);
+
+			// Optional: Wait for list to update (use AJAX or full load wait)
+			WaitUtil.waitForPageToLoad(driver, 40);
+			// Optionally: Wait for specific element/table to become stale and reload
+		}
+
+		/*
+		 * WaitUtil.waitForVisibility(driver, sortByDropdown, 50); WebElement dropdown =
+		 * driver.findElement(sortByDropdown); Select select = new Select(dropdown);
+		 * //select.selectByVisibleText(visibleText);
+		 * 
+		 * List<WebElement> options = select.getOptions(); for (WebElement option :
+		 * options) { String optionText = option.getText().trim();
+		 * 
+		 * 
+		 * System.out.println("Selecting sort option: " + optionText);
+		 * select.selectByVisibleText(optionText);
+		 * 
+		 * }
+		 */
+
+	}
+
+	public void searchList(String searchTerm) {
+		WaitUtil.waitForVisibility(driver, searchInput, 50);
+		WebElement searchBox = driver.findElement(searchInput);
+		searchBox.clear();
+		searchBox.sendKeys(searchTerm);
+		searchBox.sendKeys(Keys.ENTER); // Or trigger a button if needed
+	}
+
+	public boolean isExcludeTileEnabled() {
+		try {
+			By excludeTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
+			WebElement excludeTile = WaitUtil.waitForElementPresent(driver, excludeTileLocator, 40);
+			return excludeTile.isEnabled();
+		} catch (TimeoutException e) {
+			System.out.println("Exclude tile not present: " + e.getMessage());
+			return false;
+		}
+	}
+
+	public void clickExcludeTile() {
+		try {
+			By excludeTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
+			WebElement excludeTile = WaitUtil.waitForElementClickable(driver, excludeTileLocator, 40);
+			excludeTile.click();
+		} catch (TimeoutException e) {
+			System.out.println("Exclude tile not clickable: " + e.getMessage());
+		}
+	}
+
+	private final By undeliverableTile = By.xpath("(//button[contains(@class, 'yellow-gold')])[2]");
+
+	public boolean isUndeliverableTileEnabled() {
+		try {
+			WebElement tile = WaitUtil.waitForElementPresent(driver, undeliverableTile, 30);
+			return tile.isEnabled();
+		} catch (TimeoutException e) {
+			System.out.println("Undeliverable tile not present: " + e.getMessage());
+			return false;
+		}
+	}
+
+	public void clickUndeliverableTile() {
+		try {
+			By UndeliverableTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
+			WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UndeliverableTileLocator, 40);
+			excludeTile.click();
+		} catch (TimeoutException e) {
+			System.out.println("UndeliverableTile tile not clickable: " + e.getMessage());
+		}
+	}
+
+	private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
+
+	public boolean isunsubscribeTileEnabled() {
+		try {
+			WebElement tile = WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30);
+			return tile.isEnabled();
+		} catch (TimeoutException e) {
+			System.out.println("unsubscribeTile tile not present: " + e.getMessage());
+			return false;
+		}
+	}
+
+	public void clickUnsubscribeTile() {
+		try {
+			By UnsubscribeTileLocator = By.xpath("//button[@class='btn-block dashboard-stat red']");
+			WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UnsubscribeTileLocator, 40);
+			excludeTile.click();
+		} catch (TimeoutException e) {
+			System.out.println("Unsubscribe tile count is 0 & button is disabled, cannot click.");
+		}
+	}
+
+	public By getDropdownLocator() {
+	    return sortByDropdown;
+	}
 	
-    
-    public void sortBy(String visibleText) {
-    	
-    	
-    //	 By dropdownLocator = By.xpath("//select[contains(@class,'form-control') and contains(@class,'SelectBoxPaddingsAbJ')]");
+	public void sortAllOptions(WebDriver driver) {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	    wait.until(ExpectedConditions.visibilityOfElementLocated(sortByDropdown));
 
-    	    List<String> sortOptions = new ArrayList<>();
+	    Select dropdown = new Select(driver.findElement(sortByDropdown));
+	    List<WebElement> options = dropdown.getOptions();
 
-    	    // Step 1: Collect all dropdown option texts initially
-    	    Select initialSelect = new Select(driver.findElement(sortByDropdown));
-    	    for (WebElement option : initialSelect.getOptions()) {
-    	        String optionText = option.getText().trim();
-    	        if (!optionText.equalsIgnoreCase("Sort by") && !optionText.isEmpty()) {
-    	            sortOptions.add(optionText);
-    	        }
-    	    }
+	    for (int i = 1; i < options.size(); i++) { // skip "Sort by"
+	        dropdown.selectByIndex(i);
 
-    	    // Step 2: Iterate through the options by visible text
-    	    for (String optionText : sortOptions) {
-    	        WaitUtil.waitForVisibility(driver, sortByDropdown, 40);
-    	        Select select = new Select(driver.findElement(sortByDropdown));
-    	        select.selectByVisibleText(optionText);
+	        // Optional: log selected
+	        System.out.println("Selected: " + dropdown.getFirstSelectedOption().getText());
 
-    	        System.out.println("Selected Sort Option: " + optionText);
+	        // Optional: wait for data refresh
+	        WaitUtil.waitForLoaderToDisappear(driver, 25);
 
-    	        // Optional: Wait for list to update (use AJAX or full load wait)
-    	        WaitUtil.waitForPageToLoad(driver, 40);
-    	        // Optionally: Wait for specific element/table to become stale and reload
-    	    }
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-    	
-			/*
-			 * WaitUtil.waitForVisibility(driver, sortByDropdown, 50); WebElement dropdown =
-			 * driver.findElement(sortByDropdown); Select select = new Select(dropdown);
-			 * //select.selectByVisibleText(visibleText);
-			 * 
-			 * List<WebElement> options = select.getOptions(); for (WebElement option :
-			 * options) { String optionText = option.getText().trim();
-			 * 
-			 * 
-			 * System.out.println("Selecting sort option: " + optionText);
-			 * select.selectByVisibleText(optionText);
-			 * 
-			 * }
-			 */
-        
-        
-    }
+	        try {
+	            Thread.sleep(1000); // short UI settle time
+	        } catch (InterruptedException e) {
+	            e.printStackTrace();
+	        }
+	    }
 
-    public void searchList(String searchTerm) {
-        WaitUtil.waitForVisibility(driver, searchInput, 50);
-        WebElement searchBox = driver.findElement(searchInput);
-        searchBox.clear();
-        searchBox.sendKeys(searchTerm);
-        searchBox.sendKeys(Keys.ENTER);  // Or trigger a button if needed
-    }
-  
-    
-
-    public boolean isExcludeTileEnabled() {
-        try {
-            By excludeTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
-            WebElement excludeTile = WaitUtil.waitForElementPresent(driver, excludeTileLocator, 40);
-            return excludeTile.isEnabled();
-        } catch (TimeoutException e) {
-            System.out.println("Exclude tile not present: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public void clickExcludeTile() {
-        try {
-            By excludeTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
-            WebElement excludeTile = WaitUtil.waitForElementClickable(driver, excludeTileLocator, 40);
-            excludeTile.click();
-        } catch (TimeoutException e) {
-            System.out.println("Exclude tile not clickable: " + e.getMessage());
-        }
-    }
-
-    
-    
-    private final By undeliverableTile = By.xpath("(//button[contains(@class, 'yellow-gold')])[2]");
-
-    public boolean isUndeliverableTileEnabled() {
-        try {
-            WebElement tile = WaitUtil.waitForElementPresent(driver, undeliverableTile, 30);
-            return tile.isEnabled();
-        } catch (TimeoutException e) {
-            System.out.println("Undeliverable tile not present: " + e.getMessage());
-            return false;
-        }
-    }
-
-    
-    public void clickUndeliverableTile() {
-        try {
-            By UndeliverableTileLocator = By.xpath("(//button[contains(@class, 'yellow-gold')])[1]");
-            WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UndeliverableTileLocator, 40);
-            excludeTile.click();
-        } catch (TimeoutException e) {
-            System.out.println("UndeliverableTile tile not clickable: " + e.getMessage());
-        }
-    }
-
-    
-
-    private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
-
-    public boolean isunsubscribeTileEnabled() {
-        try {
-            WebElement tile = WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30);
-            return tile.isEnabled();
-        } catch (TimeoutException e) {
-            System.out.println("unsubscribeTile tile not present: " + e.getMessage());
-            return false;
-        }
-    }
-
-    public void clickUnsubscribeTile() {
-        try {
-            By UnsubscribeTileLocator = By.xpath("//button[@class='btn-block dashboard-stat red']");
-            WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UnsubscribeTileLocator, 40);
-            excludeTile.click();
-        } catch (TimeoutException e) {
-        	  System.out.println("Unsubscribe tile count is 0 & button is disabled, cannot click.");
-        }
-    }
-    
-    
-
+	}
 }
-	
-	
-	
