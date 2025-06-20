@@ -46,12 +46,14 @@ public class ShareLeadsPage {
 	private final By SHARE_LEADS_ADD = By.xpath("//div[@id='addContactModal']//button[2]");
 	private final By SHARE_LEADS_SAVE = By.xpath("//button[@id=\"sample_editable_1_new\"]/span");
 	private final By SHARE_LEADS_ACCEPT = By.xpath("//div[@id=\"tcModal\"]//button[2]");
-	
+
 	private final By SH_CSV_CLICK = By.xpath("//input[@type='file']");
 	private final By SEARCH_BAR = By.xpath("//div[@id='manageContacts']//input");
 	private final By EDIT_BUTTON = By.xpath("(//*[@id='partner_contact_list']//a[2]/i)[1]");
 	private final By EDIT_ICON = By.xpath("(//i[@class='fa fa-pencil-square-o IconCustomization'])[1]");
-	private final By PUBLISH_ICON = By.xpath("(//*[@id='partner_contact_list']//td[7]/div/a[1]/i)[1]");
+	// private final By PUBLISH_ICON =
+	// By.xpath("(//*[@id='partner_contact_list']//td[7]/div/a[1]/i)[1]");
+
 	private final By DELETE_ICON = By.xpath("(//i[@class='fa fa-trash-o trashIconCustomization'])[1]");
 	private final By DELETE_CONFIRM = By.xpath("//button[@class='swal2-confirm styled']");
 	private final By DROPDOWN_LOCATOR = By.xpath(
@@ -75,7 +77,8 @@ public class ShareLeadsPage {
 	private By submitButton = By.xpath("//button[contains(text(),'Submit')]");
 
 	private By searchInput = By.xpath("//input[@placeholder='Search']");
-	//private By sortDropdown = By.xpath("(//div[contains(@class, 'portlet-title')]//select )[1]");
+	// private By sortDropdown = By.xpath("(//div[contains(@class,
+	// 'portlet-title')]//select )[1]");
 	private By emailReportButton = By.xpath("//i[contains(@class, 'fa-file')]");
 	private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
 	private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
@@ -87,11 +90,11 @@ public class ShareLeadsPage {
 
 	private By exportExcelButton = By.id("export-excel");
 
-	private By sortByDropdown1 = By.xpath("//select[contains(@class,'SeclectBoxPaddingsAbj')]");
+	private By AllTilesortByDropdown = By.xpath("//div[contains(@class, 'sortingContacts')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
 
-	
-	
-	private By sortByDropdown = By.xpath("//div[contains(@class, 'search-css')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
+	private By sortByDropdown = By
+			.xpath("//div[contains(@class, 'search-css')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
+
 	public void hoverOnShareLeads() throws InterruptedException {
 		Thread.sleep(3000);
 		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, ADD_SHARE_LEADS);
@@ -133,12 +136,12 @@ public class ShareLeadsPage {
 	}
 
 	public void uploadCSVLeads() throws Exception {
-	
+
 		List<String[]> data = Arrays.asList(
-				new String[] {"Auto", "Test", "Company", "Engineer", "auto.test@test.com", "Street", "City", "ST",
-						"12345", "Country", "+91 1234567890"},
+				new String[] { "Auto", "Test", "Company", "Engineer", "auto.test@test.com", "Street", "City", "ST",
+						"12345", "Country", "+91 1234567890" },
 				new String[] { "John", "Doe", "TestCorp", "QA", "john.doe@test.com", "456 Road", "Town", "ST", "56789",
-						"Country", "+91 1231231234"});
+						"Country", "+91 1231231234" });
 
 		String path = CSVUtil.generateCSV(data);
 		driver.findElement(SH_CSV_CLICK).sendKeys(path);
@@ -148,7 +151,7 @@ public class ShareLeadsPage {
 
 	public void clickSaveAndAccept() throws InterruptedException {
 		ElementUtil.click(SHARE_LEADS_SAVE, driver);
-		
+
 		Thread.sleep(1000);
 		ElementUtil.click(SHARE_LEADS_ACCEPT, driver);
 		Thread.sleep(500);
@@ -161,24 +164,20 @@ public class ShareLeadsPage {
 	}
 
 	public void editShareLeadDetails() throws InterruptedException {
-	//	Thread.sleep(5000);
-		
+		// Thread.sleep(5000);
+
 		WaitUtil.waitForPageToLoad(driver, 70);
-		
-		
+
 		// Wait for backdrop (overlay/spinner) to disappear
-				WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 
-				// Wait for the tile to be visible
-				WaitUtil.waitForVisibility(driver, EDIT_BUTTON, 60);
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, EDIT_BUTTON, 60);
 
-				// Now click safely
-				ElementUtil.click(EDIT_BUTTON, driver);
-		
-		
-		
-		
-		//ElementUtil.click(EDIT_BUTTON, driver);
+		// Now click safely
+		ElementUtil.click(EDIT_BUTTON, driver);
+
+		// ElementUtil.click(EDIT_BUTTON, driver);
 		Thread.sleep(2000);
 		ElementUtil.click(EDIT_ICON, driver);
 		ElementUtil.getById(driver, "lastName").sendKeys("L1");
@@ -197,57 +196,33 @@ public class ShareLeadsPage {
 		Thread.sleep(1000);
 	}
 
+	public final static By FIRST_PUBLISH_ICON = By
+			.xpath("(//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')])[1]");
+	private final  By PUBLISH_viewicon = By
+			.xpath("(//i[contains(@class, 'fa-eye') and contains(@class, 'IconCustomization')])[1]");
+
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
-		
-		/*
-		 * WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(85));
-		 * 
-		 * // Wait for the page to fully load wait.until( driver ->
-		 * ((JavascriptExecutor)
-		 * driver).executeScript("return document.readyState").equals("complete"));
-		 * 
-		 * // Wait for the publish/share icon in the first row to be clickable By
-		 * publishIcon = By.xpath(
-		 * "//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]"
-		 * ); WebElement icon =
-		 * wait.until(ExpectedConditions.elementToBeClickable(publishIcon));
-		 * 
-		 * // Click the icon icon.click();
-		 * 
-		 * Thread.sleep(2000);
-		 */
 
-		
-		
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(85));
+		WaitUtil.waitForPageToLoad(driver, 80);
 
-		// Wait for document ready
-		wait.until(driver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+		// Wait for backdrop (overlay/spinner) to disappear
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 
-		// Wait for loader to disappear (backdrop or spinner)
-		WaitUtil.waitForLoaderToDisappear(driver, 60);
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, FIRST_PUBLISH_ICON, 60);
 
-		// Wait for table to appear
-		wait.until(ExpectedConditions.presenceOfElementLocated(By.id("partner_contact_list")));
+		// Now click safely
+		ElementUtil.click(FIRST_PUBLISH_ICON, driver);
 
-		// Check rows
-		List<WebElement> rows = driver.findElements(By.xpath("//table[@id='partner_contact_list']//tr"));
-		if (rows.size() <= 1) {
-		    throw new RuntimeException("No rows available in ShareLeads table. Cannot proceed with publish icon click.");
-		}
+		// Wait and input text
+		WebDriverWait inputWait = new WebDriverWait(driver, Duration.ofSeconds(20));
+		By searchInput = By.xpath("(//input[@id='sort-text'])[1]");
+		inputWait.until(ExpectedConditions.visibilityOfElementLocated(searchInput));
 
-		// Wait for share icon to be clickable
-		By publishIcon = By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')]");
-		WebElement icon = wait.until(ExpectedConditions.elementToBeClickable(publishIcon));
-
-		// Click it
-		icon.click();
-		
-		
-		ElementUtil.sendText(By.xpath("(//input[@id='sort-text'])[1]"), "PartnerAuto", driver);
-		Thread.sleep(2000);
-		ElementUtil.sendKey(By.xpath("(//input[@id='sort-text'])[1]"), Keys.ENTER, driver);
-		Thread.sleep(2000);
+		ElementUtil.sendText(searchInput, "PartnerAuto", driver);
+		Thread.sleep(1000);
+		ElementUtil.sendKey(searchInput, Keys.ENTER, driver);
+		Thread.sleep(1000);
 
 		ElementUtil.click(By.xpath("//div[@id='partnerCompaniesPopup']//table//i[@class='fa fa-angle-right']"), driver);
 		Thread.sleep(1000);
@@ -260,8 +235,28 @@ public class ShareLeadsPage {
 		Thread.sleep(1000);
 		ElementUtil.click(By.xpath("//div[@id='partnerCompaniesPopup']//button[contains(text(),\"Close\")]"), driver);
 
-		Thread.sleep(58000);
-		ElementUtil.click(By.xpath("(//i[@class=\"fa fa-eye table-eye-circle IconCustomization\"])[1]"), driver);
+	//	Thread.sleep(58000);
+		
+		
+		WaitUtil.waitForPageToLoad(driver, 80);
+
+		// Wait for backdrop (overlay/spinner) to disappear
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, PUBLISH_viewicon, 60);
+
+		// Now click safely
+		ElementUtil.click(PUBLISH_viewicon, driver);
+		
+		
+		
+		
+		
+		
+	//	ElementUtil.click(PUBLISH_viewicon, driver);
+		
+		
 		Thread.sleep(2000);
 		ElementUtil.click(By.xpath(
 				"//div[contains(@class,'d-flex') and contains(@class,'justify-content-between')] //a[contains(@class,'close-circle')]"),
@@ -273,9 +268,7 @@ public class ShareLeadsPage {
 	}
 
 	public void searchShareLead(String query) throws InterruptedException {
-		
-		
-		
+
 		WaitUtil.waitForPageToLoad(driver, 60);
 
 		// Wait for backdrop (overlay/spinner) to disappear
@@ -285,28 +278,17 @@ public class ShareLeadsPage {
 		WaitUtil.waitForVisibility(driver, SEARCH_BAR, 60);
 
 		// Now click safely
-		//ElementUtil.click(validTile, driver);
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		// ElementUtil.click(validTile, driver);
+
 		ElementUtil.sendText(SEARCH_BAR, query, driver);
 		ElementUtil.sendKey(SEARCH_BAR, Keys.ENTER, driver);
 		Thread.sleep(3000);
 	}
 
 	public void publishAndDownloadShareLead() throws InterruptedException {
-		ElementUtil.click(PUBLISH_ICON, driver);
+		ElementUtil.click(FIRST_PUBLISH_ICON, driver);
 		Thread.sleep(2000);
 	}
-
-
 
 	// Actions
 	public void clickCopyIcon() {
@@ -358,6 +340,25 @@ public class ShareLeadsPage {
 
 	public void clickAllTile() throws InterruptedException {
 
+		
+		
+		
+		
+		
+		
+		WaitUtil.waitForPageToLoad(driver, 80);
+
+		// Wait for backdrop (overlay/spinner) to disappear
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, allTile, 60);
+		
+		
+		
+		
+		
+		
 		ElementUtil.click(allTile, driver);
 		Thread.sleep(3000);
 	}
@@ -456,13 +457,14 @@ public class ShareLeadsPage {
 		ElementUtil.sendKeydriver(driver, legalBasisDropdown, Keys.ENTER);
 	}
 
-	public void clickSave() {
+	public void clickSave() throws Exception {
+		Thread.sleep(1000);
 		ElementUtil.click(saveButton, driver);
 	}
 
 	public void clickValidTile() {
 
-		WaitUtil.waitForPageToLoad(driver, 60);
+		WaitUtil.waitForPageToLoad(driver, 80);
 
 		// Wait for backdrop (overlay/spinner) to disappear
 		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
@@ -475,9 +477,7 @@ public class ShareLeadsPage {
 
 	}
 
-	/*
-	 * public void exportToExcel() { ElementUtil.click(exportExcelButton, driver); }
-	 */
+	
 
 	public void sortBy(String visibleText) {
 
@@ -599,31 +599,98 @@ public class ShareLeadsPage {
 	}
 
 	public By getDropdownLocator() {
-	    return sortByDropdown;
+		return sortByDropdown;
+	}
+
+	/*
+	 * public void sortAllOptions(WebDriver driver) { WebDriverWait wait = new
+	 * WebDriverWait(driver, Duration.ofSeconds(60));
+	 * wait.until(ExpectedConditions.visibilityOfElementLocated(sortByDropdown));
+	 * 
+	 * Select dropdown = new Select(driver.findElement(sortByDropdown));
+	 * List<WebElement> options = dropdown.getOptions();
+	 * 
+	 * for (int i = 1; i < options.size(); i++) { // skip "Sort by"
+	 * dropdown.selectByIndex(i);
+	 * 
+	 * // Optional: log selected System.out.println("Selected: " +
+	 * dropdown.getFirstSelectedOption().getText());
+	 * 
+	 * // Optional: wait for data refresh WaitUtil.waitForLoaderToDisappear(driver,
+	 * 25);
+	 * 
+	 * try { Thread.sleep(1000); // short UI settle time } catch
+	 * (InterruptedException e) { e.printStackTrace(); } }
+	 * 
+	 * }
+	 */
+
+	public void sortAllOptions(WebDriver driver) throws Exception {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+		// Ensure dropdown is visible
+		wait.until(ExpectedConditions.visibilityOfElementLocated(sortByDropdown));
+
+		Select dropdown = new Select(driver.findElement(sortByDropdown));
+		List<WebElement> options = dropdown.getOptions();
+
+		for (int i = 1; i < options.size(); i++) {
+			dropdown.selectByIndex(i);
+
+			// Wait for loader to disappear after each sort
+			WaitUtil.waitForLoaderToDisappear(driver, 40);
+
+			// Wait for first publish icon as an indicator of loaded result
+			wait.until(ExpectedConditions
+					.visibilityOfElementLocated(By.xpath("(//i[@class='fa fa-trash-o trashIconCustomization'])[1]")));
+
+			System.out.println("Selected: " + dropdown.getFirstSelectedOption().getText());
+			Thread.sleep(1000); // Optional short wait for UI animation
+		}
 	}
 	
-	public void sortAllOptions(WebDriver driver) {
+	
+	
+	
+	
+	
+	public void sortAllTileOptions(WebDriver driver) throws Exception {
 	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-	    wait.until(ExpectedConditions.visibilityOfElementLocated(sortByDropdown));
 
-	    Select dropdown = new Select(driver.findElement(sortByDropdown));
-	    List<WebElement> options = dropdown.getOptions();
-
-	    for (int i = 1; i < options.size(); i++) { // skip "Sort by"
-	        dropdown.selectByIndex(i);
-
-	        // Optional: log selected
-	        System.out.println("Selected: " + dropdown.getFirstSelectedOption().getText());
-
-	        // Optional: wait for data refresh
-	        WaitUtil.waitForLoaderToDisappear(driver, 25);
-
+	    // ✅ Loop through dropdown options, refreshing elements each time
+	    for (int i = 1; ; i++) {
 	        try {
-	            Thread.sleep(1000); // short UI settle time
-	        } catch (InterruptedException e) {
-	            e.printStackTrace();
+	            // 🔁 Re-locate dropdown and reinitialize Select to avoid stale element
+	            wait.until(ExpectedConditions.visibilityOfElementLocated(AllTilesortByDropdown));
+	            Select Alldropdown = new Select(driver.findElement(AllTilesortByDropdown));
+
+	            List<WebElement> options = Alldropdown.getOptions();
+
+	            // 🔁 Break the loop if we reach the end of options
+	            if (i >= options.size()) break;
+
+	            // ✅ Select option by index
+	            Alldropdown.selectByIndex(i);
+
+	            // ✅ Wait for loader to disappear (custom utility)
+	            WaitUtil.waitForLoaderToDisappear(driver, 40);
+
+	            // ✅ Wait for results table to appear as confirmation of reload
+	            wait.until(ExpectedConditions.visibilityOfElementLocated(
+	                    By.xpath("//*[@id='sample_editable_1']/thead/tr")));
+
+	            // ✅ Print the selected option
+	            System.out.println("Selected: " + Alldropdown.getFirstSelectedOption().getText());
+
+	            Thread.sleep(1000); // Optional: short delay for UI animation
+	        } catch (StaleElementReferenceException e) {
+	            System.out.println("⚠️ Caught stale element - retrying index " + i);
+	            i--; // 🔁 Retry the same index
 	        }
 	    }
-
 	}
+
+	
+	
+
 }
