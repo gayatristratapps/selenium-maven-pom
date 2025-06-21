@@ -77,8 +77,7 @@ public class ShareLeadsPage {
 	private By submitButton = By.xpath("//button[contains(text(),'Submit')]");
 
 	private By searchInput = By.xpath("//input[@placeholder='Search']");
-	// private By sortDropdown = By.xpath("(//div[contains(@class,
-	// 'portlet-title')]//select )[1]");
+	
 	private By emailReportButton = By.xpath("//i[contains(@class, 'fa-file')]");
 	private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
 	private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
@@ -90,7 +89,8 @@ public class ShareLeadsPage {
 
 	private By exportExcelButton = By.id("export-excel");
 
-	private By AllTilesortByDropdown = By.xpath("//div[contains(@class, 'sortingContacts')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
+	private By AllTilesortByDropdown = By
+			.xpath("//div[contains(@class, 'sortingContacts')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
 
 	private By sortByDropdown = By
 			.xpath("//div[contains(@class, 'search-css')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
@@ -180,6 +180,7 @@ public class ShareLeadsPage {
 		// ElementUtil.click(EDIT_BUTTON, driver);
 		Thread.sleep(2000);
 		ElementUtil.click(EDIT_ICON, driver);
+
 		ElementUtil.getById(driver, "lastName").sendKeys("L1");
 		WebElement mobileField = driver.findElement(SH_MOBILE_NO);
 		mobileField.clear();
@@ -198,7 +199,7 @@ public class ShareLeadsPage {
 
 	public final static By FIRST_PUBLISH_ICON = By
 			.xpath("(//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')])[1]");
-	private final  By PUBLISH_viewicon = By
+	private final By PUBLISH_viewicon = By
 			.xpath("(//i[contains(@class, 'fa-eye') and contains(@class, 'IconCustomization')])[1]");
 
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
@@ -235,9 +236,8 @@ public class ShareLeadsPage {
 		Thread.sleep(1000);
 		ElementUtil.click(By.xpath("//div[@id='partnerCompaniesPopup']//button[contains(text(),\"Close\")]"), driver);
 
-	//	Thread.sleep(58000);
-		
-		
+		// Thread.sleep(58000);
+
 		WaitUtil.waitForPageToLoad(driver, 80);
 
 		// Wait for backdrop (overlay/spinner) to disappear
@@ -248,15 +248,9 @@ public class ShareLeadsPage {
 
 		// Now click safely
 		ElementUtil.click(PUBLISH_viewicon, driver);
-		
-		
-		
-		
-		
-		
-	//	ElementUtil.click(PUBLISH_viewicon, driver);
-		
-		
+
+		// ElementUtil.click(PUBLISH_viewicon, driver);
+
 		Thread.sleep(2000);
 		ElementUtil.click(By.xpath(
 				"//div[contains(@class,'d-flex') and contains(@class,'justify-content-between')] //a[contains(@class,'close-circle')]"),
@@ -340,12 +334,6 @@ public class ShareLeadsPage {
 
 	public void clickAllTile() throws InterruptedException {
 
-		
-		
-		
-		
-		
-		
 		WaitUtil.waitForPageToLoad(driver, 80);
 
 		// Wait for backdrop (overlay/spinner) to disappear
@@ -353,12 +341,7 @@ public class ShareLeadsPage {
 
 		// Wait for the tile to be visible
 		WaitUtil.waitForVisibility(driver, allTile, 60);
-		
-		
-		
-		
-		
-		
+
 		ElementUtil.click(allTile, driver);
 		Thread.sleep(3000);
 	}
@@ -476,8 +459,6 @@ public class ShareLeadsPage {
 		ElementUtil.click(validTile, driver);
 
 	}
-
-	
 
 	public void sortBy(String visibleText) {
 
@@ -648,49 +629,42 @@ public class ShareLeadsPage {
 			Thread.sleep(1000); // Optional short wait for UI animation
 		}
 	}
-	
-	
-	
-	
-	
-	
+
 	public void sortAllTileOptions(WebDriver driver) throws Exception {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
-	    // ✅ Loop through dropdown options, refreshing elements each time
-	    for (int i = 1; ; i++) {
-	        try {
-	            // 🔁 Re-locate dropdown and reinitialize Select to avoid stale element
-	            wait.until(ExpectedConditions.visibilityOfElementLocated(AllTilesortByDropdown));
-	            Select Alldropdown = new Select(driver.findElement(AllTilesortByDropdown));
+		// ✅ Loop through dropdown options, refreshing elements each time
+		for (int i = 1;; i++) {
+			try {
+				// 🔁 Re-locate dropdown and reinitialize Select to avoid stale element
+				wait.until(ExpectedConditions.visibilityOfElementLocated(AllTilesortByDropdown));
+				Select Alldropdown = new Select(driver.findElement(AllTilesortByDropdown));
 
-	            List<WebElement> options = Alldropdown.getOptions();
+				List<WebElement> options = Alldropdown.getOptions();
 
-	            // 🔁 Break the loop if we reach the end of options
-	            if (i >= options.size()) break;
+				// 🔁 Break the loop if we reach the end of options
+				if (i >= options.size())
+					break;
 
-	            // ✅ Select option by index
-	            Alldropdown.selectByIndex(i);
+				// ✅ Select option by index
+				Alldropdown.selectByIndex(i);
 
-	            // ✅ Wait for loader to disappear (custom utility)
-	            WaitUtil.waitForLoaderToDisappear(driver, 40);
+				// ✅ Wait for loader to disappear (custom utility)
+				WaitUtil.waitForLoaderToDisappear(driver, 40);
 
-	            // ✅ Wait for results table to appear as confirmation of reload
-	            wait.until(ExpectedConditions.visibilityOfElementLocated(
-	                    By.xpath("//*[@id='sample_editable_1']/thead/tr")));
+				// ✅ Wait for results table to appear as confirmation of reload
+				wait.until(ExpectedConditions
+						.visibilityOfElementLocated(By.xpath("//*[@id='sample_editable_1']/thead/tr")));
 
-	            // ✅ Print the selected option
-	            System.out.println("Selected: " + Alldropdown.getFirstSelectedOption().getText());
+				// ✅ Print the selected option
+				System.out.println("Selected: " + Alldropdown.getFirstSelectedOption().getText());
 
-	            Thread.sleep(1000); // Optional: short delay for UI animation
-	        } catch (StaleElementReferenceException e) {
-	            System.out.println("⚠️ Caught stale element - retrying index " + i);
-	            i--; // 🔁 Retry the same index
-	        }
-	    }
+				Thread.sleep(1000); // Optional: short delay for UI animation
+			} catch (StaleElementReferenceException e) {
+				System.out.println("⚠️ Caught stale element - retrying index " + i);
+				i--; // 🔁 Retry the same index
+			}
+		}
 	}
-
-	
-	
 
 }

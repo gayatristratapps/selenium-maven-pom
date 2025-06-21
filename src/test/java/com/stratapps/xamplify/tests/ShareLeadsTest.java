@@ -12,7 +12,6 @@ import com.stratapps.xamplify.base.BaseTest;
 import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.pages.ShareLeadsPage;
 import com.stratapps.xamplify.utils.ConfigReader;
-import com.stratapps.xamplify.utils.DropdownUtil;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
 import com.stratapps.xamplify.utils.WaitUtil;
 
