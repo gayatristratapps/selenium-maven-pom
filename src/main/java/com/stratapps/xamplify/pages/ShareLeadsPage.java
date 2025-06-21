@@ -77,8 +77,9 @@ public class ShareLeadsPage {
 	private By submitButton = By.xpath("//button[contains(text(),'Submit')]");
 
 	private By searchInput = By.xpath("//input[@placeholder='Search']");
+    private final By emailReportButton = By.xpath("//i[contains(@class, 'fa-file') and contains(@class, 'IconCustomization')]");
+
 	
-	private By emailReportButton = By.xpath("//i[contains(@class, 'fa-file')]");
 	private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
 	private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
 	private By deleteButton = By.id("delete_button");
@@ -408,11 +409,17 @@ public class ShareLeadsPage {
 		// ElementUtil.click(emailReportButton, driver);
 	}
 
-	public void EmailReport() throws InterruptedException {
-		Thread.sleep(1000);
-		ElementUtil.click(emailReportButton, driver);
 
-	}
+	
+	
+	 public void EmailReport() {
+	        try {
+	            WaitUtil.waitForVisibility(driver, emailReportButton, 40);
+	            ElementUtil.click(emailReportButton, driver);
+	        } catch (Exception e) {
+	            System.out.println("❌ Email report icon not clickable: " + e.getMessage());
+	        }
+	    }
 
 	private By campaignNameInput = By.id("campaignName");
 	private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
@@ -420,13 +427,22 @@ public class ShareLeadsPage {
 
 	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
 
-	public void gearIconFromTiles() {
-		ElementUtil.click(manageshFilterSelect, driver);
+	
+	  public void gearIconFromTiles() {
+	        try {
+	            WaitUtil.waitForVisibility(driver, manageshFilterSelect, 40);
+	            ElementUtil.click(manageshFilterSelect, driver);
+	            ElementUtil.click(gearIcon, driver);
+	    		ElementUtil.click(newlist, driver);
+	        } catch (Exception e) {
+	            System.out.println("❌ Unable to locate or click checkAllExistingContacts: " + e.getMessage());
+	        }
+	    }
+	
+	
+	
+	
 
-		ElementUtil.click(gearIcon, driver);
-		ElementUtil.click(newlist, driver);
-
-	}
 
 	public void enterListName(String baseName) throws InterruptedException {
 		Thread.sleep(2000);
