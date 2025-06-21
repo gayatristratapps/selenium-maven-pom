@@ -1,17 +1,20 @@
-// BaseTest.java
 package com.stratapps.xamplify.base;
 
 import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.EmailUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions; // 🔁 CHANGED
 import org.openqa.selenium.firefox.FirefoxDriver;
+
 import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +42,17 @@ public class BaseTest {
 
             if (browser.equalsIgnoreCase("chrome")) {
                 WebDriverManager.chromedriver().setup();
-                staticDriver = new ChromeDriver();
-                logger.debug("Initialized ChromeDriver");
+
+                // 🔁 CHANGED: Headless mode setup for GitHub Actions
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--headless"); // run without UI
+                options.addArguments("--no-sandbox"); // required in CI
+                options.addArguments("--disable-dev-shm-usage"); // prevent shared memory crash
+                options.addArguments("--remote-allow-origins=*"); // optional but prevents newer driver errors
+
+                staticDriver = new ChromeDriver(options); // 🔁 CHANGED
+                logger.debug("Initialized ChromeDriver in headless mode");
+
             } else if (browser.equalsIgnoreCase("firefox")) {
                 WebDriverManager.firefoxdriver().setup();
                 staticDriver = new FirefoxDriver();
@@ -73,30 +85,4 @@ public class BaseTest {
     }
 
 
-	/*
-	 * @AfterSuite public void sendReportAfterSuite() { String to =
-	 * ConfigReader.getProperty("email.to"); String subject =
-	 * ConfigReader.getProperty("email.subject"); String body =
-	 * "Hi Team,\n\nPlease find the attached automation report.\n\nRegards,\nQA Automation Team"
-	 * ;
-	 * 
-	 * // Example paths — adjust as per your ExtentReport output location // String
-	 * reportPath = "reports/ExtentReport.html"; // Make sure this file is generated
-	 * here
-	 * 
-	 * String reportPath = System.getProperty("user.dir") +
-	 * "/test-output/ExtentReport.html";
-	 * 
-	 * 
-	 * // Example screenshot paths — if you don't have, pass an empty list
-	 * List<String> screenshots = List.of(); // e.g.,
-	 * List.of("screenshots/failure1.png")
-	 * 
-	 * try { EmailUtil.sendReportEmailWithAttachments(to, subject, body, reportPath,
-	 * screenshots); } catch (Exception e) {
-	 * System.out.println("❌ Error while sending report email: " + e.getMessage());
-	 * e.printStackTrace(); } }
-	 */
 }
-    
-    
