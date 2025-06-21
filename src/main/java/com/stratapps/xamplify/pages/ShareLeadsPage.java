@@ -329,17 +329,22 @@ public class ShareLeadsPage {
 	
 	
 	public void clickDeleteIcon() {
-	    WaitUtil.waitForLoaderToDisappear(driver, 30); // wait for loader
-	    WaitUtil.waitForPresence(driver, deleteIconLocator, 30);
-	    WaitUtil.waitForVisibility(driver, deleteIconLocator, 30);
+		/*
+		 * WaitUtil.waitForLoaderToDisappear(driver, 30); // wait for loader
+		 * WaitUtil.waitForPresence(driver, deleteIconLocator, 30);
+		 * WaitUtil.waitForVisibility(driver, deleteIconLocator, 30);
+		 * 
+		 * try { WebElement delete = WaitUtil.waitForElementClickable(driver,
+		 * deleteIconLocator, 30); ((JavascriptExecutor)
+		 * driver).executeScript("arguments[0].scrollIntoView(true);", delete);
+		 * delete.click(); } catch (Exception e) { throw new
+		 * RuntimeException("Failed to click Delete icon", e); }
+		 */
+	    
+	    
+	    
+	    ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
 
-	    try {
-	        WebElement delete = WaitUtil.waitForElementClickable(driver, deleteIconLocator, 30);
-	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", delete);
-	        delete.click();
-	    } catch (Exception e) {
-	        throw new RuntimeException("Failed to click Delete icon", e);
-	    }
 	}
 
 	
@@ -472,15 +477,23 @@ public class ShareLeadsPage {
 
 
 	
-	
+	/*
+	 * public void EmailReport() { try { WaitUtil.waitForVisibility(driver,
+	 * emailReportButton, 40); ElementUtil.click(emailReportButton, driver); } catch
+	 * (Exception e) { System.out.println("❌ Email report icon not clickable: " +
+	 * e.getMessage()); } }
+	 */
+	 
 	 public void EmailReport() {
-	        try {
-	            WaitUtil.waitForVisibility(driver, emailReportButton, 40);
-	            ElementUtil.click(emailReportButton, driver);
-	        } catch (Exception e) {
-	            System.out.println("❌ Email report icon not clickable: " + e.getMessage());
-	        }
-	    }
+		    ActionUtil.clickWithRetry(driver, emailReportButton, 3);
+		}
+	 
+	 
+	 
+	 
+	 
+	 
+	 
 
 	private By campaignNameInput = By.id("campaignName");
 	private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
@@ -488,18 +501,20 @@ public class ShareLeadsPage {
 
 	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
 
-	
+	/*
+	 * public void gearIconFromTiles() { try { WaitUtil.waitForVisibility(driver,
+	 * manageshFilterSelect, 40); ElementUtil.click(manageshFilterSelect, driver);
+	 * ElementUtil.click(gearIcon, driver); ElementUtil.click(newlist, driver); }
+	 * catch (Exception e) {
+	 * System.out.println("❌ Unable to locate or click checkAllExistingContacts: " +
+	 * e.getMessage()); } }
+	 */
+	  
+	  
+	  
 	  public void gearIconFromTiles() {
-	        try {
-	            WaitUtil.waitForVisibility(driver, manageshFilterSelect, 40);
-	            ElementUtil.click(manageshFilterSelect, driver);
-	            ElementUtil.click(gearIcon, driver);
-	    		ElementUtil.click(newlist, driver);
-	        } catch (Exception e) {
-	            System.out.println("❌ Unable to locate or click checkAllExistingContacts: " + e.getMessage());
-	        }
-	    }
-	
+		    ActionUtil.clickWithRetry(driver, manageshFilterSelect, 3);
+		}
 	
 	
 	
