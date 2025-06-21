@@ -140,6 +140,10 @@ public class WaitUtil {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("backdrop")));
     }
+    public static WebElement waitForPresence(WebDriver driver, By locator, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
 
    
 

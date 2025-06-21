@@ -66,7 +66,10 @@ public class ShareLeadsPage {
 			"//div[contains(@class,'modal-footer')]//button[.//span[contains(normalize-space(), 'Save changes')]]");
 
 	private By confirmDeleteYes = By.xpath("//button[normalize-space()='Yes']");
-	private final By deleteIconLocator = By.xpath("(//i[contains(@class,'fa-trash')])[1]");
+	//private final By deleteIconLocator = By.xpath("(//i[contains(@class,'fa-trash')])[1]");
+
+	
+	private final By deleteIconLocator=By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class,'fa-trash')]");
 
 	private By allTile = By.xpath("//div[contains(text(),'All')]");
 
@@ -285,11 +288,34 @@ public class ShareLeadsPage {
 		Thread.sleep(2000);
 	}
 
-	// Actions
+	/*
+	 * // Actions public void clickCopyIcon() {
+	 * wait.until(ExpectedConditions.elementToBeClickable(copyIcon)).click(); }
+	 */
+	
+	
 	public void clickCopyIcon() {
-		wait.until(ExpectedConditions.elementToBeClickable(copyIcon)).click();
+	    WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
+	    WaitUtil.waitForPresence(driver, copyIcon, 30); // Ensure presence
+	    WaitUtil.waitForVisibility(driver, copyIcon, 30); // Ensure visible
+	    WaitUtil.waitForElementClickable(driver, copyIcon, 30).click(); // Ensure clickable
 	}
 
+	
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void clickSaveAsButton() {
 		wait.until(ExpectedConditions.elementToBeClickable(saveChangesButton)).click();
 	}
@@ -298,33 +324,68 @@ public class ShareLeadsPage {
 		wait.until(ExpectedConditions.elementToBeClickable(confirmDeleteYes)).click();
 	}
 
-	public boolean clickDeleteIconWithRetry() {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+	
+	
+	
+	
+	public void clickDeleteIcon() {
+	    WaitUtil.waitForLoaderToDisappear(driver, 30); // wait for loader
+	    WaitUtil.waitForPresence(driver, deleteIconLocator, 30);
+	    WaitUtil.waitForVisibility(driver, deleteIconLocator, 30);
 
-		for (int attempt = 1; attempt <= 5; attempt++) {
-			try {
-				WebElement deleteIcon = wait.until(ExpectedConditions.elementToBeClickable(deleteIconLocator));
-				deleteIcon.click();
-				System.out.println("✅ Clicked delete icon on attempt " + attempt);
-
-				ElementUtil.click(DELETE_CONFIRM, driver);
-
-				System.out.println("✅ Delete icon clicked successfully on attempt " + attempt);
-				return true;
-			} catch (StaleElementReferenceException e) {
-				System.out.println("⚠️ StaleElementReferenceException on attempt " + attempt);
-				sleep(1000);
-			} catch (TimeoutException e) {
-				System.out.println("⏳ Timeout waiting for delete icon on attempt " + attempt);
-				break;
-			} catch (Exception e) {
-				System.out.println("❌ Exception during delete icon click: " + e.getMessage());
-				break;
-			}
-		}
-
-		return false;
+	    try {
+	        WebElement delete = WaitUtil.waitForElementClickable(driver, deleteIconLocator, 30);
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", delete);
+	        delete.click();
+	    } catch (Exception e) {
+	        throw new RuntimeException("Failed to click Delete icon", e);
+	    }
 	}
+
+	
+	public boolean retryClickDeleteIcon() {
+	    for (int i = 0; i < 3; i++) {
+	        try {
+	            clickDeleteIcon();
+	            return true;
+	        } catch (Exception e) {
+	            System.out.println("Retry " + (i + 1) + ": Failed to click delete icon");
+	            try {
+	                Thread.sleep(2000);
+	            } catch (InterruptedException ignored) {}
+	        }
+	    }
+	    return false;
+	}
+
+	
+	
+	
+	
+	
+	
+	/*
+	 * public boolean clickDeleteIconWithRetry() { WebDriverWait wait = new
+	 * WebDriverWait(driver, Duration.ofSeconds(60));
+	 * 
+	 * for (int attempt = 1; attempt <= 5; attempt++) { try { WebElement deleteIcon
+	 * = wait.until(ExpectedConditions.elementToBeClickable(deleteIconLocator));
+	 * deleteIcon.click(); System.out.println("✅ Clicked delete icon on attempt " +
+	 * attempt);
+	 * 
+	 * ElementUtil.click(DELETE_CONFIRM, driver);
+	 * 
+	 * System.out.println("✅ Delete icon clicked successfully on attempt " +
+	 * attempt); return true; } catch (StaleElementReferenceException e) {
+	 * System.out.println("⚠️ StaleElementReferenceException on attempt " +
+	 * attempt); sleep(1000); } catch (TimeoutException e) {
+	 * System.out.println("⏳ Timeout waiting for delete icon on attempt " +
+	 * attempt); break; } catch (Exception e) {
+	 * System.out.println("❌ Exception during delete icon click: " +
+	 * e.getMessage()); break; } }
+	 * 
+	 * return false; }
+	 */
 
 	private void sleep(long millis) {
 		try {
@@ -442,15 +503,34 @@ public class ShareLeadsPage {
 	
 	
 	
+		/*
+		 * 
+		 * public void enterListName(String baseName) throws InterruptedException {
+		 * Thread.sleep(2000); baseName = "test"; String nameWithTimestamp = baseName +
+		 * System.currentTimeMillis(); ElementUtil.sendTextdriver(driver,
+		 * campaignNameInput, nameWithTimestamp); }
+		 */
 
-
+	
 	public void enterListName(String baseName) throws InterruptedException {
-		Thread.sleep(2000);
-		baseName = "test";
-		String nameWithTimestamp = baseName + System.currentTimeMillis();
-		ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
+	    Thread.sleep(2000); // or replace with WebDriverWait
+	    String nameWithTimestamp = baseName + System.currentTimeMillis();
+
+	    // 🔽 FIXED: Ensure visibility first
+	    WaitUtil.waitForVisibility(driver, campaignNameInput, 30);
+	    WaitUtil.waitForPresence(driver, campaignNameInput, 30);
+
+	    ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
 	public void selectLegalBasis(String option) {
 		ElementUtil.sendTextdriver(driver, legalBasisDropdown, option);
 		ElementUtil.sendKeydriver(driver, legalBasisDropdown, Keys.ENTER);
@@ -596,27 +676,72 @@ public class ShareLeadsPage {
 		}
 	}
 
-	private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
-
-	public boolean isunsubscribeTileEnabled() {
-		try {
-			WebElement tile = WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30);
-			return tile.isEnabled();
-		} catch (TimeoutException e) {
-			System.out.println("unsubscribeTile tile not present: " + e.getMessage());
-			return false;
-		}
-	}
-
+	
+	  private final By unsubscribeTile =
+	  By.xpath("//button[@class='btn-block dashboard-stat red']");
+	  
+	  public boolean isunsubscribeTileEnabled() { try { WebElement tile =
+	  WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30); return
+	  tile.isEnabled(); } catch (TimeoutException e) {
+	  System.out.println("unsubscribeTile tile not present: " + e.getMessage());
+	  return false; } }
+	  
+/*
+ * public void clickUnsubscribeTile() { try { By UnsubscribeTileLocator =
+ * By.xpath("//button[@class='btn-block dashboard-stat red']"); WebElement
+ * excludeTile = WaitUtil.waitForElementClickable(driver,
+ * UnsubscribeTileLocator, 40); excludeTile.click(); } catch (TimeoutException
+ * e) { System.out.
+ * println("Unsubscribe tile count is 0 & button is disabled, cannot click."); }
+ * }
+ */
+	 
+	
+	
+	
 	public void clickUnsubscribeTile() {
-		try {
-			By UnsubscribeTileLocator = By.xpath("//button[@class='btn-block dashboard-stat red']");
-			WebElement excludeTile = WaitUtil.waitForElementClickable(driver, UnsubscribeTileLocator, 40);
-			excludeTile.click();
-		} catch (TimeoutException e) {
-			System.out.println("Unsubscribe tile count is 0 & button is disabled, cannot click.");
-		}
+	    try {
+	        // ✅ Updated locator for better flexibility (in case of dynamic class order)
+	        By unsubscribeTileLocator = By.xpath("//button[contains(@class, 'dashboard-stat') and contains(@class, 'red')]");
+
+	        // ✅ Wait until the element is clickable
+	        WebElement unsubscribeButton = WaitUtil.waitForElementClickable(driver, unsubscribeTileLocator, 40);
+
+	        // ✅ Ensure element is scrolled into view
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", unsubscribeButton);
+
+	        // ✅ Check if element has size (not hidden or collapsed)
+	        if (unsubscribeButton.isDisplayed() && unsubscribeButton.getSize().getHeight() > 0) {
+	            try {
+	                unsubscribeButton.click();
+	                System.out.println("✅ Clicked Unsubscribe tile successfully.");
+	            } catch (ElementNotInteractableException e) {
+	                // 🔁 Fallback to JS click if normal click fails
+	                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", unsubscribeButton);
+	                System.out.println("⚠️ Used JS click fallback for Unsubscribe tile.");
+	            }
+	        } else {
+	            System.out.println("❌ Unsubscribe tile not visible or has no size.");
+	        }
+
+	    } catch (TimeoutException e) {
+	        System.out.println("❌ Unsubscribe tile not clickable (Timeout): " + e.getMessage());
+	    }
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public By getDropdownLocator() {
 		return sortByDropdown;
