@@ -445,20 +445,43 @@ public class ShareLeadsPage {
 		ElementUtil.click(saveButton, driver);
 	}
 
+	/*
+	 * public void clickValidTile() {
+	 * 
+	 * WaitUtil.waitForPageToLoad(driver, 80);
+	 * 
+	 * // Wait for backdrop (overlay/spinner) to disappear
+	 * WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+	 * 
+	 * // Wait for the tile to be visible WaitUtil.waitForVisibility(driver,
+	 * validTile, 60);
+	 * 
+	 * // Now click safely ElementUtil.click(validTile, driver);
+	 * 
+	 * }
+	 */
+	
+	
 	public void clickValidTile() {
+		try {
+			WaitUtil.waitForPageToLoad(driver, 80);
+			WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+			WaitUtil.waitForVisibility(driver, validTile, 60);
 
-		WaitUtil.waitForPageToLoad(driver, 80);
+			WebElement tile = driver.findElement(validTile);
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tile);
+			Thread.sleep(1000);
+			((JavascriptExecutor) driver).executeScript("arguments[0].click();", tile);
 
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, validTile, 60);
-
-		// Now click safely
-		ElementUtil.click(validTile, driver);
-
+			System.out.println("✅ Clicked on Valid tile successfully");
+		} catch (Exception e) {
+			System.out.println("❌ Failed to click Valid tile: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
+	
+	
+	
 
 	public void sortBy(String visibleText) {
 
