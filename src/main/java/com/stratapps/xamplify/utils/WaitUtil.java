@@ -146,6 +146,20 @@ public class WaitUtil {
     }
 
    
+    public static void waitAndClick(WebDriver driver, By locator, By backdropLocator, int timeout) {
+        // Wait for full page load
+        waitForPageToLoad(driver, timeout);
+
+        // Wait for the backdrop/spinner (if any) to disappear
+        waitForInvisibilityOfElement(backdropLocator, driver, timeout);
+
+        // Wait for the target element to become visible
+        waitForVisibility(driver, locator, timeout);
+
+        // Perform safe click
+        ElementUtil.click(locator, driver);
+    }
+
 
 
 }

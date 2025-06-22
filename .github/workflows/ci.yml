@@ -23,6 +23,7 @@ jobs:
     - name: ⚙️ Set up Chrome
       uses: browser-actions/setup-chrome@v1
 
+
     - name: 🧪 Run Maven tests
       run: mvn clean test
 

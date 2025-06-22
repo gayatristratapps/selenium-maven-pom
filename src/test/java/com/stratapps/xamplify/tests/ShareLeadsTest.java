@@ -118,9 +118,10 @@ public class ShareLeadsTest extends BaseTest {
 	public void manageShareleadsDelete() {
 		logger.info("🧪 Starting test: manageShareleadsDelete");
 
-		boolean isDeleted = shareleadsPage.retryClickDeleteIcon();
+		//boolean isDeleted = shareleadsPage.retryClickDeleteIcon();
+	    shareleadsPage.clickDeleteIcon();
 
-		Assert.assertTrue(isDeleted, "❌ Failed to click delete icon after retries.");
+		//Assert.assertTrue(isDeleted, "❌ Failed to click delete icon after retries.");
 		logger.info("✅ Delete icon was clicked successfully.");
 	}
 

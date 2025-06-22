@@ -179,7 +179,6 @@ public class ShareLeadsPage {
 	}
 
 	public void editShareLeadDetails() throws InterruptedException {
-		// Thread.sleep(5000);
 
 		WaitUtil.waitForPageToLoad(driver, 70);
 
@@ -299,8 +298,6 @@ public class ShareLeadsPage {
 		Thread.sleep(2000);
 	}
 
-	
-
 	public void clickCopyIcon() {
 		WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
 		WaitUtil.waitForPresence(driver, copyIcon, 30); // Ensure presence
@@ -317,27 +314,12 @@ public class ShareLeadsPage {
 	}
 
 	public void clickDeleteIcon() {
-		
-		ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
+		 WaitUtil.waitAndClick(driver, DELETE_ICON, backdrop, 60);
+		// ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
 
 	}
-
-	public boolean retryClickDeleteIcon() {
-		for (int i = 0; i < 3; i++) {
-			try {
-				clickDeleteIcon();
-				return true;
-			} catch (Exception e) {
-				System.out.println("Retry " + (i + 1) + ": Failed to click delete icon");
-				try {
-					Thread.sleep(2000);
-				} catch (InterruptedException ignored) {
-				}
-			}
-		}
-		return false;
-	}
-
+	
+	
 	
 
 	private void sleep(long millis) {
@@ -420,12 +402,28 @@ public class ShareLeadsPage {
 		}
 		Thread.sleep(1000); // wait for UI to update
 
-		
 	}
 
-	
 	public void EmailReport() {
-		ActionUtil.clickWithRetry(driver, emailReportButton, 3);
+		
+		
+		
+		// Wait for page load
+	    WaitUtil.waitForPageToLoad(driver, 70);
+
+	    // Wait for backdrop/spinner to disappear
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+	    // Wait until the gear icon (filter selector) is visible
+	    WaitUtil.waitForVisibility(driver, emailReportButton, 60);
+
+	    // Now safely click the element
+	    ElementUtil.click(emailReportButton, driver);
+		
+		
+		
+		
+		//ActionUtil.clickWithRetry(driver, emailReportButton, 3);
 	}
 
 	private By campaignNameInput = By.id("campaignName");
@@ -435,13 +433,15 @@ public class ShareLeadsPage {
 	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
 
 	
-
+	
+	
 	public void gearIconFromTiles() {
-		ActionUtil.clickWithRetry(driver, manageshFilterSelect, 3);
+	    WaitUtil.waitAndClick(driver, manageshFilterSelect, backdrop, 70);
 	}
 
 	
-
+	
+	
 	public void enterListName(String baseName) throws InterruptedException {
 		Thread.sleep(2000); // or replace with WebDriverWait
 		String nameWithTimestamp = baseName + System.currentTimeMillis();
@@ -462,7 +462,6 @@ public class ShareLeadsPage {
 		Thread.sleep(1000);
 		ElementUtil.click(saveButton, driver);
 	}
-
 
 	public void clickValidTile() {
 		try {
@@ -510,8 +509,6 @@ public class ShareLeadsPage {
 			WaitUtil.waitForPageToLoad(driver, 40);
 			// Optionally: Wait for specific element/table to become stale and reload
 		}
-
-		
 
 	}
 
@@ -578,8 +575,6 @@ public class ShareLeadsPage {
 		}
 	}
 
-	
-
 	public void clickUnsubscribeTile() {
 		try {
 			// ✅ Updated locator for better flexibility (in case of dynamic class order)
@@ -614,8 +609,6 @@ public class ShareLeadsPage {
 	public By getDropdownLocator() {
 		return sortByDropdown;
 	}
-
-	
 
 	public void sortAllOptions(WebDriver driver) throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
