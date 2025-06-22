@@ -45,7 +45,7 @@ public class BaseTest {
 
                 // 🔁 CHANGED: Headless mode setup for GitHub Actions
                 ChromeOptions options = new ChromeOptions();
-                options.addArguments("--headless"); // run without UI
+               // options.addArguments("--headless"); // run without UI
                 options.addArguments("--no-sandbox"); // required in CI
                 options.addArguments("--disable-dev-shm-usage"); // prevent shared memory crash
                 options.addArguments("--remote-allow-origins=*"); // optional but prevents newer driver errors

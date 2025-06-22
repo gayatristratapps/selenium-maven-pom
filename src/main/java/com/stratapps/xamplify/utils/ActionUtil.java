@@ -9,25 +9,68 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ActionUtil {
 
-public static void hoverAndClick(WebDriver driver, By hoverLocator, By clickLocator) {
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+	public static void hoverAndClick(WebDriver driver, By hoverLocator, By clickLocator) throws Exception {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60)); // ⏳ increased timeout
 
-    // Wait for hover and click elements to be visible and clickable
-    WebElement hoverElement = wait.until(ExpectedConditions.visibilityOfElementLocated(hoverLocator));
-    WebElement clickElement = wait.until(ExpectedConditions.elementToBeClickable(clickLocator));
+	    try {
+	        // Wait for hover element to be visible
+	        WebElement hoverElement = wait.until(ExpectedConditions.visibilityOfElementLocated(hoverLocator));
 
-    // Perform hover and click using Actions
-    Actions actions = new Actions(driver);
-    actions.moveToElement(hoverElement)
-           .pause(500)
-           .click(clickElement)
-           .build().perform();
-}
+	        // Scroll into view (avoids off-screen issues in headless/CI)
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", hoverElement);
+	        Thread.sleep(500); // short buffer time
 
-public static void scrollInsideElement(WebDriver driver, WebElement element, int pixels) {
-    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += arguments[1];", element, pixels);
-}
+	        // Hover
+	        Actions actions = new Actions(driver);
+	        actions.moveToElement(hoverElement).pause(Duration.ofMillis(500)).perform();
 
+	        // Wait for click element to be clickable
+	        WebElement clickElement = wait.until(ExpectedConditions.elementToBeClickable(clickLocator));
+
+	        // Scroll to and click
+	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", clickElement);
+	        actions.moveToElement(clickElement).click().perform();
+
+	    } catch (TimeoutException e) {
+	        System.out.println("Timed out waiting for hover or click element.");
+	        throw e;
+	    } catch (Exception e) {
+	        System.out.println("Unexpected error in hoverAndClick: " + e.getMessage());
+	        throw e;
+	    }
+	}
+
+	
+	
+	public static void scrollInsideElement(WebDriver driver, WebElement element,int pixels) { 
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollTop += arguments[1];", element, pixels);
+	
+	}
+	
+	
+	
+	
+	
+	/*
+	 * public static void hoverAndClick(WebDriver driver, By hoverLocator, By
+	 * clickLocator) { WebDriverWait wait = new WebDriverWait(driver,
+	 * Duration.ofSeconds(60));
+	 * 
+	 * // Wait for hover and click elements to be visible and clickable WebElement
+	 * hoverElement =
+	 * wait.until(ExpectedConditions.visibilityOfElementLocated(hoverLocator));
+	 * WebElement clickElement =
+	 * wait.until(ExpectedConditions.elementToBeClickable(clickLocator));
+	 * 
+	 * // Perform hover and click using Actions Actions actions = new
+	 * Actions(driver); actions.moveToElement(hoverElement) .pause(500)
+	 * .click(clickElement) .build().perform(); }
+	 * 
+	 * public static void scrollInsideElement(WebDriver driver, WebElement element,
+	 * int pixels) { ((JavascriptExecutor)
+	 * driver).executeScript("arguments[0].scrollTop += arguments[1];", element,
+	 * pixels); }
+	 */
 
 
 // ✅ NEW METHOD: Click with retry logic and better wait handling

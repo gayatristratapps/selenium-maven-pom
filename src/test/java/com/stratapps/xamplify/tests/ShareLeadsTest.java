@@ -105,7 +105,7 @@ public class ShareLeadsTest extends BaseTest {
 	
 	
 	@Test(priority = 6, enabled = false)
-	public void manageShareleadsPublishDownload() throws InterruptedException {
+	public void manageShareleadsPublishDownload() throws Exception {
 		shareleadsPage.navigateToManageShareLeads();
 		shareleadsPage.publishAndDownloadShareLeadFlow();
 	}
@@ -132,7 +132,7 @@ public class ShareLeadsTest extends BaseTest {
 	}
 
 	@Test(priority = 9, enabled = false)
-	public void testManageShareleadsAllTilesFilterSearch() throws InterruptedException {
+	public void testManageShareleadsAllTilesFilterSearch() throws Exception {
 		shareleadsPage.navigateToManageShareLeads();
 		//Thread.sleep(55000); // Optional: Replace with explicit wait if needed
 		shareleadsPage.clickAllTile();

@@ -99,7 +99,7 @@ public class ShareLeadsPage {
 	private By sortByDropdown = By
 			.xpath("//div[contains(@class, 'search-css')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
 
-	public void hoverOnShareLeads() throws InterruptedException {
+	public void hoverOnShareLeads() throws Exception {
 		Thread.sleep(3000);
 		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, ADD_SHARE_LEADS);
 		ElementUtil.sendText(By.id("contactListName"), "AutoSlist" + System.currentTimeMillis(), driver);
@@ -161,7 +161,7 @@ public class ShareLeadsPage {
 		Thread.sleep(500);
 	}
 
-	public void navigateToManageShareLeads() throws InterruptedException {
+	public void navigateToManageShareLeads() throws Exception {
 		Thread.sleep(1000);
 		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, MANAGE_SHARE_LEADS);
 
