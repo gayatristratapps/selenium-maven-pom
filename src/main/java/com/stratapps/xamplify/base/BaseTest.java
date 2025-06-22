@@ -53,6 +53,21 @@ public class BaseTest {
                 options.addArguments("--window-size=1920,1080");
                 
                 
+                
+                
+                
+
+             // ✅ Generate a unique user-data-dir for each session (important for CI)
+             String uniqueProfile = System.getProperty("java.io.tmpdir") + "/chrome-profile-" + System.currentTimeMillis();
+             options.addArguments("--user-data-dir=" + uniqueProfile);
+
+             // ✅ Optional: Run headless only in CI environments
+             if (System.getenv("CI") != null) {
+                 options.addArguments("--headless=new");
+             }
+                
+                
+                
              
                 staticDriver = new ChromeDriver(options); // 🔁 CHANGED
                 logger.debug("Initialized ChromeDriver in headless mode");
