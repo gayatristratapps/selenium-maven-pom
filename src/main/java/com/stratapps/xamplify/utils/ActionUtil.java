@@ -13,6 +13,19 @@ public class ActionUtil {
 	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60)); // ⏳ increased timeout
 
 	    try {
+	    	
+	    	// ✅ Ensure page is loaded (optional but safer if called early)
+	        WaitUtil.waitForPageToLoad(driver, 60);
+	        WaitUtil.waitForInvisibilityOfElement(By.cssSelector(".loader, .backdrop, .spinner"), driver, 60);
+
+	        
+	        
+	        // ✅ First wait for element to be present in the DOM
+	        wait.until(ExpectedConditions.presenceOfElementLocated(hoverLocator));
+
+	        
+	        
+	        
 	        // Wait for hover element to be visible
 	        WebElement hoverElement = wait.until(ExpectedConditions.visibilityOfElementLocated(hoverLocator));
 
@@ -24,16 +37,31 @@ public class ActionUtil {
 	        Actions actions = new Actions(driver);
 	        actions.moveToElement(hoverElement).pause(Duration.ofMillis(500)).perform();
 
+	        
+
+	        // ✅ Wait for clickable target
+	        wait.until(ExpectedConditions.presenceOfElementLocated(clickLocator));
 	        // Wait for click element to be clickable
 	        WebElement clickElement = wait.until(ExpectedConditions.elementToBeClickable(clickLocator));
 
 	        // Scroll to and click
 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", clickElement);
 	        actions.moveToElement(clickElement).click().perform();
+	        
+	     // ✅ Try click via Actions
+	        try {
+	            actions.moveToElement(clickElement).click().perform();
+	        } catch (Exception clickFailure) {
+	            // ⛔ Fallback to JS click if Action fails
+	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", clickElement);
+	        }
 
 	    } catch (TimeoutException e) {
 	        System.out.println("Timed out waiting for hover or click element.");
+	        ScreenshotUtil.captureScreenshot(driver, "hover_click_timeout_" + System.currentTimeMillis());
 	        throw e;
+
+	    
 	    } catch (Exception e) {
 	        System.out.println("Unexpected error in hoverAndClick: " + e.getMessage());
 	        throw e;
