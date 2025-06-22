@@ -34,7 +34,7 @@ public class ShareLeadsPage {
 	}
 
 	// Locators
-	private final By HOVER_SHARE_LEADS = By.xpath("//*[starts-with(text(),'Share Leads')]");
+	private final By HOVER_SHARE_LEADS = By.xpath("//span[@class='title' and normalize-space()='Share Leads']");
 	private final By ADD_SHARE_LEADS = By.xpath("//span[normalize-space()='Add Share Leads']");
 	private final By MANAGE_SHARE_LEADS = By.xpath("//span[normalize-space()='Manage Share Leads']");
 	private final By SH_ONE_AT_TIME = By.xpath("//span[normalize-space()=\"One at a Time\"]");
