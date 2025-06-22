@@ -47,9 +47,13 @@ public class BaseTest {
                 ChromeOptions options = new ChromeOptions();
                // options.addArguments("--headless"); // run without UI
                 options.addArguments("--no-sandbox"); // required in CI
-                options.addArguments("--disable-dev-shm-usage"); // prevent shared memory crash
-                options.addArguments("--remote-allow-origins=*"); // optional but prevents newer driver errors
-
+                options.addArguments("--disable-dev-shm-usage");// prevent shared memory crash
+                options.addArguments("--remote-allow-origins=*");// optional but prevents newer driver errors
+                options.addArguments("--disable-gpu");
+                options.addArguments("--window-size=1920,1080");
+                
+                
+             
                 staticDriver = new ChromeDriver(options); // 🔁 CHANGED
                 logger.debug("Initialized ChromeDriver in headless mode");
 
