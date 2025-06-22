@@ -109,7 +109,11 @@ public class TestListener implements ITestListener, ISuiteListener {
             e.printStackTrace();
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+       // SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+
         String startTimeStr = sdf.format(new Date(suiteStartTime));
         String endTimeStr = sdf.format(new Date(suiteEndTime));
         long durationMillis = suiteEndTime - suiteStartTime;

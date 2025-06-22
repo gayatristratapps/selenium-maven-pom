@@ -14,10 +14,12 @@ public class ActionUtil {
 
 	    try {
 	    	
-	    	// ✅ Ensure page is loaded (optional but safer if called early)
-	        WaitUtil.waitForPageToLoad(driver, 60);
-	        WaitUtil.waitForInvisibilityOfElement(By.cssSelector(".loader, .backdrop, .spinner"), driver, 60);
-
+			/*
+			 * // ✅ Ensure page is loaded (optional but safer if called early)
+			 * WaitUtil.waitForPageToLoad(driver, 60);
+			 * WaitUtil.waitForInvisibilityOfElement(By.
+			 * cssSelector(".loader, .backdrop, .spinner"), driver, 60);
+			 */
 	        
 	        
 	        // ✅ First wait for element to be present in the DOM
@@ -29,10 +31,12 @@ public class ActionUtil {
 	        // Wait for hover element to be visible
 	        WebElement hoverElement = wait.until(ExpectedConditions.visibilityOfElementLocated(hoverLocator));
 
-	        // Scroll into view (avoids off-screen issues in headless/CI)
-	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", hoverElement);
-	        Thread.sleep(500); // short buffer time
-
+			/*
+			 * // Scroll into view (avoids off-screen issues in headless/CI)
+			 * ((JavascriptExecutor)
+			 * driver).executeScript("arguments[0].scrollIntoView(true);", hoverElement);
+			 * Thread.sleep(500); // short buffer time
+			 */
 	        // Hover
 	        Actions actions = new Actions(driver);
 	        actions.moveToElement(hoverElement).pause(Duration.ofMillis(500)).perform();
@@ -48,14 +52,13 @@ public class ActionUtil {
 	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", clickElement);
 	        actions.moveToElement(clickElement).click().perform();
 	        
-	     // ✅ Try click via Actions
-	        try {
-	            actions.moveToElement(clickElement).click().perform();
-	        } catch (Exception clickFailure) {
-	            // ⛔ Fallback to JS click if Action fails
-	            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", clickElement);
-	        }
-
+			/*
+			 * // ✅ Try click via Actions try {
+			 * actions.moveToElement(clickElement).click().perform(); } catch (Exception
+			 * clickFailure) { // ⛔ Fallback to JS click if Action fails
+			 * ((JavascriptExecutor) driver).executeScript("arguments[0].click();",
+			 * clickElement); }
+			 */
 	    } catch (TimeoutException e) {
 	        System.out.println("Timed out waiting for hover or click element.");
 	        ScreenshotUtil.captureScreenshot(driver, "hover_click_timeout_" + System.currentTimeMillis());

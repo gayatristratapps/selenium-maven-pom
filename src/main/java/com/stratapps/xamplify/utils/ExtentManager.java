@@ -1,5 +1,7 @@
 package com.stratapps.xamplify.utils;
 
+import java.util.TimeZone;
+
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 
@@ -9,6 +11,8 @@ public class ExtentManager {
     private static String reportPath;
 
     public static ExtentReports getInstance() {
+    	TimeZone.setDefault(TimeZone.getTimeZone("Asia/Kolkata"));
+
         if (extent == null) {
             // Set report path
             reportPath = System.getProperty("user.dir") + "/test-output/ExtentReport.html";
