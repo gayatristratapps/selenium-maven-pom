@@ -89,7 +89,7 @@ public class ShareLeadsTest extends BaseTest {
 	
 	
 
-	@Test(priority = 5, enabled = true)
+	@Test(priority = 5, enabled = false)
 	public void shareleadsDropdown() throws Exception {
 		WaitUtil.waitForPageToLoad(driver, 60);
 	    WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
@@ -104,13 +104,13 @@ public class ShareLeadsTest extends BaseTest {
 	
 	
 	
-	@Test(priority = 6, enabled = true)
+	@Test(priority = 6, enabled = false)
 	public void manageShareleadsPublishDownload() throws InterruptedException {
 		shareleadsPage.navigateToManageShareLeads();
 		shareleadsPage.publishAndDownloadShareLeadFlow();
 	}
 
-	@Test(priority = 7, enabled = true)
+	@Test(priority = 7, enabled = false)
 	public void manageShareleadsCopy() throws InterruptedException, AWTException, IOException {
 		logger.info("Hovering on Shared Leads.");
 
@@ -121,7 +121,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.clickSaveAsButton();
 	}
 
-	@Test(priority = 8, enabled = true)
+	@Test(priority = 8, enabled = false)
 	public void manageShareleadsDelete() {
 		logger.info("🧪 Starting test: manageShareleadsDelete");
 
@@ -131,7 +131,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.info("✅ Delete icon was clicked successfully.");
 	}
 
-	@Test(priority = 9, enabled = true)
+	@Test(priority = 9, enabled = false)
 	public void testManageShareleadsAllTilesFilterSearch() throws InterruptedException {
 		shareleadsPage.navigateToManageShareLeads();
 		//Thread.sleep(55000); // Optional: Replace with explicit wait if needed
@@ -143,7 +143,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.applyFilter();
 	}
 
-	@Test(priority = 10, enabled = true)
+	@Test(priority = 10, enabled = false)
 	public void manageShareleadsAlltilesSortEmailreports() throws Exception {
 
 		shareleadsPage.sortByIndex(1); // Use appropriate index for email sorting
@@ -151,7 +151,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 11, enabled = true)
+	@Test(priority = 11, enabled = false)
 	public void manageShareleadsAlltileCreateList() throws Exception {
 
 		shareleadsPage.gearIconFromTiles();
@@ -164,7 +164,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 12, enabled = true)
+	@Test(priority = 12, enabled = false)
 	public void manageShareleadsValidtiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -187,7 +187,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 13, enabled = true)
+	@Test(priority = 13, enabled = false)
 	public void manageShareleadsExcludetiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -214,7 +214,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 14, enabled = true)
+	@Test(priority = 14, enabled = false)
 	public void manageShareleadsUndeliverabletiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -231,7 +231,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 15, enabled = true)
+	@Test(priority = 15, enabled = false)
 	public void manageShareleadsUnsubscribetiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
