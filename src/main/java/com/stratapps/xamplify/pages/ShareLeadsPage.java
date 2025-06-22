@@ -73,10 +73,11 @@ public class ShareLeadsPage {
 			"//div[contains(@class,'modal-footer')]//button[.//span[contains(normalize-space(), 'Save changes')]]");
 
 	private By confirmDeleteYes = By.xpath("//button[normalize-space()='Yes']");
-	//private final By deleteIconLocator = By.xpath("(//i[contains(@class,'fa-trash')])[1]");
+	// private final By deleteIconLocator =
+	// By.xpath("(//i[contains(@class,'fa-trash')])[1]");
 
-	
-	private final By deleteIconLocator=By.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class,'fa-trash')]");
+	private final By deleteIconLocator = By
+			.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class,'fa-trash')]");
 
 	private By allTile = By.xpath("//div[contains(text(),'All')]");
 
@@ -87,9 +88,9 @@ public class ShareLeadsPage {
 	private By submitButton = By.xpath("//button[contains(text(),'Submit')]");
 
 	private By searchInput = By.xpath("//input[@placeholder='Search']");
-    private final By emailReportButton = By.xpath("//i[contains(@class, 'fa-file') and contains(@class, 'IconCustomization')]");
+	private final By emailReportButton = By
+			.xpath("//i[contains(@class, 'fa-file') and contains(@class, 'IconCustomization')]");
 
-	
 	private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
 	private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
 	private By deleteButton = By.id("delete_button");
@@ -98,7 +99,7 @@ public class ShareLeadsPage {
 
 	private By backdrop = By.cssSelector("div.backdrop");
 
-	//private By exportExcelButton = By.id("export-excel");
+	// private By exportExcelButton = By.id("export-excel");
 
 	private By AllTilesortByDropdown = By
 			.xpath("//div[contains(@class, 'sortingContacts')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
@@ -108,7 +109,10 @@ public class ShareLeadsPage {
 
 	public void hoverOnShareLeads() throws Exception {
 		Thread.sleep(3000);
-		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, ADD_SHARE_LEADS);
+
+		ActionUtil.hover(driver, HOVER_SHARE_LEADS); // hover only
+		ActionUtil.hoverAndClick(driver, ADD_SHARE_LEADS); // click after hover
+
 		ElementUtil.sendText(By.id("contactListName"), "AutoSlist" + System.currentTimeMillis(), driver);
 	}
 
@@ -170,7 +174,10 @@ public class ShareLeadsPage {
 
 	public void navigateToManageShareLeads() throws Exception {
 		Thread.sleep(1000);
-		ActionUtil.hoverAndClick(driver, HOVER_SHARE_LEADS, MANAGE_SHARE_LEADS);
+		
+		ActionUtil.hover(driver, HOVER_SHARE_LEADS); // hover only
+		ActionUtil.hoverAndClick(driver, MANAGE_SHARE_LEADS); // click after hover
+
 
 	}
 
@@ -299,30 +306,14 @@ public class ShareLeadsPage {
 	 * // Actions public void clickCopyIcon() {
 	 * wait.until(ExpectedConditions.elementToBeClickable(copyIcon)).click(); }
 	 */
-	
-	
+
 	public void clickCopyIcon() {
-	    WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
-	    WaitUtil.waitForPresence(driver, copyIcon, 30); // Ensure presence
-	    WaitUtil.waitForVisibility(driver, copyIcon, 30); // Ensure visible
-	    WaitUtil.waitForElementClickable(driver, copyIcon, 30).click(); // Ensure clickable
+		WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
+		WaitUtil.waitForPresence(driver, copyIcon, 30); // Ensure presence
+		WaitUtil.waitForVisibility(driver, copyIcon, 30); // Ensure visible
+		WaitUtil.waitForElementClickable(driver, copyIcon, 30).click(); // Ensure clickable
 	}
 
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void clickSaveAsButton() {
 		wait.until(ExpectedConditions.elementToBeClickable(saveChangesButton)).click();
 	}
@@ -331,10 +322,6 @@ public class ShareLeadsPage {
 		wait.until(ExpectedConditions.elementToBeClickable(confirmDeleteYes)).click();
 	}
 
-	
-	
-	
-	
 	public void clickDeleteIcon() {
 		/*
 		 * WaitUtil.waitForLoaderToDisappear(driver, 30); // wait for loader
@@ -347,35 +334,27 @@ public class ShareLeadsPage {
 		 * delete.click(); } catch (Exception e) { throw new
 		 * RuntimeException("Failed to click Delete icon", e); }
 		 */
-	    
-	    
-	    
-	    ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
+
+		ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
 
 	}
 
-	
 	public boolean retryClickDeleteIcon() {
-	    for (int i = 0; i < 3; i++) {
-	        try {
-	            clickDeleteIcon();
-	            return true;
-	        } catch (Exception e) {
-	            System.out.println("Retry " + (i + 1) + ": Failed to click delete icon");
-	            try {
-	                Thread.sleep(2000);
-	            } catch (InterruptedException ignored) {}
-	        }
-	    }
-	    return false;
+		for (int i = 0; i < 3; i++) {
+			try {
+				clickDeleteIcon();
+				return true;
+			} catch (Exception e) {
+				System.out.println("Retry " + (i + 1) + ": Failed to click delete icon");
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException ignored) {
+				}
+			}
+		}
+		return false;
 	}
 
-	
-	
-	
-	
-	
-	
 	/*
 	 * public boolean clickDeleteIconWithRetry() { WebDriverWait wait = new
 	 * WebDriverWait(driver, Duration.ofSeconds(60));
@@ -482,25 +461,16 @@ public class ShareLeadsPage {
 		// ElementUtil.click(emailReportButton, driver);
 	}
 
-
-	
 	/*
 	 * public void EmailReport() { try { WaitUtil.waitForVisibility(driver,
 	 * emailReportButton, 40); ElementUtil.click(emailReportButton, driver); } catch
 	 * (Exception e) { System.out.println("❌ Email report icon not clickable: " +
 	 * e.getMessage()); } }
 	 */
-	 
-	 public void EmailReport() {
-		    ActionUtil.clickWithRetry(driver, emailReportButton, 3);
-		}
-	 
-	 
-	 
-	 
-	 
-	 
-	 
+
+	public void EmailReport() {
+		ActionUtil.clickWithRetry(driver, emailReportButton, 3);
+	}
 
 	private By campaignNameInput = By.id("campaignName");
 	private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
@@ -516,43 +486,30 @@ public class ShareLeadsPage {
 	 * System.out.println("❌ Unable to locate or click checkAllExistingContacts: " +
 	 * e.getMessage()); } }
 	 */
-	  
-	  
-	  
-	  public void gearIconFromTiles() {
-		    ActionUtil.clickWithRetry(driver, manageshFilterSelect, 3);
-		}
-	
-	
-	
-		/*
-		 * 
-		 * public void enterListName(String baseName) throws InterruptedException {
-		 * Thread.sleep(2000); baseName = "test"; String nameWithTimestamp = baseName +
-		 * System.currentTimeMillis(); ElementUtil.sendTextdriver(driver,
-		 * campaignNameInput, nameWithTimestamp); }
-		 */
 
-	
-	public void enterListName(String baseName) throws InterruptedException {
-	    Thread.sleep(2000); // or replace with WebDriverWait
-	    String nameWithTimestamp = baseName + System.currentTimeMillis();
-
-	    // 🔽 FIXED: Ensure visibility first
-	    WaitUtil.waitForVisibility(driver, campaignNameInput, 30);
-	    WaitUtil.waitForPresence(driver, campaignNameInput, 30);
-
-	    ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
+	public void gearIconFromTiles() {
+		ActionUtil.clickWithRetry(driver, manageshFilterSelect, 3);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	 * 
+	 * public void enterListName(String baseName) throws InterruptedException {
+	 * Thread.sleep(2000); baseName = "test"; String nameWithTimestamp = baseName +
+	 * System.currentTimeMillis(); ElementUtil.sendTextdriver(driver,
+	 * campaignNameInput, nameWithTimestamp); }
+	 */
+
+	public void enterListName(String baseName) throws InterruptedException {
+		Thread.sleep(2000); // or replace with WebDriverWait
+		String nameWithTimestamp = baseName + System.currentTimeMillis();
+
+		// 🔽 FIXED: Ensure visibility first
+		WaitUtil.waitForVisibility(driver, campaignNameInput, 30);
+		WaitUtil.waitForPresence(driver, campaignNameInput, 30);
+
+		ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
+	}
+
 	public void selectLegalBasis(String option) {
 		ElementUtil.sendTextdriver(driver, legalBasisDropdown, option);
 		ElementUtil.sendKeydriver(driver, legalBasisDropdown, Keys.ENTER);
@@ -578,8 +535,7 @@ public class ShareLeadsPage {
 	 * 
 	 * }
 	 */
-	
-	
+
 	public void clickValidTile() {
 		try {
 			WaitUtil.waitForPageToLoad(driver, 80);
@@ -597,9 +553,6 @@ public class ShareLeadsPage {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
 
 	public void sortBy(String visibleText) {
 
@@ -698,72 +651,58 @@ public class ShareLeadsPage {
 		}
 	}
 
-	
-	  private final By unsubscribeTile =
-	  By.xpath("//button[@class='btn-block dashboard-stat red']");
-	  
-	  public boolean isunsubscribeTileEnabled() { try { WebElement tile =
-	  WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30); return
-	  tile.isEnabled(); } catch (TimeoutException e) {
-	  System.out.println("unsubscribeTile tile not present: " + e.getMessage());
-	  return false; } }
-	  
-/*
- * public void clickUnsubscribeTile() { try { By UnsubscribeTileLocator =
- * By.xpath("//button[@class='btn-block dashboard-stat red']"); WebElement
- * excludeTile = WaitUtil.waitForElementClickable(driver,
- * UnsubscribeTileLocator, 40); excludeTile.click(); } catch (TimeoutException
- * e) { System.out.
- * println("Unsubscribe tile count is 0 & button is disabled, cannot click."); }
- * }
- */
-	 
-	
-	
-	
-	public void clickUnsubscribeTile() {
-	    try {
-	        // ✅ Updated locator for better flexibility (in case of dynamic class order)
-	        By unsubscribeTileLocator = By.xpath("//button[contains(@class, 'dashboard-stat') and contains(@class, 'red')]");
+	private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
 
-	        // ✅ Wait until the element is clickable
-	        WebElement unsubscribeButton = WaitUtil.waitForElementClickable(driver, unsubscribeTileLocator, 40);
-
-	        // ✅ Ensure element is scrolled into view
-	        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", unsubscribeButton);
-
-	        // ✅ Check if element has size (not hidden or collapsed)
-	        if (unsubscribeButton.isDisplayed() && unsubscribeButton.getSize().getHeight() > 0) {
-	            try {
-	                unsubscribeButton.click();
-	                System.out.println("✅ Clicked Unsubscribe tile successfully.");
-	            } catch (ElementNotInteractableException e) {
-	                // 🔁 Fallback to JS click if normal click fails
-	                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", unsubscribeButton);
-	                System.out.println("⚠️ Used JS click fallback for Unsubscribe tile.");
-	            }
-	        } else {
-	            System.out.println("❌ Unsubscribe tile not visible or has no size.");
-	        }
-
-	    } catch (TimeoutException e) {
-	        System.out.println("❌ Unsubscribe tile not clickable (Timeout): " + e.getMessage());
-	    }
+	public boolean isunsubscribeTileEnabled() {
+		try {
+			WebElement tile = WaitUtil.waitForElementPresent(driver, unsubscribeTile, 30);
+			return tile.isEnabled();
+		} catch (TimeoutException e) {
+			System.out.println("unsubscribeTile tile not present: " + e.getMessage());
+			return false;
+		}
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	 * public void clickUnsubscribeTile() { try { By UnsubscribeTileLocator =
+	 * By.xpath("//button[@class='btn-block dashboard-stat red']"); WebElement
+	 * excludeTile = WaitUtil.waitForElementClickable(driver,
+	 * UnsubscribeTileLocator, 40); excludeTile.click(); } catch (TimeoutException
+	 * e) { System.out.
+	 * println("Unsubscribe tile count is 0 & button is disabled, cannot click."); }
+	 * }
+	 */
+
+	public void clickUnsubscribeTile() {
+		try {
+			// ✅ Updated locator for better flexibility (in case of dynamic class order)
+			By unsubscribeTileLocator = By
+					.xpath("//button[contains(@class, 'dashboard-stat') and contains(@class, 'red')]");
+
+			// ✅ Wait until the element is clickable
+			WebElement unsubscribeButton = WaitUtil.waitForElementClickable(driver, unsubscribeTileLocator, 40);
+
+			// ✅ Ensure element is scrolled into view
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", unsubscribeButton);
+
+			// ✅ Check if element has size (not hidden or collapsed)
+			if (unsubscribeButton.isDisplayed() && unsubscribeButton.getSize().getHeight() > 0) {
+				try {
+					unsubscribeButton.click();
+					System.out.println("✅ Clicked Unsubscribe tile successfully.");
+				} catch (ElementNotInteractableException e) {
+					// 🔁 Fallback to JS click if normal click fails
+					((JavascriptExecutor) driver).executeScript("arguments[0].click();", unsubscribeButton);
+					System.out.println("⚠️ Used JS click fallback for Unsubscribe tile.");
+				}
+			} else {
+				System.out.println("❌ Unsubscribe tile not visible or has no size.");
+			}
+
+		} catch (TimeoutException e) {
+			System.out.println("❌ Unsubscribe tile not clickable (Timeout): " + e.getMessage());
+		}
+	}
 
 	public By getDropdownLocator() {
 		return sortByDropdown;

@@ -16,8 +16,8 @@ import com.stratapps.xamplify.base.BaseTest;
 import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.pages.ShareLeadsPage;
 import com.stratapps.xamplify.utils.ConfigReader;
-import com.stratapps.xamplify.utils.ScreenshotUtil;
 import com.stratapps.xamplify.utils.WaitUtil;
+import com.stratapps.xamplify.utils.ScreenshotUtil;
 
 public class ShareLeadsTest extends BaseTest {
 
@@ -63,7 +63,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	@Test(priority = 3, enabled = true)
 	public void manageshareleadsEditAddsharelead() throws Exception {
-		
+
 		shareleadsPage.navigateToManageShareLeads();
 
 		// Edit share lead details
@@ -71,43 +71,32 @@ public class ShareLeadsTest extends BaseTest {
 
 		// Upload CSV data
 		shareleadsPage.uploadCSVLeads();
-		
+
 		shareleadsPage.saveEditedLeadAndConfirm();
 
 		logger.debug("Done creation sharelead using edit option through csv");
 	}
 
-	@Test(priority = 4,enabled = true)
-	
+	@Test(priority = 4, enabled = true)
+
 	public void testSearchShareLeads() throws Exception {
-	    shareleadsPage.navigateToManageShareLeads();
-	    shareleadsPage.searchShareLead("Auto");
+		shareleadsPage.navigateToManageShareLeads();
+		shareleadsPage.searchShareLead("Auto");
 
-	    // Wait for loader to disappear after search
-	    WaitUtil.waitForLoaderToDisappear(driver, 40);
+		// Wait for loader to disappear after search
+		WaitUtil.waitForLoaderToDisappear(driver, 40);
 
-	   
-	
-	
 	}
-	
-	
 
 	@Test(priority = 5, enabled = false)
 	public void shareleadsDropdown() throws Exception {
 		WaitUtil.waitForPageToLoad(driver, 60);
-	    WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
+		WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
 
-	    shareleadsPage.sortAllOptions(driver);
+		shareleadsPage.sortAllOptions(driver);
 
-	 
-		
-			
 	}
 
-	
-	
-	
 	@Test(priority = 6, enabled = false)
 	public void manageShareleadsPublishDownload() throws Exception {
 		shareleadsPage.navigateToManageShareLeads();
@@ -138,7 +127,7 @@ public class ShareLeadsTest extends BaseTest {
 	@Test(priority = 9, enabled = false)
 	public void testManageShareleadsAllTilesFilterSearch() throws Exception {
 		shareleadsPage.navigateToManageShareLeads();
-		//Thread.sleep(55000); // Optional: Replace with explicit wait if needed
+		// Thread.sleep(55000); // Optional: Replace with explicit wait if needed
 		shareleadsPage.clickAllTile();
 		shareleadsPage.clickFilterIcon();
 		shareleadsPage.selectFieldName("Job Title");
@@ -182,10 +171,10 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.applyFilter();
 
 		shareleadsPage.EmailReport();
-		
+
 		shareleadsPage.sortAllTileOptions(driver);
 
-		//shareleadsPage.sortBy("Email (A-Z)");
+		// shareleadsPage.sortBy("Email (A-Z)");
 
 		shareleadsPage.searchList("Test1");
 
@@ -209,7 +198,6 @@ public class ShareLeadsTest extends BaseTest {
 			shareleadsPage.EmailReport();
 
 			shareleadsPage.sortAllTileOptions(driver);
-
 
 			shareleadsPage.searchList("Test1");
 
