@@ -6,7 +6,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions; // 🔁 CHANGED
@@ -42,48 +42,38 @@ public class BaseTest {
 
             if (browser.equalsIgnoreCase("chrome")) {
                 WebDriverManager.chromedriver().setup();
+               
 
-                // 🔁 CHANGED: Headless mode setup for GitHub Actions
                 ChromeOptions options = new ChromeOptions();
-               // options.addArguments("--headless"); // run without UI
-                options.addArguments("--no-sandbox"); // required in CI
-                options.addArguments("--disable-dev-shm-usage");// prevent shared memory crash
+                options.addArguments("--no-sandbox");
+                options.addArguments("--disable-dev-shm-usage");// prevent shared memory
                 options.addArguments("--remote-allow-origins=*");// optional but prevents newer driver errors
                 options.addArguments("--disable-gpu");
-                options.addArguments("--window-size=1920,1080");
-                
-                
-                
-                
-                
+                options.addArguments("--start-maximized");
+                options.addArguments("--force-device-scale-factor=1");
 
-             // ✅ Generate a unique user-data-dir for each session (important for CI)
-             String uniqueProfile = System.getProperty("java.io.tmpdir") + "/chrome-profile-" + System.currentTimeMillis();
-             options.addArguments("--user-data-dir=" + uniqueProfile);
+                // ✅ Run headless only in CI
+                if (System.getenv("CI") != null) {
+                    options.addArguments("--headless=new");
+                }
 
-             // ✅ Optional: Run headless only in CI environments
-             if (System.getenv("CI") != null) {
-                 options.addArguments("--headless=new");
-             }
-                
-                
-                
-             
-                staticDriver = new ChromeDriver(options); // 🔁 CHANGED
-                logger.debug("Initialized ChromeDriver in headless mode");
+                // ✅ Isolate user profile in CI
+                String uniqueProfile = System.getProperty("java.io.tmpdir") + "/chrome-profile-" + System.currentTimeMillis();
+                options.addArguments("--user-data-dir=" + uniqueProfile);
 
-            } else if (browser.equalsIgnoreCase("firefox")) {
-                WebDriverManager.firefoxdriver().setup();
-                staticDriver = new FirefoxDriver();
-                logger.debug("Initialized FirefoxDriver");
-            } else {
-                logger.error("Unsupported browser: {}", browser);
-                throw new IllegalArgumentException("Unsupported browser: " + browser);
+                // ✅ Initialize driver
+                staticDriver = new ChromeDriver(options);
+                logger.debug("Initialized ChromeDriver");
+
+                // ✅ Set window size AFTER driver init
+            
+                staticDriver.manage().window().setSize(new Dimension(1920, 1080));
+                logger.info("Browser window maximized");
+
             }
-
-            staticDriver.manage().window().maximize();
-            logger.info("Browser window maximized");
-
+                
+          
+      
             String url = ConfigReader.getProperty("url");
             if (url == null) {
                 throw new IllegalStateException("URL property is missing in config.properties");
