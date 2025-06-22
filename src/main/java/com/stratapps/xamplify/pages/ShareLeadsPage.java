@@ -99,8 +99,6 @@ public class ShareLeadsPage {
 
 	private By backdrop = By.cssSelector("div.backdrop");
 
-	// private By exportExcelButton = By.id("export-excel");
-
 	private By AllTilesortByDropdown = By
 			.xpath("//div[contains(@class, 'sortingContacts')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
 
@@ -174,10 +172,9 @@ public class ShareLeadsPage {
 
 	public void navigateToManageShareLeads() throws Exception {
 		Thread.sleep(1000);
-		
+
 		ActionUtil.hover(driver, HOVER_SHARE_LEADS); // hover only
 		ActionUtil.hoverAndClick(driver, MANAGE_SHARE_LEADS); // click after hover
-
 
 	}
 
@@ -302,10 +299,7 @@ public class ShareLeadsPage {
 		Thread.sleep(2000);
 	}
 
-	/*
-	 * // Actions public void clickCopyIcon() {
-	 * wait.until(ExpectedConditions.elementToBeClickable(copyIcon)).click(); }
-	 */
+	
 
 	public void clickCopyIcon() {
 		WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
@@ -323,18 +317,7 @@ public class ShareLeadsPage {
 	}
 
 	public void clickDeleteIcon() {
-		/*
-		 * WaitUtil.waitForLoaderToDisappear(driver, 30); // wait for loader
-		 * WaitUtil.waitForPresence(driver, deleteIconLocator, 30);
-		 * WaitUtil.waitForVisibility(driver, deleteIconLocator, 30);
-		 * 
-		 * try { WebElement delete = WaitUtil.waitForElementClickable(driver,
-		 * deleteIconLocator, 30); ((JavascriptExecutor)
-		 * driver).executeScript("arguments[0].scrollIntoView(true);", delete);
-		 * delete.click(); } catch (Exception e) { throw new
-		 * RuntimeException("Failed to click Delete icon", e); }
-		 */
-
+		
 		ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
 
 	}
@@ -355,28 +338,7 @@ public class ShareLeadsPage {
 		return false;
 	}
 
-	/*
-	 * public boolean clickDeleteIconWithRetry() { WebDriverWait wait = new
-	 * WebDriverWait(driver, Duration.ofSeconds(60));
-	 * 
-	 * for (int attempt = 1; attempt <= 5; attempt++) { try { WebElement deleteIcon
-	 * = wait.until(ExpectedConditions.elementToBeClickable(deleteIconLocator));
-	 * deleteIcon.click(); System.out.println("✅ Clicked delete icon on attempt " +
-	 * attempt);
-	 * 
-	 * ElementUtil.click(DELETE_CONFIRM, driver);
-	 * 
-	 * System.out.println("✅ Delete icon clicked successfully on attempt " +
-	 * attempt); return true; } catch (StaleElementReferenceException e) {
-	 * System.out.println("⚠️ StaleElementReferenceException on attempt " +
-	 * attempt); sleep(1000); } catch (TimeoutException e) {
-	 * System.out.println("⏳ Timeout waiting for delete icon on attempt " +
-	 * attempt); break; } catch (Exception e) {
-	 * System.out.println("❌ Exception during delete icon click: " +
-	 * e.getMessage()); break; } }
-	 * 
-	 * return false; }
-	 */
+	
 
 	private void sleep(long millis) {
 		try {
@@ -458,16 +420,10 @@ public class ShareLeadsPage {
 		}
 		Thread.sleep(1000); // wait for UI to update
 
-		// ElementUtil.click(emailReportButton, driver);
+		
 	}
 
-	/*
-	 * public void EmailReport() { try { WaitUtil.waitForVisibility(driver,
-	 * emailReportButton, 40); ElementUtil.click(emailReportButton, driver); } catch
-	 * (Exception e) { System.out.println("❌ Email report icon not clickable: " +
-	 * e.getMessage()); } }
-	 */
-
+	
 	public void EmailReport() {
 		ActionUtil.clickWithRetry(driver, emailReportButton, 3);
 	}
@@ -478,26 +434,13 @@ public class ShareLeadsPage {
 
 	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
 
-	/*
-	 * public void gearIconFromTiles() { try { WaitUtil.waitForVisibility(driver,
-	 * manageshFilterSelect, 40); ElementUtil.click(manageshFilterSelect, driver);
-	 * ElementUtil.click(gearIcon, driver); ElementUtil.click(newlist, driver); }
-	 * catch (Exception e) {
-	 * System.out.println("❌ Unable to locate or click checkAllExistingContacts: " +
-	 * e.getMessage()); } }
-	 */
+	
 
 	public void gearIconFromTiles() {
 		ActionUtil.clickWithRetry(driver, manageshFilterSelect, 3);
 	}
 
-	/*
-	 * 
-	 * public void enterListName(String baseName) throws InterruptedException {
-	 * Thread.sleep(2000); baseName = "test"; String nameWithTimestamp = baseName +
-	 * System.currentTimeMillis(); ElementUtil.sendTextdriver(driver,
-	 * campaignNameInput, nameWithTimestamp); }
-	 */
+	
 
 	public void enterListName(String baseName) throws InterruptedException {
 		Thread.sleep(2000); // or replace with WebDriverWait
@@ -520,21 +463,6 @@ public class ShareLeadsPage {
 		ElementUtil.click(saveButton, driver);
 	}
 
-	/*
-	 * public void clickValidTile() {
-	 * 
-	 * WaitUtil.waitForPageToLoad(driver, 80);
-	 * 
-	 * // Wait for backdrop (overlay/spinner) to disappear
-	 * WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-	 * 
-	 * // Wait for the tile to be visible WaitUtil.waitForVisibility(driver,
-	 * validTile, 60);
-	 * 
-	 * // Now click safely ElementUtil.click(validTile, driver);
-	 * 
-	 * }
-	 */
 
 	public void clickValidTile() {
 		try {
@@ -583,20 +511,7 @@ public class ShareLeadsPage {
 			// Optionally: Wait for specific element/table to become stale and reload
 		}
 
-		/*
-		 * WaitUtil.waitForVisibility(driver, sortByDropdown, 50); WebElement dropdown =
-		 * driver.findElement(sortByDropdown); Select select = new Select(dropdown);
-		 * //select.selectByVisibleText(visibleText);
-		 * 
-		 * List<WebElement> options = select.getOptions(); for (WebElement option :
-		 * options) { String optionText = option.getText().trim();
-		 * 
-		 * 
-		 * System.out.println("Selecting sort option: " + optionText);
-		 * select.selectByVisibleText(optionText);
-		 * 
-		 * }
-		 */
+		
 
 	}
 
@@ -663,15 +578,7 @@ public class ShareLeadsPage {
 		}
 	}
 
-	/*
-	 * public void clickUnsubscribeTile() { try { By UnsubscribeTileLocator =
-	 * By.xpath("//button[@class='btn-block dashboard-stat red']"); WebElement
-	 * excludeTile = WaitUtil.waitForElementClickable(driver,
-	 * UnsubscribeTileLocator, 40); excludeTile.click(); } catch (TimeoutException
-	 * e) { System.out.
-	 * println("Unsubscribe tile count is 0 & button is disabled, cannot click."); }
-	 * }
-	 */
+	
 
 	public void clickUnsubscribeTile() {
 		try {
@@ -708,28 +615,7 @@ public class ShareLeadsPage {
 		return sortByDropdown;
 	}
 
-	/*
-	 * public void sortAllOptions(WebDriver driver) { WebDriverWait wait = new
-	 * WebDriverWait(driver, Duration.ofSeconds(60));
-	 * wait.until(ExpectedConditions.visibilityOfElementLocated(sortByDropdown));
-	 * 
-	 * Select dropdown = new Select(driver.findElement(sortByDropdown));
-	 * List<WebElement> options = dropdown.getOptions();
-	 * 
-	 * for (int i = 1; i < options.size(); i++) { // skip "Sort by"
-	 * dropdown.selectByIndex(i);
-	 * 
-	 * // Optional: log selected System.out.println("Selected: " +
-	 * dropdown.getFirstSelectedOption().getText());
-	 * 
-	 * // Optional: wait for data refresh WaitUtil.waitForLoaderToDisappear(driver,
-	 * 25);
-	 * 
-	 * try { Thread.sleep(1000); // short UI settle time } catch
-	 * (InterruptedException e) { e.printStackTrace(); } }
-	 * 
-	 * }
-	 */
+	
 
 	public void sortAllOptions(WebDriver driver) throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
