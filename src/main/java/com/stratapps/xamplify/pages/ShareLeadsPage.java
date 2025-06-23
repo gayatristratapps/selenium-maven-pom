@@ -299,11 +299,26 @@ public class ShareLeadsPage {
 	}
 
 	public void clickCopyIcon() {
-		WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
-		WaitUtil.waitForPresence(driver, copyIcon, 30); // Ensure presence
-		WaitUtil.waitForVisibility(driver, copyIcon, 30); // Ensure visible
-		WaitUtil.waitForElementClickable(driver, copyIcon, 30).click(); // Ensure clickable
-	}
+		
+		
+		WaitUtil.waitForPageToLoad(driver, 80);
+
+		// Wait for backdrop (overlay/spinner) to disappear
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+		// Wait for the tile to be visible
+		WaitUtil.waitForVisibility(driver, copyIcon, 60);
+
+		ElementUtil.click(copyIcon, driver);
+		
+		
+		/*
+		 * WaitUtil.waitForLoaderToDisappear(driver, 40); // Wait for any loaders
+		 * WaitUtil.waitForPresence(driver, copyIcon, 30); // Ensure presence
+		 * WaitUtil.waitForVisibility(driver, copyIcon, 30); // Ensure visible
+		 * WaitUtil.waitForElementClickable(driver, copyIcon, 30).click(); // Ensure
+		 * clickable
+		 */	}
 
 	public void clickSaveAsButton() {
 		wait.until(ExpectedConditions.elementToBeClickable(saveChangesButton)).click();
