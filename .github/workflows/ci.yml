@@ -41,4 +41,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Screenshots
-        path: screenshots/  # Update this if screenshot path differs
+        path: test-output/screenshots/  # Update this if screenshot path differs
