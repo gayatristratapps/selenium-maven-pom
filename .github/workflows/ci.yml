@@ -34,8 +34,8 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ExtentReports
-          path: test-output/ExtentReport/
+          name: ExtentReport
+          path: test-output/ExtentReport.html
 
       - name: 📤 Upload Screenshots (if any)
         if: always()
