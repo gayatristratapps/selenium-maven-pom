@@ -57,11 +57,11 @@ public class ShareLeadsPage {
 	private final By SH_CSV_CLICK = By.xpath("//input[@type='file']");
 	private final By SEARCH_BAR = By.xpath("//div[@id='manageContacts']//input");
 	private final By EDIT_BUTTON = By.xpath("(//*[@id='partner_contact_list']//a[2]/i)[1]");
-	private final By EDIT_ICON = By.xpath("(//i[@class='fa fa-pencil-square-o IconCustomization'])[1]");
+	private final By EDIT_ICON = By.xpath("(//i[contains(@class, 'fa-pencil-square-o')])[1]");
 	// private final By PUBLISH_ICON =
 	// By.xpath("(//*[@id='partner_contact_list']//td[7]/div/a[1]/i)[1]");
 
-	private final By DELETE_ICON = By.xpath("(//i[@class='fa fa-trash-o trashIconCustomization'])[1]");
+	private final By DELETE_ICON = By.xpath("(//i[contains(@class, 'fa-trash-o')])[1]");
 	private final By DELETE_CONFIRM = By.xpath("//button[@class='swal2-confirm styled']");
 	private final By DROPDOWN_LOCATOR = By.xpath(
 			"//div[@class=\"col-xs-12 col-md-12 col-sm-12\"]//div[@class=\"col-xs-12 col-sm-6 col-lg-6 p0 pull-right\"]//select");
