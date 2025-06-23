@@ -2,43 +2,44 @@ name: Run Selenium TestNG Tests
 
 on:
   schedule:
-    
+    - cron: '30 8 * * *'  # ⏰ Runs every day at 2:00 PM IST (8:30 AM UTC)
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: ⬇️ Checkout repository
-      uses: actions/checkout@v4
+      - name: ⬇️ Checkout repository
+        uses: actions/checkout@v4
 
-    - name: ☕ Set up Java 17
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '17'
+      - name: ☕ Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
 
-    - name: ⚙️ Set up Chrome
-      uses: browser-actions/setup-chrome@v1
+      - name: ⚙️ Set up Chrome
+        uses: browser-actions/setup-chrome@v1
 
+      - name: 🧪 Run Maven tests
+        run: mvn clean test
 
-    - name: 🧪 Run Maven tests
-      run: mvn clean test
+      - name: 📤 Upload Extent Report (if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExtentReports
+          path: test-output/ExtentReport/
 
-    - name: 📤 Upload Extent Report (if any)
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: ExtentReports
-        path: test-output/ExtentReport/  # Update path as per your report folder
-
-    - name: 📤 Upload Screenshots (if any)
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: Screenshots
-        path: test-output/screenshots/  # Update this if screenshot path differs
+      - name: 📤 Upload Screenshots (if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Screenshots
+          path: test-output/screenshots/
