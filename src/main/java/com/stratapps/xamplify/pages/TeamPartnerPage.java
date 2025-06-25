@@ -67,6 +67,9 @@ public class TeamPartnerPage {
 	private By clearFilter = By.xpath("//a[normalize-space()='Clear Filter']");
 	private By previewIcon = By.xpath("(//i[@class='fa fa-eye'])[1]");
 	private By previewclose = By.xpath("//div[@id=\"preview-team-member-popup\"]/div/div/div[3]/button");
+	private By select_tm=By.xpath("//input[@placeholder='Select Team Members']");
+	
+	private By select_vendor=By.xpath("//input[@placeholder='Select Vendors']");
 
 	public void openTeamPage() {
 		ActionUtil.hoverAndClick(driver, teamMenu);
@@ -74,6 +77,7 @@ public class TeamPartnerPage {
 
 	public void addTeamMember() {
 		ElementUtil.click(addButton, driver);
+		WaitUtil.waitForVisibility(driver, firstNameField, 30);
 		ElementUtil.sendText(firstNameField, "CMR_FN", driver);
 		ElementUtil.sendText(lastNameField, "LN", driver);
 		ElementUtil.sendText(emailIdField, "Partteam" + System.currentTimeMillis() + "@test.com", driver);
@@ -102,8 +106,8 @@ public class TeamPartnerPage {
 
 	public void generateCSV() {
 		// Define file path and data
-		String filePath = "partnerteammemberupload.csv";
-		String[][] data = { { "Email Id", "First Name", "Last Name" }, { "autotest@gmail.com", "mouni", "ch" }, };
+		String filePath = "teammemberupload.csv";
+		String[][] data = { { "Email Id", "First Name", "Last Name" }, { "autotest@gmail.com", "mouni", "ch" }};
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
 			for (String[] row : data) {
 				writer.write(String.join(",", row));
@@ -125,7 +129,7 @@ public class TeamPartnerPage {
 		WaitUtil.waitForPageToLoad(driver, 70);
 		WaitUtil.waitForElementVisible(driver, uploadGroupDropdown, 40);
 		ElementUtil.click(uploadGroupDropdown, driver);
-		ElementUtil.selectDropdownByVisibleText(uploadGroupDropdown, "Sales Account Manager", driver);
+		ElementUtil.selectDropdownByVisibleText(uploadGroupDropdown, "Partner Account Manager", driver);
 		ElementUtil.click(saveCSVButton, driver);
 
 	}
@@ -140,15 +144,18 @@ public class TeamPartnerPage {
 	}
 
 	public void exportTeamMembers() {
-		ElementUtil.click(exportExcelButton, driver);
+		
+		WaitUtil.waitAndClick(driver, exportExcelButton, 60);
 	}
 
 	public void applyFilters(String invitedByEmail) {
 
 		WaitUtil.waitAndClick(driver, refreshButton, 60);
 		ElementUtil.click(filterButton, driver);
-		WaitUtil.waitAndClick(driver, invitedByFilter, 60);
-		ElementUtil.sendKey(invitedByFilter, Keys.ENTER, driver);
+		WaitUtil.waitAndClick(driver, select_tm, 60);
+		ElementUtil.sendKey(select_tm, Keys.ENTER, driver);
+		WaitUtil.waitAndClick(driver, select_vendor, 60);
+		ElementUtil.sendKey(select_vendor, Keys.ENTER, driver);
 		ElementUtil.click(selectDateField, driver);
 		WaitUtil.waitAndClick(driver, fromDate, 60);
 		ElementUtil.click(toDateField, driver);
@@ -188,7 +195,7 @@ public class TeamPartnerPage {
 	public void handleAdminsPopup() {
 		
 		WaitUtil.waitAndClick(driver, admins, 60);
-		ElementUtil.click(closeAdminsPopup, driver);
+		WaitUtil.waitAndClick(driver, closeAdminsPopup, 60);
 		
 	}
 }

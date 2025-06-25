@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.stratapps.xamplify.base.BaseTest;
-import com.stratapps.xamplify.pages.LoginPage;
+import com.stratapps.xamplify.pages.PartnerLoginPage;
 import com.stratapps.xamplify.pages.TeamPartnerPage;
 import com.stratapps.xamplify.utils.ConfigReader;
 
@@ -25,8 +25,8 @@ import com.stratapps.xamplify.utils.ConfigReader;
 		@BeforeClass
 		public void setUpClass() {
 			super.setUp();
-			LoginPage loginPage = new LoginPage(driver);
-			loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
+			PartnerLoginPage partnerloginPage = new PartnerLoginPage(driver);
+			partnerloginPage.login(ConfigReader.getProperty("partnerusername"), ConfigReader.getProperty("partnerpassword"));
 			teamPartnerPage = new TeamPartnerPage(driver);
 			wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 			logger.info("TeamVendorTest setup completed");

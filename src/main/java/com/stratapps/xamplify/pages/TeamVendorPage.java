@@ -153,7 +153,7 @@ public class TeamVendorPage {
 
 	public void exportTeamMembers() {
 		
-		ElementUtil.click(exportExcelButton, driver);
+		WaitUtil.waitAndClick(driver, exportExcelButton, 60);
 		
 	}
 
