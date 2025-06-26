@@ -37,4 +37,34 @@ public class LoginTest extends BaseTest {
         
         logger.info("Test 'testValidLogin' completed successfully.");
     }
+    
+    
+    
+    @Test(priority = 2)
+    public void testPartnerLogin() {
+        logger.info("Starting test: testPartnerLogin");
+
+        LoginPage loginPage = new LoginPage(driver);
+
+        // ✅ Get partner credentials from config
+        String partnerEmail = ConfigReader.getProperty("partner.username");
+        String partnerPassword = ConfigReader.getProperty("partner.password");
+
+        logger.debug("Partner login using: {}", partnerEmail);
+
+        loginPage.login(partnerEmail, partnerPassword);
+
+        boolean isPartnerLoggedIn = loginPage.isWelcomeDisplayed();
+        logger.info("Partner welcome visible: {}", isPartnerLoggedIn);
+
+        Assert.assertTrue(isPartnerLoggedIn, "Partner Login failed: Welcome not visible.");
+
+        logger.info("Test 'testPartnerLogin' completed successfully.");
+    }
+    
+    
+    
+    
+    
+    
 }

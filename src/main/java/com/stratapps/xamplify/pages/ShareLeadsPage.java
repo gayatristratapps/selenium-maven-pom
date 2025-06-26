@@ -29,7 +29,7 @@ public class ShareLeadsPage {
 
 	public ShareLeadsPage(WebDriver driver) {
 		this.driver = driver;
-		this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		this.wait = new WebDriverWait(driver, Duration.ofSeconds(70));
 
 	}
 
@@ -73,9 +73,7 @@ public class ShareLeadsPage {
 			"//div[contains(@class,'modal-footer')]//button[.//span[contains(normalize-space(), 'Save changes')]]");
 
 	private By confirmDeleteYes = By.xpath("//button[normalize-space()='Yes']");
-	// private final By deleteIconLocator =
-	// By.xpath("(//i[contains(@class,'fa-trash')])[1]");
-
+	
 	private final By deleteIconLocator = By
 			.xpath("//table[@id='partner_contact_list']//tr[1]//td//i[contains(@class,'fa-trash')]");
 
@@ -105,6 +103,30 @@ public class ShareLeadsPage {
 	private By sortByDropdown = By
 			.xpath("//div[contains(@class, 'search-css')]//select[contains(@class, 'SeclectBoxPaddingsAbj')]");
 
+	
+	public final static By FIRST_PUBLISH_ICON = By
+			.xpath("(//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')])[1]");
+	private final By PUBLISH_viewicon = By
+			.xpath("(//i[contains(@class, 'fa-eye') and contains(@class, 'IconCustomization')])[1]");
+
+	
+	private By fieldNameDropdown = By.xpath("(//select[contains(@class,'form-control')])[1]");
+
+	private By campaignNameInput = By.id("campaignName");
+	private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
+	private By saveButton = By.xpath("(//div[@id='saveAsModal']//button)[3]"); // update with actual value or property
+
+	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
+
+	private final By undeliverableTile = By.xpath("(//button[contains(@class, 'yellow-gold')])[2]");
+	private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
+	
+	
+	
+	
+	
+	
+	
 	public void hoverOnShareLeads() throws Exception {
 		Thread.sleep(3000);
 
@@ -180,10 +202,10 @@ public class ShareLeadsPage {
 
 	public void editShareLeadDetails() throws InterruptedException {
 
-		WaitUtil.waitForPageToLoad(driver, 70);
+		WaitUtil.waitForPageToLoad(driver, 80);
 
 		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 70);
 
 		// Wait for the tile to be visible
 		WaitUtil.waitForVisibility(driver, EDIT_BUTTON, 60);
@@ -191,7 +213,6 @@ public class ShareLeadsPage {
 		// Now click safely
 		ElementUtil.click(EDIT_BUTTON, driver);
 
-		// ElementUtil.click(EDIT_BUTTON, driver);
 		Thread.sleep(2000);
 		ElementUtil.click(EDIT_ICON, driver);
 
@@ -211,11 +232,7 @@ public class ShareLeadsPage {
 		Thread.sleep(1000);
 	}
 
-	public final static By FIRST_PUBLISH_ICON = By
-			.xpath("(//i[contains(@class, 'fa-share') and contains(@class, 'IconCustomization')])[1]");
-	private final By PUBLISH_viewicon = By
-			.xpath("(//i[contains(@class, 'fa-eye') and contains(@class, 'IconCustomization')])[1]");
-
+	
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
 
 		WaitUtil.waitForPageToLoad(driver, 80);
@@ -366,7 +383,6 @@ public class ShareLeadsPage {
 		Thread.sleep(2000);
 	}
 
-	private By fieldNameDropdown = By.xpath("(//select[contains(@class,'form-control')])[1]");
 
 	public void selectFieldName(String fieldName) {
 		ElementUtil.selectDropdownByVisibleText(fieldNameDropdown, fieldName, driver);
@@ -426,13 +442,13 @@ public class ShareLeadsPage {
 		
 		
 		// Wait for page load
-	    WaitUtil.waitForPageToLoad(driver, 70);
+	    WaitUtil.waitForPageToLoad(driver, 80);
 
 	    // Wait for backdrop/spinner to disappear
-	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 70);
 
 	    // Wait until the gear icon (filter selector) is visible
-	    WaitUtil.waitForVisibility(driver, emailReportButton, 60);
+	    WaitUtil.waitForVisibility(driver, emailReportButton, 70);
 
 	    // Now safely click the element
 	    ElementUtil.click(emailReportButton, driver);
@@ -443,17 +459,12 @@ public class ShareLeadsPage {
 		//ActionUtil.clickWithRetry(driver, emailReportButton, 3);
 	}
 
-	private By campaignNameInput = By.id("campaignName");
-	private By legalBasisDropdown = By.xpath("//*[@id=\"multiselectelement\"]//span[3]/input");
-	private By saveButton = By.xpath("(//div[@id='saveAsModal']//button)[3]"); // update with actual value or property
-
-	private By manageshFilterSelect = By.xpath("//input[@id='checkAllExistingContacts']");
-
+	
 	
 	
 	
 	public void gearIconFromTiles() {
-	    WaitUtil.waitAndClick(driver, manageshFilterSelect, backdrop, 70);
+	    WaitUtil.waitAndClick(driver, manageshFilterSelect, backdrop, 80);
 	}
 
 	
@@ -483,8 +494,8 @@ public class ShareLeadsPage {
 	public void clickValidTile() {
 		try {
 			WaitUtil.waitForPageToLoad(driver, 80);
-			WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-			WaitUtil.waitForVisibility(driver, validTile, 60);
+			WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 70);
+			WaitUtil.waitForVisibility(driver, validTile, 70);
 
 			WebElement tile = driver.findElement(validTile);
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tile);
@@ -558,7 +569,7 @@ public class ShareLeadsPage {
 		}
 	}
 
-	private final By undeliverableTile = By.xpath("(//button[contains(@class, 'yellow-gold')])[2]");
+	
 
 	public boolean isUndeliverableTileEnabled() {
 		try {
@@ -580,7 +591,7 @@ public class ShareLeadsPage {
 		}
 	}
 
-	private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
+	
 
 	public boolean isunsubscribeTileEnabled() {
 		try {

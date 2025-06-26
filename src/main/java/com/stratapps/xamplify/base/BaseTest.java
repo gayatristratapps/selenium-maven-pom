@@ -1,5 +1,6 @@
 package com.stratapps.xamplify.base;
 
+import com.stratapps.xamplify.pages.LogoutPage;
 import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.EmailUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -65,9 +66,10 @@ public class BaseTest {
                 staticDriver = new ChromeDriver(options);
                 logger.debug("Initialized ChromeDriver");
 
+              
+                staticDriver.manage().window().maximize();
                 // ✅ Set window size AFTER driver init
-            
-                staticDriver.manage().window().setSize(new Dimension(1920, 1080));
+                //staticDriver.manage().window().setSize(new Dimension(1920, 1080));
                 logger.info("Browser window maximized");
 
             }
@@ -84,9 +86,23 @@ public class BaseTest {
 
         driver = staticDriver;
     }
+    
+    
+    
+    protected void logoutIfLoggedIn() {
+        try {
+            LogoutPage logoutPage = new LogoutPage(driver);
+            logoutPage.logout();
+            logger.info("Logout successful.");
+        } catch (Exception e) {
+            logger.warn("Logout failed or not needed: " + e.getMessage());
+        }
+    }
 
     @AfterClass
     public void tearDown() {
+    	logoutIfLoggedIn();
+    	
         if (driver != null) {
             logger.info("Test completed, browser remains open");
             // staticDriver.quit(); // Uncomment to close after each test class
