@@ -33,7 +33,7 @@ public class LoginPage {
         try {
             logger.info("Attempting to login with email: {}", email);
 
-            driver.findElement(emailField).clear();
+            //driver.findElement(emailField).clear();
             driver.findElement(emailField).sendKeys(email);
             logger.debug("Entered email.");
 

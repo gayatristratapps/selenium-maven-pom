@@ -90,9 +90,10 @@ public class ShareLeadsTest extends BaseTest {
 
 	@Test(priority = 5, enabled = true)
 	public void shareleadsDropdown() throws Exception {
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
-
+		/*
+		 * WaitUtil.waitForPageToLoad(driver, 60);
+		 * WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
+		 */
 		shareleadsPage.sortAllOptions(driver);
 
 	}
@@ -244,6 +245,8 @@ public class ShareLeadsTest extends BaseTest {
 	@AfterClass
 	public void tearDownClass() {
 		super.tearDown();
+    //	logoutIfLoggedIn();
+
 		logger.info("ShareleadsTest teardown completed");
 
 	}

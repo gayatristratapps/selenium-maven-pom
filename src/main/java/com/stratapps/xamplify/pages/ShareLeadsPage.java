@@ -86,8 +86,11 @@ public class ShareLeadsPage {
 	private By submitButton = By.xpath("//button[contains(text(),'Submit')]");
 
 	private By searchInput = By.xpath("//input[@placeholder='Search']");
-	private final By emailReportButton = By
-			.xpath("//i[contains(@class, 'fa-file') and contains(@class, 'IconCustomization')]");
+	
+	private final By emailReportButton = By.xpath("//i[contains(@class, 'fa-file')]");
+
+	
+	private final By emailReportButton2 = By.xpath("//i[contains(@class, 'fa-file') and contains(@class, 'IconCustomization')]");
 
 	private By gearIcon = By.xpath("//span[contains(@class, 'dropdown-toggle')]//i[contains(@class, 'fa-cog')]");
 	private By newlist = By.xpath("//a[contains(text(),\" Create New List \")]");
@@ -121,7 +124,8 @@ public class ShareLeadsPage {
 	private final By undeliverableTile = By.xpath("(//button[contains(@class, 'yellow-gold')])[2]");
 	private final By unsubscribeTile = By.xpath("//button[@class='btn-block dashboard-stat red']");
 	
-	
+	private final By geariconAlltile=By.xpath("(//i[contains(@class,'fa-angle-down')])[2]");
+
 	
 	
 	
@@ -202,17 +206,16 @@ public class ShareLeadsPage {
 
 	public void editShareLeadDetails() throws InterruptedException {
 
-		WaitUtil.waitForPageToLoad(driver, 80);
+	
+		
+		
+		
+		 WaitUtil.waitAndClick(driver, EDIT_BUTTON, backdrop, 80);
 
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 70);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, EDIT_BUTTON, 60);
-
-		// Now click safely
-		ElementUtil.click(EDIT_BUTTON, driver);
-
+		
+			/*
+			 * // Now click safely ElementUtil.click(EDIT_BUTTON, driver);
+			 */
 		Thread.sleep(2000);
 		ElementUtil.click(EDIT_ICON, driver);
 
@@ -235,16 +238,13 @@ public class ShareLeadsPage {
 	
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
 
-		WaitUtil.waitForPageToLoad(driver, 80);
-
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, FIRST_PUBLISH_ICON, 60);
+		
+		
+		
+		 WaitUtil.waitAndClick(driver, FIRST_PUBLISH_ICON, backdrop, 80);
 
 		// Now click safely
-		ElementUtil.click(FIRST_PUBLISH_ICON, driver);
+		//ElementUtil.click(FIRST_PUBLISH_ICON, driver);
 
 		// Wait and input text
 		WebDriverWait inputWait = new WebDriverWait(driver, Duration.ofSeconds(20));
@@ -269,18 +269,12 @@ public class ShareLeadsPage {
 
 		// Thread.sleep(58000);
 
-		WaitUtil.waitForPageToLoad(driver, 80);
-
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, PUBLISH_viewicon, 60);
+		
+		 WaitUtil.waitAndClick(driver, PUBLISH_viewicon, backdrop, 80);
 
 		// Now click safely
-		ElementUtil.click(PUBLISH_viewicon, driver);
+		//ElementUtil.click(PUBLISH_viewicon, driver);
 
-		// ElementUtil.click(PUBLISH_viewicon, driver);
 
 		Thread.sleep(2000);
 		ElementUtil.click(By.xpath(
@@ -294,14 +288,11 @@ public class ShareLeadsPage {
 
 	public void searchShareLead(String query) throws InterruptedException {
 
-		WaitUtil.waitForPageToLoad(driver, 60);
+	
+		
+		 WaitUtil.waitAndClick(driver, SEARCH_BAR, backdrop, 80);
 
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, SEARCH_BAR, 60);
-
+	
 		// Now click safely
 		// ElementUtil.click(validTile, driver);
 
@@ -318,15 +309,20 @@ public class ShareLeadsPage {
 	public void clickCopyIcon() {
 		
 		
-		WaitUtil.waitForPageToLoad(driver, 80);
+		/*
+		 * WaitUtil.waitForPageToLoad(driver, 80);
+		 * 
+		 * // Wait for backdrop (overlay/spinner) to disappear
+		 * WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		 * 
+		 * // Wait for the tile to be visible WaitUtil.waitForVisibility(driver,
+		 * copyIcon, 60);
+		 * 
+		 */
+		
+		 WaitUtil.waitAndClick(driver, copyIcon, backdrop, 80);
 
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, copyIcon, 60);
-
-		ElementUtil.click(copyIcon, driver);
+		//ElementUtil.click(copyIcon, driver);
 		
 		
 		/*
@@ -365,15 +361,12 @@ public class ShareLeadsPage {
 
 	public void clickAllTile() throws InterruptedException {
 
-		WaitUtil.waitForPageToLoad(driver, 80);
+		
+		 WaitUtil.waitAndClick(driver, allTile, backdrop, 80);
 
-		// Wait for backdrop (overlay/spinner) to disappear
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-		// Wait for the tile to be visible
-		WaitUtil.waitForVisibility(driver, allTile, 60);
-
-		ElementUtil.click(allTile, driver);
+		
+		
+		//ElementUtil.click(allTile, driver);
 		Thread.sleep(3000);
 	}
 
@@ -441,17 +434,19 @@ public class ShareLeadsPage {
 		
 		
 		
-		// Wait for page load
-	    WaitUtil.waitForPageToLoad(driver, 80);
+		
+	    
+	    
+		 WaitUtil.waitAndClick(driver, emailReportButton, backdrop, 80);
 
-	    // Wait for backdrop/spinner to disappear
-	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 70);
-
-	    // Wait until the gear icon (filter selector) is visible
-	    WaitUtil.waitForVisibility(driver, emailReportButton, 70);
-
+	    
+	    
+	    
+	    
+	    
+	    
 	    // Now safely click the element
-	    ElementUtil.click(emailReportButton, driver);
+	    //ElementUtil.click(emailReportButton, driver);
 		
 		
 		
@@ -465,18 +460,31 @@ public class ShareLeadsPage {
 	
 	public void gearIconFromTiles() {
 	    WaitUtil.waitAndClick(driver, manageshFilterSelect, backdrop, 80);
+	    
 	}
 
 	
 	
 	
 	public void enterListName(String baseName) throws InterruptedException {
-		Thread.sleep(2000); // or replace with WebDriverWait
+		
+	Thread.sleep(3000); // or replace with WebDriverWait
+		
+		
+		
+		
+	    ElementUtil.click(geariconAlltile, driver);
+	    ElementUtil.click(newlist, driver);
+
+	    
+	    
+	    
+
 		String nameWithTimestamp = baseName + System.currentTimeMillis();
 
 		// 🔽 FIXED: Ensure visibility first
-		WaitUtil.waitForVisibility(driver, campaignNameInput, 30);
-		WaitUtil.waitForPresence(driver, campaignNameInput, 30);
+		WaitUtil.waitForVisibility(driver, campaignNameInput, 70);
+		WaitUtil.waitForPresence(driver, campaignNameInput, 70);
 
 		ElementUtil.sendTextdriver(driver, campaignNameInput, nameWithTimestamp);
 	}
@@ -487,15 +495,15 @@ public class ShareLeadsPage {
 	}
 
 	public void clickSave() throws Exception {
-		Thread.sleep(1000);
+		Thread.sleep(3000);
 		ElementUtil.click(saveButton, driver);
 	}
 
 	public void clickValidTile() {
 		try {
-			WaitUtil.waitForPageToLoad(driver, 80);
-			WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 70);
-			WaitUtil.waitForVisibility(driver, validTile, 70);
+			
+			
+		    WaitUtil.waitAndClick(driver, validTile, backdrop, 80);
 
 			WebElement tile = driver.findElement(validTile);
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tile);

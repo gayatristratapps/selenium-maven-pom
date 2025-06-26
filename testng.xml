@@ -11,6 +11,10 @@
     <classes>
       <class name="com.stratapps.xamplify.tests.ShareLeadsTest">
         
+     <!--  <class name="com.stratapps.xamplify.tests.TeamPartnerTest">
+      -->  
+         
+        
       </class>
     </classes>
   </test>
