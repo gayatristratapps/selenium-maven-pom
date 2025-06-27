@@ -25,7 +25,8 @@ import com.stratapps.xamplify.utils.ConfigReader;
 		@BeforeClass
 		public void setUpClass() {
 			super.setUp();
-			
+	        logoutIfLoggedIn();
+
 			LoginPage loginPage = new LoginPage(driver);
 			loginPage.login(ConfigReader.getProperty("partner.username"), ConfigReader.getProperty("partner.password"));
 			

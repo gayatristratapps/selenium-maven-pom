@@ -342,7 +342,7 @@ public class ShareLeadsPage {
 	}
 
 	public void clickDeleteIcon() {
-		 WaitUtil.waitAndClick(driver, DELETE_ICON, backdrop, 60);
+		 WaitUtil.waitAndClick(driver, DELETE_ICON, backdrop, 80);
 		 ElementUtil.click(DELETE_CONFIRM, driver);
 		 
 		// ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);
