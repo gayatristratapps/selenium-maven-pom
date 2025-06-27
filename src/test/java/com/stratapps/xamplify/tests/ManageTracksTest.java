@@ -66,24 +66,24 @@ public class ManageTracksTest extends BaseTest {
         logger.info("Test 5: Preview Track - COMPLETED");
     }
 
-    @Test(priority = 6, enabled = false)
+    @Test(priority = 6, enabled = true)
     public void trackAnalyticsTest() {
         logger.info("Test 6: Track Analytics - STARTED");
         manageTracksPage.viewTrackAnalytics();
         logger.info("Test 6: Track Analytics - COMPLETED");
     }
 
-    @Test(priority = 7, enabled = false)
+    @Test(priority = 7, enabled = true)
     public void sortAndDeleteTrackTest() {
         logger.info("Test 7: Sort and Delete Track - STARTED");
         manageTracksPage.sortAndDeleteTrack();
         logger.info("Test 7: Sort and Delete Track - COMPLETED");
     }
 
-    @Test(priority = 8, enabled = false)
+    @Test(priority = 8, enabled = true)
     public void trackViewsTest() throws AWTException {
         logger.info("Test 8: Track Views - STARTED");
-        manageTracksPage.trackViews("D:\\Track_img");
+        manageTracksPage.trackViews("D:\\Track_img\\Thumbnail_file.jpg");
         logger.info("Test 8: Track Views - COMPLETED");
     }
 }
