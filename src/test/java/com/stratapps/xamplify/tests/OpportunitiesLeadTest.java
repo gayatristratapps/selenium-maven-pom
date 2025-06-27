@@ -19,7 +19,7 @@ public class OpportunitiesLeadTest extends BaseTest{
 
 	
 	private OpportunitiesLeadPage opportunitiesleadPage;
-	private static final Logger logger = LogManager.getLogger(ShareLeadsTest.class);
+	private static final Logger logger = LogManager.getLogger(OpportunitiesLeadTest.class);
 	private WebDriverWait wait;
 	@BeforeClass
 	public void setUpClass() {
@@ -31,10 +31,8 @@ public class OpportunitiesLeadTest extends BaseTest{
 		logger.info("OpportunitiesLeadTest setup completed");
 	}
 	
-	
-	
 	@Test(priority = 1, enabled = true)
-	public void testCreateOneAtATimeShareLead() {
+	public void OpenManageLeads() {
 		logger.info("Starting test: Create share lead one at a time");
 		try {
 			opportunitiesleadPage.hoverOnOpportunities_ManageLeads();
@@ -84,5 +82,12 @@ public class OpportunitiesLeadTest extends BaseTest{
 		opportunitiesleadPage.addcomment();
 	}
 	
+	@Test(priority = 6, enabled = true)
+	public void LeadTilesAndPagination() throws Exception {
+		//logger.info("Starting test: Lead Tiles in Manage leads");
+		//opportunitiesleadPage.leadTiles();
+		logger.info("Starting test: Lead pagination in Manage leads");
+		opportunitiesleadPage.leadsPaginationandPageCount();
+	}
 	
 }
