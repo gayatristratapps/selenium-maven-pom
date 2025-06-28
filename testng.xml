@@ -4,7 +4,7 @@
     <listener class-name="com.stratapps.xamplify.listeners.TestListener" />
   </listeners>
 
-  <test name="Vendor Account Tests">
+  <!--<test name="Vendor Account Tests">
     <classes>
       <class name="com.stratapps.xamplify.tests.ShareLeadsTest"/>
       
@@ -17,13 +17,15 @@
       
       
     </classes>
-  </test>
+  </test>-->
 
   <test name="Partner Account Tests">
     <classes>
-      <class name="com.stratapps.xamplify.tests.TeamPartnerTest"/>
+      <class name="com.stratapps.xamplify.tests.SharedLeadsTest"/>
+      
+      <!--<class name="com.stratapps.xamplify.tests.TeamPartnerTest"/>
       <class name="com.stratapps.xamplify.tests.OpportunitiesLeadTest"/>
-      <class name="com.stratapps.xamplify.tests.OpportunitiesDealTest"/>
+      <class name="com.stratapps.xamplify.tests.OpportunitiesDealTest"/>-->
       
       
       

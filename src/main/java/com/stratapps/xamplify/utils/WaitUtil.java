@@ -12,11 +12,6 @@ public class WaitUtil {
 	
 	
 	
-	
-	
-	
-	
-	
     
     /**
      * Wait for element to be clickable
