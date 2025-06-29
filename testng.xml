@@ -1,23 +1,17 @@
 <suite name="Xamplify Test Suite" preserve-order="true">
-
   <listeners>
     <listener class-name="com.stratapps.xamplify.listeners.TestListener" />
   </listeners>
 
-  <!--<test name="Vendor Account Tests">
+  <test name="Vendor Account Tests">
     <classes>
-      <class name="com.stratapps.xamplify.tests.ShareLeadsTest"/>
-      
-      <class name="com.stratapps.xamplify.tests.AddTracksTest"/>
-      
-       <class name="com.stratapps.xamplify.tests.ManageTracksTest"/>
-       <class name="com.stratapps.xamplify.tests.TeamVendorTest"/>
-      
-      
-      
-      
+      <class name="com.stratapps.xamplify.tests.ShareLeadsTest" />
+      <class name="com.stratapps.xamplify.tests.AddTracksTest" />
+	  <class name="com.stratapps.xamplify.tests.ManageTracksTest" />
+	  <class name="com.stratapps.xamplify.tests.TeamVendorTest" />
+   
     </classes>
-  </test>-->
+  </test>
 
   <test name="Partner Account Tests">
     <classes>
@@ -30,9 +24,6 @@
       
       
       
-      
-      
     </classes>
   </test>
-
 </suite>

@@ -323,7 +323,7 @@ public class ShareLeadsPage {
 	}
 
 	public void clickFilterIcon() throws InterruptedException {
-		Thread.sleep(4000);
+		Thread.sleep(5000);
 		ElementUtil.click(filterIcon, driver);
 		Thread.sleep(2000);
 	}

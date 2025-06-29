@@ -74,41 +74,27 @@ public class SharedLeadsPage {
 
 	// --------------------- Navigation ---------------------
 	public void navigateToSharedLeads() {
-		//wait.until(ExpectedConditions.elementToBeClickable(sharedLeadsMenu)).click();
-		
-	    WaitUtil.waitForDropdownToBeReady(driver, sharedLeadsMenu, 60);
-	    ElementUtil.click(sharedLeadsMenu, driver);
+		// wait.until(ExpectedConditions.elementToBeClickable(sharedLeadsMenu)).click();
+
+		WaitUtil.waitForDropdownToBeReady(driver, sharedLeadsMenu, 60);
+		ElementUtil.click(sharedLeadsMenu, driver);
 
 	}
 
 	public void waitForCountsToLoad() {
-		/*
-		 * wait.until(ExpectedConditions.visibilityOfElementLocated(allCountBox));
-		 * wait.until(ExpectedConditions.visibilityOfElementLocated(validCountBox));
-		 * wait.until(ExpectedConditions.visibilityOfElementLocated(excludedCountBox));
-		 * wait.until(ExpectedConditions.visibilityOfElementLocated(
-		 * undeliverableCountBox));
-		 * wait.until(ExpectedConditions.visibilityOfElementLocated(unsubscribedCountBox
-		 * ));
-		 */
-		
-		
 		WaitUtil.waitForElementVisible(driver, allCountBox, 60);
 		WaitUtil.waitForElementVisible(driver, validCountBox, 60);
 		WaitUtil.waitForElementVisible(driver, excludedCountBox, 60);
 		WaitUtil.waitForElementVisible(driver, undeliverableCountBox, 60);
 		WaitUtil.waitForElementVisible(driver, unsubscribedCountBox, 60);
-		
-		
-		
+
 	}
 
 	public void clickFirstInfoIcon() {
-		
-	    WaitUtil.waitForDropdownToBeReady(driver, firstInfoIcon, 60);
-	    ElementUtil.click(firstInfoIcon, driver);
 
-		//wait.until(ExpectedConditions.elementToBeClickable(firstInfoIcon)).click();
+		WaitUtil.waitForDropdownToBeReady(driver, firstInfoIcon, 60);
+		ElementUtil.click(firstInfoIcon, driver);
+
 	}
 
 	// --------------------- Tile Count ---------------------
@@ -157,14 +143,10 @@ public class SharedLeadsPage {
 	// --------------------- Filtering ---------------------
 	public void applyFilter(String field, String operator, String value) {
 		try {
-		//	wait.until(ExpectedConditions.elementToBeClickable(filterIcon)).click();
 
-			  WaitUtil.waitForDropdownToBeReady(driver, filterIcon, 60);
-			    ElementUtil.click(filterIcon, driver);
+			WaitUtil.waitForDropdownToBeReady(driver, filterIcon, 60);
+			ElementUtil.click(filterIcon, driver);
 
-			
-			
-			
 			Select fieldDropdown = new Select(
 					wait.until(ExpectedConditions.visibilityOfElementLocated(filterFieldDropdown)));
 			fieldDropdown.selectByVisibleText(field);
@@ -177,19 +159,12 @@ public class SharedLeadsPage {
 			inputField.clear();
 			inputField.sendKeys(value);
 
-			
-			
-			 WaitUtil.waitForDropdownToBeReady(driver, filterSubmitBtn, 60);
-			    ElementUtil.click(filterSubmitBtn, driver);
-			    WaitUtil.waitForDropdownToBeReady(driver, filterCloseIcon, 60);
-			    ElementUtil.click(filterCloseIcon, driver);
+			WaitUtil.waitForDropdownToBeReady(driver, filterSubmitBtn, 60);
+			ElementUtil.click(filterSubmitBtn, driver);
+			WaitUtil.waitForDropdownToBeReady(driver, filterCloseIcon, 60);
+			ElementUtil.click(filterCloseIcon, driver);
 
 			
-				/*
-				 * wait.until(ExpectedConditions.elementToBeClickable(filterSubmitBtn)).click();
-				 * 
-				 * wait.until(ExpectedConditions.elementToBeClickable(filterCloseIcon)).click();
-				 */
 		} catch (Exception e) {
 			logger.error(
 					"Failed to apply filter with field: " + field + ", operator: " + operator + ", value: " + value, e);
@@ -205,25 +180,20 @@ public class SharedLeadsPage {
 
 	// --------------------- Tile Actions ---------------------
 	public void manageSharedleadsTilesEmailreports() {
-		
-		 WaitUtil.waitForDropdownToBeReady(driver, emailReportIcon, 60);
-		    ElementUtil.click(emailReportIcon, driver);
 
-		
-		//wait.until(ExpectedConditions.elementToBeClickable(emailReportIcon)).click();
+		WaitUtil.waitForDropdownToBeReady(driver, emailReportIcon, 60);
+		ElementUtil.click(emailReportIcon, driver);
+
 	}
 
 	public void clickMoreLessButton() {
 		try {
-			//WebElement btn = wait.until(ExpectedConditions.presenceOfElementLocated());
-			
-			
-			WaitUtil.waitForPresence(driver, buttonid, 60);
-			
-			 WaitUtil.waitForDropdownToBeReady(driver, buttonid, 60);
-			    ElementUtil.click(buttonid, driver);
 
-			//wait.until(ExpectedConditions.elementToBeClickable(btn)).click();
+			WaitUtil.waitForPresence(driver, buttonid, 60);
+
+			WaitUtil.waitForDropdownToBeReady(driver, buttonid, 60);
+			ElementUtil.click(buttonid, driver);
+
 			logger.info("Clicked on More/Less button successfully.");
 		} catch (Exception e) {
 			logger.error("Failed to click on More/Less button.", e);
@@ -232,89 +202,64 @@ public class SharedLeadsPage {
 	}
 
 	public void clickUnsubscribeIcon() {
-		
-		
-	    WaitUtil.waitForDropdownToBeReady(driver, unsubIcon, 60);
-	    ElementUtil.click(unsubIcon, driver);
-	    WaitUtil.waitForDropdownToBeReady(driver, unsubReason, 60);
-	    ElementUtil.click(unsubReason, driver);
-	    WaitUtil.waitForDropdownToBeReady(driver, unsubSubmit, 60);
-	    ElementUtil.click(unsubSubmit, driver);
 
-		
-		/*
-		 * wait.until(ExpectedConditions.elementToBeClickable(unsubIcon)).click();
-		 * wait.until(ExpectedConditions.elementToBeClickable(unsubReason)).click();
-		 * wait.until(ExpectedConditions.elementToBeClickable(unsubSubmit)).click();
-		 */
+		WaitUtil.waitForDropdownToBeReady(driver, unsubIcon, 60);
+		ElementUtil.click(unsubIcon, driver);
+		WaitUtil.waitForDropdownToBeReady(driver, unsubReason, 60);
+		ElementUtil.click(unsubReason, driver);
+		WaitUtil.waitForDropdownToBeReady(driver, unsubSubmit, 60);
+		ElementUtil.click(unsubSubmit, driver);
+
+	
 	}
 
 	public void sharedLeadsListUnsubscribeTile() {
-		//wait.until(ExpectedConditions.elementToBeClickable(unsubscribedTile)).click();
-		
-		
-		WaitUtil.waitForDropdownToBeReady(driver, unsubscribedTile, 60);
-	    ElementUtil.click(unsubscribedTile, driver);
 
-		
-		
+		WaitUtil.waitForDropdownToBeReady(driver, unsubscribedTile, 60);
+		ElementUtil.click(unsubscribedTile, driver);
+
 		filterSearch();
 		manageSharedleadsTilesEmailreports();
-		
-		WaitUtil.waitForDropdownToBeReady(driver, resubscribeButton, 60);
-	    ElementUtil.click(resubscribeButton, driver);
 
-		
-		
-		//wait.until(ExpectedConditions.elementToBeClickable(resubscribeButton)).click();
+		WaitUtil.waitForDropdownToBeReady(driver, resubscribeButton, 60);
+		ElementUtil.click(resubscribeButton, driver);
+
 		driver.findElement(By.id("comment")).sendKeys("Resubscribe sharedlead 123");
 		ElementUtil.click(resubscribeSubmit, driver);
-		//driver.findElement(resubscribeSubmit).click();
+		
 	}
 
 	public void sharedLeadsEditListValidTile(int count) {
 		if (count > 0)
-			
 
 			WaitUtil.waitForDropdownToBeReady(driver, validTile, 60);
-		    ElementUtil.click(validTile, driver);
+		ElementUtil.click(validTile, driver);
 
-			
-			//wait.until(ExpectedConditions.elementToBeClickable(validTile)).click();
 	}
 
 	public void sharedLeadsEditListExcludeTile(int count) {
 		if (count > 0)
-			
 
 			WaitUtil.waitForDropdownToBeReady(driver, excludeTile, 60);
-		    ElementUtil.click(excludeTile, driver);
+		ElementUtil.click(excludeTile, driver);
 
-			
-			
-			//wait.until(ExpectedConditions.elementToBeClickable(excludeTile)).click();
+		// wait.until(ExpectedConditions.elementToBeClickable(excludeTile)).click();
 	}
 
 	public void sharedLeadsEditListUndeliverableTile(int count) {
 		if (count > 0)
 			WaitUtil.waitForDropdownToBeReady(driver, undeliverableTile, 60);
-	    ElementUtil.click(undeliverableTile, driver);
+		ElementUtil.click(undeliverableTile, driver);
 
-			
-			
-			//wait.until(ExpectedConditions.elementToBeClickable(undeliverableTile)).click();
+	
 	}
 
 	// --------------------- Full Tile Flow ---------------------
 	public void manageAllSharedLeadsTileActions() {
-		
-		WaitUtil.waitForDropdownToBeReady(driver, sharedleadsAllBtn, 60);
-	    ElementUtil.click(sharedleadsAllBtn, driver);
 
-			
-		
-		//wait.until(ExpectedConditions.elementToBeClickable(sharedleadsAllBtn)).click();
-		
+		WaitUtil.waitForDropdownToBeReady(driver, sharedleadsAllBtn, 60);
+		ElementUtil.click(sharedleadsAllBtn, driver);
+
 		applyFilter("City", "Contains", "Hyderabad");
 
 		filterSearch();
@@ -322,16 +267,11 @@ public class SharedLeadsPage {
 	}
 
 	public void manageValidSharedLeadsTileActions() {
-		
-		WaitUtil.waitForDropdownToBeReady(driver, validTile, 60);
-	    ElementUtil.click(validTile, driver);
 
-		
-		
-		
-		
-		//wait.until(ExpectedConditions.elementToBeClickable(validTile)).click();
-		
+		WaitUtil.waitForDropdownToBeReady(driver, validTile, 60);
+		ElementUtil.click(validTile, driver);
+
+
 		applyFilter("City", "Contains", "Hyderabad");
 
 		manageSharedleadsTilesEmailreports();
@@ -339,16 +279,11 @@ public class SharedLeadsPage {
 
 	public void manageExcludeSharedLeadsTileActions() {
 		if (getExcludeTileCount() > 0) {
-			
-			
-			WaitUtil.waitForDropdownToBeReady(driver, excludeTile, 60);
-		    ElementUtil.click(excludeTile, driver);
 
-			
-			
-			
-			//wait.until(ExpectedConditions.elementToBeClickable(excludeTile)).click();
-			// applyCityFilter("Hyderabad");
+			WaitUtil.waitForDropdownToBeReady(driver, excludeTile, 60);
+			ElementUtil.click(excludeTile, driver);
+
+		
 			applyFilter("City", "Contains", "Hyderabad");
 
 			manageSharedleadsTilesEmailreports();
@@ -357,14 +292,10 @@ public class SharedLeadsPage {
 
 	public void manageUndeliverableSharedLeadsTileActions() {
 		if (getUndeliverableTileCount() > 0) {
-			
-			WaitUtil.waitForDropdownToBeReady(driver, undeliverableTile, 60);
-		    ElementUtil.click(undeliverableTile, driver);
 
-			
-			
-		//	wait.until(ExpectedConditions.elementToBeClickable(undeliverableTile)).click();
-			
+			WaitUtil.waitForDropdownToBeReady(driver, undeliverableTile, 60);
+			ElementUtil.click(undeliverableTile, driver);
+
 			applyFilter("City", "Contains", "Hyderabad");
 
 			manageSharedleadsTilesEmailreports();
@@ -374,13 +305,9 @@ public class SharedLeadsPage {
 	public void manageUnsubscribeSharedLeadsTileActions() {
 		if (extractTileCount(unsubscribedTile) > 0) {
 			WaitUtil.waitForDropdownToBeReady(driver, unsubscribedTile, 60);
-		    ElementUtil.click(unsubscribedTile, driver);
+			ElementUtil.click(unsubscribedTile, driver);
 
-			
-			
-			
-			
-			//wait.until(ExpectedConditions.elementToBeClickable(unsubscribedTile)).click();
+			// wait.until(ExpectedConditions.elementToBeClickable(unsubscribedTile)).click();
 			applyFilter("City", "Contains", "Hyderabad");
 
 			manageSharedleadsTilesEmailreports();
