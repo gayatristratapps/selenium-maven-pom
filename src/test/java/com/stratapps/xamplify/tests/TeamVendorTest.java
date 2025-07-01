@@ -21,15 +21,13 @@ public class TeamVendorTest extends BaseTest {
 	private static final Logger logger = LogManager.getLogger(TeamVendorTest.class);
 	private WebDriverWait wait;
 
-	@BeforeClass
-	public void setUpClass() {
-		super.setUp();
-		LoginPage loginPage = new LoginPage(driver);
-		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
-		teamvendorPage = new TeamVendorPage(driver);
-		wait = new WebDriverWait(driver, Duration.ofSeconds(60));
-		logger.info("TeamVendorTest setup completed");
-	}
+	/*
+	 * @BeforeClass public void setUpClass() { super.setUp(); LoginPage loginPage =
+	 * new LoginPage(driver); loginPage.login(ConfigReader.getProperty("username"),
+	 * ConfigReader.getProperty("password")); teamvendorPage = new
+	 * TeamVendorPage(driver); wait = new WebDriverWait(driver,
+	 * Duration.ofSeconds(60)); logger.info("TeamVendorTest setup completed"); }
+	 */
 
 
     @Test(priority = 1, enabled = true)
