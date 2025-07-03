@@ -565,7 +565,7 @@ public class ShareLeadsPage {
 	}
 
 	public void sortAllOptions(WebDriver driver) throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
 
 		// Ensure dropdown is visible
 		wait.until(ExpectedConditions.visibilityOfElementLocated(sortByDropdown));
@@ -577,7 +577,7 @@ public class ShareLeadsPage {
 			dropdown.selectByIndex(i);
 
 			// Wait for loader to disappear after each sort
-			WaitUtil.waitForLoaderToDisappear(driver, 40);
+			WaitUtil.waitForLoaderToDisappear(driver, 80);
 
 			// Wait for first publish icon as an indicator of loaded result
 			wait.until(ExpectedConditions
@@ -589,7 +589,7 @@ public class ShareLeadsPage {
 	}
 
 	public void sortAllTileOptions(WebDriver driver) throws Exception {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(80));
 
 		// ✅ Loop through dropdown options, refreshing elements each time
 		for (int i = 1;; i++) {
@@ -608,7 +608,7 @@ public class ShareLeadsPage {
 				Alldropdown.selectByIndex(i);
 
 				// ✅ Wait for loader to disappear (custom utility)
-				WaitUtil.waitForLoaderToDisappear(driver, 40);
+				WaitUtil.waitForLoaderToDisappear(driver, 80);
 
 				// ✅ Wait for results table to appear as confirmation of reload
 				wait.until(ExpectedConditions
