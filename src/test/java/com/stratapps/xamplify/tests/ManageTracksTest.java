@@ -21,13 +21,19 @@ public class ManageTracksTest extends BaseTest {
     private static final Logger logger = LogManager.getLogger(ManageTracksTest.class);
     private WebDriverWait wait;
 
-	/*
-	 * @BeforeClass public void setUpClass() { super.setUp(); LoginPage loginPage =
-	 * new LoginPage(driver); loginPage.login(ConfigReader.getProperty("username"),
-	 * ConfigReader.getProperty("password")); manageTracksPage = new
-	 * ManageTracksPage(driver); wait = new WebDriverWait(driver,
-	 * Duration.ofSeconds(60)); logger.info("ManageTracksTest setup completed"); }
-	 */
+	@BeforeClass
+	public void setUpClass() {
+		super.setUp();
+		
+
+        if (!isLoggedIn()) {  // ✅ Only log in if session isn't active
+		LoginPage loginPage = new LoginPage(driver);
+		loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
+        }
+		manageTracksPage = new ManageTracksPage(driver);
+		wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		logger.info("ManageTracksTest setup completed");
+	}
 
     @Test(priority = 1, enabled = true)
     public void navigateToManageTracksTest() {
