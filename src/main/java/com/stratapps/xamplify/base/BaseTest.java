@@ -29,7 +29,7 @@ public class BaseTest {
         "AddTracksTest",
         "ManageTracksTest",
         "TeamVendorTest"
-               // Add any new vendor classes here
+        // Add any new vendor classes here
     ));
 
     // 🔁 CHANGED: Track how many vendor test classes completed
@@ -91,6 +91,15 @@ public class BaseTest {
             logger.info("Logout successful.");
         } catch (Exception e) {
             logger.warn("Logout failed or not needed: " + e.getMessage());
+        }
+    }
+
+    // ✅ ✅ ✅ NEW METHOD TO CHECK IF USER IS ALREADY LOGGED IN
+    protected boolean isLoggedIn() {
+        try {
+            return new com.stratapps.xamplify.pages.LoginPage(driver).isWelcomeDisplayed();
+        } catch (Exception e) {
+            return false;
         }
     }
 

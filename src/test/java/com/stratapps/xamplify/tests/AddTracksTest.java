@@ -21,13 +21,30 @@ public class AddTracksTest extends BaseTest {
     private static final Logger logger = LogManager.getLogger(AddTracksTest.class);
     private WebDriverWait wait;
 
-	/*
-	 * @BeforeClass public void setUpClass() { super.setUp(); LoginPage loginPage =
-	 * new LoginPage(driver); loginPage.login(ConfigReader.getProperty("username"),
-	 * ConfigReader.getProperty("password")); addTracksPage = new
-	 * AddTracksPage(driver); wait = new WebDriverWait(driver,
-	 * Duration.ofSeconds(60)); logger.info("AddTracksTest setup completed"); }
-	 */
+	
+    @BeforeClass
+    public void setUpClass() {
+        super.setUp();  // ✅ Ensure driver setup and URL navigation happens
+
+        if (!isLoggedIn()) {  // ✅ Only log in if session isn't active
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
+        }
+
+        addTracksPage = new AddTracksPage(driver);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        logger.info("AddTracksTest setup completed");
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     @Test(priority = 1, enabled = true)
     public void openContentMenuTest() {
