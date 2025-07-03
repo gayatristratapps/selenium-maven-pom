@@ -32,7 +32,7 @@ public class OpportunitiesDealTest extends BaseTest{
 	
 	@Test(priority = 1, enabled = true)
 	public void OpenManageDealsPage() {
-		logger.info("Starting test: Create share lead one at a time");
+		logger.info("Starting test: Navigate to Manage Deals");
 		try {
 			opportunitiesDealPage.hoverOnOpportunities_ManageDeals();
 			ScreenshotUtil.captureScreenshot(driver, "opportunities");
@@ -42,7 +42,7 @@ public class OpportunitiesDealTest extends BaseTest{
 	}
 	@Test(priority = 2, enabled = true)
 	public void searchLeadAndEmailReport() throws Exception {
-		logger.info("Starting test: search leads and send email report");
+		logger.info("Starting test: search deals and send email report");
 		opportunitiesDealPage.dealSearch();
 		opportunitiesDealPage.dealEmailReport();
 		opportunitiesDealPage.removeDealSearch();
@@ -50,8 +50,33 @@ public class OpportunitiesDealTest extends BaseTest{
 	}
 	
 	@Test(priority = 3, enabled = true)
-	public void AddLead() throws Exception {
-		logger.info("Starting test: Create new lead in Manage leads");
+	public void AddDeal() throws Exception {
+		logger.info("Starting test: Create new deal in Manage deals");
 		opportunitiesDealPage.addDeal();
 	}
+	
+	@Test(priority = 4, enabled = true)
+	public void DealAction() throws Exception {
+		logger.info("Starting test: Edit deal in Manage deals");
+		opportunitiesDealPage.editDeal();
+		opportunitiesDealPage.addDealComment();
+		opportunitiesDealPage.deleteDeal();
+	}
+	
+	@Test(priority = 5, enabled = true)
+	public void DealsPagination() throws Exception {
+		logger.info("Starting test: Pagination in Manage deals");
+		opportunitiesDealPage.dealsPaginationandPageCount();
+	}
+	
+	@Test(priority = 6, enabled = false)
+	public void DealsCampaignView() throws Exception {
+		logger.info("Starting test: CampaignView in Manage deals");
+		opportunitiesDealPage.dealCampainView();
+		opportunitiesDealPage.editDeal();
+		opportunitiesDealPage.addDealComment();
+		opportunitiesDealPage.deleteDeal();
+	}
+	
+
 }
