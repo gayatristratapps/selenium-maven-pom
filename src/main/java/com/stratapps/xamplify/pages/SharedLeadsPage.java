@@ -370,7 +370,7 @@ public class SharedLeadsPage {
 
 			// Wait for backdrop if visible
 			try {
-				WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(35));
+				WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(55));
 				shortWait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector("div.backdrop")));
 			} catch (Exception e) {
 				System.out.println("Backdrop not found or already disappeared.");

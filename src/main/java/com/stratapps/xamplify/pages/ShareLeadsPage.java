@@ -199,7 +199,7 @@ public class ShareLeadsPage {
 
 	public void editShareLeadDetails() throws InterruptedException {
 
-		WaitUtil.waitAndClick(driver, EDIT_BUTTON, backdrop, 80);
+		WaitUtil.waitAndClick(driver, EDIT_BUTTON, backdrop, 120);
 
 		/*
 		 * // Now click safely ElementUtil.click(EDIT_BUTTON, driver);
@@ -270,7 +270,7 @@ public class ShareLeadsPage {
 
 	public void searchShareLead(String query) throws InterruptedException {
 
-		WaitUtil.waitAndClick(driver, SEARCH_BAR, backdrop, 80);
+		WaitUtil.waitAndClick(driver, SEARCH_BAR, backdrop, 120);
 
 		// Now click safely
 		// ElementUtil.click(validTile, driver);
@@ -316,7 +316,7 @@ public class ShareLeadsPage {
 
 	public void clickAllTile() throws InterruptedException {
 
-		WaitUtil.waitAndClick(driver, allTile, backdrop, 80);
+		WaitUtil.waitAndClick(driver, allTile, backdrop, 120);
 
 		// ElementUtil.click(allTile, driver);
 		Thread.sleep(3000);
@@ -418,7 +418,7 @@ public class ShareLeadsPage {
 	}
 
 	public void clickSave() throws Exception {
-		Thread.sleep(3000);
+		Thread.sleep(2000);
 		ElementUtil.click(saveButton, driver);
 	}
 
