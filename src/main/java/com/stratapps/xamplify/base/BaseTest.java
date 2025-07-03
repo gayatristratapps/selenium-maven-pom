@@ -7,17 +7,14 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions; // 🔁 CHANGED
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -25,6 +22,18 @@ public class BaseTest {
 
     private static final Logger logger = LogManager.getLogger(BaseTest.class);
     private static WebDriver staticDriver;
+
+    // 🔁 CHANGED: Vendor class names (make sure to update when you add new ones)
+    private static final Set<String> VENDOR_TEST_CLASSES = new HashSet<>(Arrays.asList(
+        "ShareLeadsTest",
+        "AddTracksTest",
+        "ManageTracksTest",
+        "TeamVendorTest"
+               // Add any new vendor classes here
+    ));
+
+    // 🔁 CHANGED: Track how many vendor test classes completed
+    private static int vendorCompletedCount = 0;
 
     public WebDriver getDriver() {
         return driver;
@@ -43,39 +52,27 @@ public class BaseTest {
 
             if (browser.equalsIgnoreCase("chrome")) {
                 WebDriverManager.chromedriver().setup();
-               
 
                 ChromeOptions options = new ChromeOptions();
                 options.addArguments("--no-sandbox");
-                options.addArguments("--disable-dev-shm-usage");// prevent shared memory
-                options.addArguments("--remote-allow-origins=*");// optional but prevents newer driver errors
+                options.addArguments("--disable-dev-shm-usage");
+                options.addArguments("--remote-allow-origins=*");
                 options.addArguments("--disable-gpu");
                 options.addArguments("--start-maximized");
                 options.addArguments("--force-device-scale-factor=1");
 
-                // ✅ Run headless only in CI
                 if (System.getenv("CI") != null) {
                     options.addArguments("--headless=new");
                 }
 
-                // ✅ Isolate user profile in CI
                 String uniqueProfile = System.getProperty("java.io.tmpdir") + "/chrome-profile-" + System.currentTimeMillis();
                 options.addArguments("--user-data-dir=" + uniqueProfile);
 
-                // ✅ Initialize driver
                 staticDriver = new ChromeDriver(options);
-                logger.debug("Initialized ChromeDriver");
-
-              
                 staticDriver.manage().window().maximize();
-                // ✅ Set window size AFTER driver init
-                //staticDriver.manage().window().setSize(new Dimension(1920, 1080));
-                logger.info("Browser window maximized");
-
+                logger.info("ChromeDriver initialized and window maximized.");
             }
-                
-          
-      
+
             String url = ConfigReader.getProperty("url");
             if (url == null) {
                 throw new IllegalStateException("URL property is missing in config.properties");
@@ -86,9 +83,7 @@ public class BaseTest {
 
         driver = staticDriver;
     }
-    
-    
-    
+
     protected void logoutIfLoggedIn() {
         try {
             LogoutPage logoutPage = new LogoutPage(driver);
@@ -99,15 +94,25 @@ public class BaseTest {
         }
     }
 
-    @AfterClass
+    // 🔁 CHANGED: Intelligent logout after all vendor tests complete
+    @AfterClass(alwaysRun = true)
     public void tearDown() {
-    	logoutIfLoggedIn();
-    	
-        if (driver != null) {
-            logger.info("Test completed, browser remains open");
-            // staticDriver.quit(); // Uncomment to close after each test class
+        String className = this.getClass().getSimpleName();
+
+        if (VENDOR_TEST_CLASSES.contains(className)) {
+            vendorCompletedCount++;
+            logger.info("✅ Vendor class '{}' completed. Progress: {}/{}", className,
+                        vendorCompletedCount, VENDOR_TEST_CLASSES.size());
+
+            if (vendorCompletedCount == VENDOR_TEST_CLASSES.size()) {
+                logger.info("🎯 All vendor test classes finished. Logging out...");
+                logoutIfLoggedIn();
+            } else {
+                logger.info("⏳ Waiting for remaining vendor test classes. Logout skipped for now.");
+            }
+        } else {
+            // For non-vendor (e.g., partner) classes — log out immediately
+            logoutIfLoggedIn();
         }
     }
-
-
 }
