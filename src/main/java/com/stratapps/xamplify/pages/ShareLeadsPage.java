@@ -270,11 +270,7 @@ public class ShareLeadsPage {
 
 	public void searchShareLead(String query) throws InterruptedException {
 
-		WaitUtil.waitAndClick(driver, SEARCH_BAR, backdrop, 120);
-
-		// Now click safely
-		// ElementUtil.click(validTile, driver);
-
+		WaitUtil.waitAndClick(driver, SEARCH_BAR, backdrop, 130);
 		ElementUtil.sendText(SEARCH_BAR, query, driver);
 		ElementUtil.sendKey(SEARCH_BAR, Keys.ENTER, driver);
 		Thread.sleep(3000);
@@ -300,7 +296,7 @@ public class ShareLeadsPage {
 	}
 
 	public void clickDeleteIcon() {
-		WaitUtil.waitAndClick(driver, DELETE_ICON, backdrop, 80);
+		WaitUtil.waitAndClick(driver, DELETE_ICON, backdrop, 120);
 		ElementUtil.click(DELETE_CONFIRM, driver);
 
 		// ActionUtil.clickWithRetry(driver, DELETE_ICON, 3);

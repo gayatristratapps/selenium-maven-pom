@@ -25,6 +25,15 @@ public class AddTracksTest extends BaseTest {
 	public void setUpClass() {
 		super.setUp(); // ✅ Ensure driver setup and URL navigation happens
 
+		
+		 if (driver == null) {
+		        logger.error("🚨 Driver is null in AddTracksTest!");
+		        throw new RuntimeException("Driver is not initialized");
+		    }
+		
+		
+		
+		
 		if (!isLoggedIn()) { // ✅ Only log in if session isn't active
 			LoginPage loginPage = new LoginPage(driver);
 			loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));

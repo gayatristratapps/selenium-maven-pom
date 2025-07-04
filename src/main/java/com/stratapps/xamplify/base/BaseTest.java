@@ -1,6 +1,7 @@
 package com.stratapps.xamplify.base;
 
 import com.stratapps.xamplify.pages.LogoutPage;
+import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.EmailUtil;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -23,16 +24,14 @@ public class BaseTest {
     private static final Logger logger = LogManager.getLogger(BaseTest.class);
     private static WebDriver staticDriver;
 
-    // 🔁 CHANGED: Vendor class names (make sure to update when you add new ones)
+    // 🔁 CHANGED: Vendor test class names
     private static final Set<String> VENDOR_TEST_CLASSES = new HashSet<>(Arrays.asList(
         "ShareLeadsTest",
         "AddTracksTest",
         "ManageTracksTest",
         "TeamVendorTest"
-        // Add any new vendor classes here
     ));
 
-    // 🔁 CHANGED: Track how many vendor test classes completed
     private static int vendorCompletedCount = 0;
 
     public WebDriver getDriver() {
@@ -41,6 +40,8 @@ public class BaseTest {
 
     @BeforeClass
     public void setUp() {
+        logger.info("🛠 BaseTest.setUp() - START");
+
         if (staticDriver == null) {
             String browser = ConfigReader.getProperty("browser.name");
 
@@ -70,36 +71,38 @@ public class BaseTest {
 
                 staticDriver = new ChromeDriver(options);
                 staticDriver.manage().window().maximize();
-                logger.info("ChromeDriver initialized and window maximized.");
+                logger.info("✅ ChromeDriver initialized and window maximized.");
             }
 
             String url = ConfigReader.getProperty("url");
             if (url == null) {
                 throw new IllegalStateException("URL property is missing in config.properties");
             }
+
+            logger.info("🌐 Navigating to URL: {}", url);
             staticDriver.get(url);
-            logger.info("Navigated to URL: {}", url);
+        } else {
+            logger.info("🔁 Reusing existing WebDriver session");
         }
 
         driver = staticDriver;
+
+        // 🔸 Highlighted Check
+        if (driver == null) {
+            logger.error("🚨 WebDriver is NULL after setup!");
+            throw new RuntimeException("WebDriver not initialized!");
+        }
+
+        logger.info("✅ BaseTest.setUp() - COMPLETE");
     }
 
     protected void logoutIfLoggedIn() {
         try {
             LogoutPage logoutPage = new LogoutPage(driver);
             logoutPage.logout();
-            logger.info("Logout successful.");
+            logger.info("👋 Logout successful.");
         } catch (Exception e) {
-            logger.warn("Logout failed or not needed: " + e.getMessage());
-        }
-    }
-
-    // ✅ ✅ ✅ NEW METHOD TO CHECK IF USER IS ALREADY LOGGED IN
-    protected boolean isLoggedIn() {
-        try {
-            return new com.stratapps.xamplify.pages.LoginPage(driver).isWelcomeDisplayed();
-        } catch (Exception e) {
-            return false;
+            logger.warn("⚠️ Logout failed or not needed: {}", e.getMessage());
         }
     }
 
@@ -122,6 +125,16 @@ public class BaseTest {
         } else {
             // For non-vendor (e.g., partner) classes — log out immediately
             logoutIfLoggedIn();
+        }
+    }
+
+    // ✅ NEW: Session checker to be used in test classes
+    protected boolean isLoggedIn() {
+        try {
+            return new LoginPage(driver).isWelcomeDisplayed();
+        } catch (Exception e) {
+            logger.warn("⚠️ isLoggedIn() failed: {}", e.getMessage());
+            return false;
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.stratapps.xamplify.utils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -47,10 +48,16 @@ public class WaitUtil {
      * @param timeoutInSeconds timeout in seconds
      * @return WebElement that is visible
      */
+    
+    
+    
     public static WebElement waitForElementVisible(WebDriver driver, By locator, int timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+        return waitForVisibility(driver, locator, timeoutInSeconds); // 🔁 Reuse internally
     }
+    
+    
+    
+    
     
     /**
      * Wait for element to be present in DOM
@@ -140,21 +147,37 @@ public class WaitUtil {
         return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
     }
 
-   
+    
+    
+ // 🔁 UPDATED: Enhanced waitAndClick with full stabilization and fallback
     public static void waitAndClick(WebDriver driver, By locator, By backdropLocator, int timeout) {
-        // Wait for full page load
         waitForPageToLoad(driver, timeout);
 
         // Wait for the backdrop/spinner (if any) to disappear
         waitForInvisibilityOfElement(backdropLocator, driver, timeout);
+        
+        // ✅ NEW: Additional safety before clicking
+        try {
+            Thread.sleep(500); // optional delay for flaky DOMs
+        } catch (InterruptedException ignored) {}
 
-        // Wait for the target element to become visible
-        waitForVisibility(driver, locator, timeout);
+        waitForElementClickable(driver, locator, timeout); // ✅ use elementToBeClickable instead of just visible
 
-        // Perform safe click
-        ElementUtil.click(locator, driver);
+        // ✅ REPLACED direct click with safer version
+        ElementUtil.safeClick(locator, driver); // NEW: uses JS fallback if needed
     }
 
+    // ✅ NEW: wait for scroll & visibility then return element (optional utility)
+    public static WebElement waitAndScrollToElement(WebDriver driver, By locator, int timeoutInSeconds) {
+        WebElement element = waitForElementVisible(driver, locator, timeoutInSeconds);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+        return element;
+    }
+    
+    
+    
+    
+   
 
 
 }

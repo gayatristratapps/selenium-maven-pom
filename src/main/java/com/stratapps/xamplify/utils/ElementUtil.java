@@ -59,7 +59,36 @@ public class ElementUtil {
 
     
     
-    
+    // ✅ NEW: Safe click with JS fallback
+    public static void safeClick(By locator, WebDriver driver) throws ElementClickInterceptedException {
+        WebElement element = driver.findElement(locator);
+
+        try {
+            scrollToElement(element, driver);
+            element.click();
+        } catch (ElementNotInteractableException e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        }
+    }
+
+    // ✅ NEW: Scroll to element
+    public static void scrollToElement(WebElement element, WebDriver driver) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+    }
+
+    // ✅ NEW: Get text from element
+    public static String getText(By locator, WebDriver driver) {
+        return driver.findElement(locator).getText();
+    }
+
+    // ✅ NEW: Check if element is displayed
+    public static boolean isDisplayed(By locator, WebDriver driver) {
+        try {
+            return driver.findElement(locator).isDisplayed();
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
     
     
     
