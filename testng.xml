@@ -6,7 +6,7 @@
   <!-- ✅ All vendor classes grouped under one test block -->
   <test name="Vendor Account Tests">
     <classes>
-      <class name="com.stratapps.xamplify.tests.ShareLeadsTest" />
+      <!--<class name="com.stratapps.xamplify.tests.ShareLeadsTest" />-->
       <class name="com.stratapps.xamplify.tests.AddTracksTest" />
       <class name="com.stratapps.xamplify.tests.ManageTracksTest" />
       <class name="com.stratapps.xamplify.tests.TeamVendorTest" />

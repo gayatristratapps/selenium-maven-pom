@@ -73,22 +73,23 @@ public class SharedLeadsPage {
 	private By manageSharedGridInfoicon = By.xpath("(//a[@class='Iconhover custom-grid-icon'])[1]");
 
 	// --------------------- Navigation ---------------------
-	/*
-	 * public void navigateToSharedLeads() { //
-	 * wait.until(ExpectedConditions.elementToBeClickable(sharedLeadsMenu)).click();
-	 * 
-	 * WaitUtil.waitForDropdownToBeReady(driver, sharedLeadsMenu, 60);
-	 * ElementUtil.click(sharedLeadsMenu, driver);
-	 * 
-	 * }
-	 */
+	
+	  public void navigateToSharedLeads() { //
+	  wait.until(ExpectedConditions.elementToBeClickable(sharedLeadsMenu)).click();
+	  
+	  WaitUtil.waitForDropdownToBeReady(driver, sharedLeadsMenu, 60);
+	  ElementUtil.click(sharedLeadsMenu, driver);
+	  
+	  }
+	 
 
-	public void navigateToSharedLeads() {
-		logger.info("Navigating to Shared Leads page");
-		WaitUtil.waitForPageToLoad(driver, 60);
-		ElementUtil.clickWithRetry(sharedLeadsMenu, driver, 3); // ✅ safe click
-		WaitUtil.waitForLoaderToDisappear(driver, 60);
-	}
+		/*
+		 * public void navigateToSharedLeads() {
+		 * logger.info("Navigating to Shared Leads page");
+		 * WaitUtil.waitForPageToLoad(driver, 60);
+		 * ElementUtil.clickWithRetry(sharedLeadsMenu, driver, 3); // ✅ safe click
+		 * WaitUtil.waitForLoaderToDisappear(driver, 60); }
+		 */
 
 	public void waitForCountsToLoad() {
 		logger.info("Waiting for tile counts to load");
