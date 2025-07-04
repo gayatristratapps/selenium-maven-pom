@@ -91,7 +91,29 @@ public class ElementUtil {
     }
     
     
-    
+    public static void clickWithRetry(By locator, WebDriver driver, int maxRetries) {
+        int attempts = 0;
+        while (attempts < maxRetries) {
+            try {
+                WebElement element = driver.findElement(locator);
+
+                // ✅ Scroll into view to avoid hidden/intercepted clicks
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+
+                // ✅ Attempt regular click
+                element.click();
+                return; // success
+            } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+                attempts++;
+                System.out.println("Attempt " + attempts + " failed for: " + locator + " - Retrying...");
+                try {
+                    Thread.sleep(300); // ✅ Optional short pause
+                } catch (InterruptedException ignored) {}
+            }
+        }
+        throw new RuntimeException("❌ Click failed after " + maxRetries + " attempts for: " + locator);
+    }
+
     
     
     
