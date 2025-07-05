@@ -23,22 +23,58 @@ public class AddTracksTest extends BaseTest {
 
 	@BeforeClass
 	public void setUpClass() {
-		super.setUp(); // ✅ Ensure driver setup and URL navigation happens
+		
+		
+		super.setUp();
 
-		
-		 if (driver == null) {
-		        logger.error("🚨 Driver is null in AddTracksTest!");
-		        throw new RuntimeException("Driver is not initialized");
-		    }
-		
+        if (!isLoggedIn()) {
+            LoginPage loginPage = new LoginPage(driver);
+            loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
+        }
 		
 		
 		
-		if (!isLoggedIn()) { // ✅ Only log in if session isn't active
-			LoginPage loginPage = new LoginPage(driver);
-			loginPage.login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
-		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		//super.setUp(); // ✅ Ensure driver setup and URL navigation happens
 
+		/*
+		 * if (driver == null) { logger.error("🚨 Driver is null in AddTracksTest!");
+		 * throw new RuntimeException("Driver is not initialized"); }
+		 */
+
+		/*
+		 * if (!isLoggedIn()) { // ✅ Only log in if session isn't active LoginPage
+		 * loginPage = new LoginPage(driver);
+		 * loginPage.login(ConfigReader.getProperty("username"),
+		 * ConfigReader.getProperty("password")); }
+		 */
+		/*
+		 * 
+		 * if (!isLoggedIn()) { // ✅ Only log in if session isn't active
+		 * 
+		 * LoginPage loginPage = new LoginPage(driver);
+		 * loginPage.login(ConfigReader.getProperty("username"),
+		 * ConfigReader.getProperty("password"));
+		 * 
+		 * logger.error("❌ Not logged in. AddTracksTest cannot proceed."); throw new
+		 * RuntimeException("User session not active. AddTracksTest aborted.");
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * }
+		 */
 		addTracksPage = new AddTracksPage(driver);
 		wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 		logger.info("AddTracksTest setup completed");
