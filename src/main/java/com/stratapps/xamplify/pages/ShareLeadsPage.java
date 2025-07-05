@@ -225,7 +225,7 @@ public class ShareLeadsPage {
 
 	public void publishAndDownloadShareLeadFlow() throws InterruptedException {
 
-		WaitUtil.waitAndClick(driver, FIRST_PUBLISH_ICON, backdrop, 80);
+		WaitUtil.waitAndClick(driver, FIRST_PUBLISH_ICON, backdrop, 150);
 
 		// Now click safely
 		// ElementUtil.click(FIRST_PUBLISH_ICON, driver);
@@ -319,7 +319,7 @@ public class ShareLeadsPage {
 	}
 
 	public void clickFilterIcon() throws InterruptedException {
-		Thread.sleep(5000);
+		Thread.sleep(8000);
 		ElementUtil.click(filterIcon, driver);
 		Thread.sleep(2000);
 	}
@@ -421,7 +421,7 @@ public class ShareLeadsPage {
 	public void clickValidTile() {
 		try {
 
-			WaitUtil.waitAndClick(driver, validTile, backdrop, 80);
+			WaitUtil.waitAndClick(driver, validTile, backdrop, 130);
 
 			WebElement tile = driver.findElement(validTile);
 			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", tile);
