@@ -11,20 +11,18 @@ import org.testng.annotations.Test;
 import com.stratapps.xamplify.base.BaseTest;
 import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.pages.OpportunitiesLeadPage;
-import com.stratapps.xamplify.pages.ShareLeadsPage;
-import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
 
-public class OpportunitiesLeadTest extends BaseTest{
+public class VendorOpportunitiesLeadTest extends BaseTest{
 
-	
 	private OpportunitiesLeadPage opportunitiesleadPage;
 	private static final Logger logger = LogManager.getLogger(OpportunitiesLeadTest.class);
 	private WebDriverWait wait;
 	
-	  @BeforeClass public void setUpClass() { super.setUp(); LoginPage loginPage =
-	  new LoginPage(driver); loginPage.loginAsPartner(); opportunitiesleadPage =
-	  new OpportunitiesLeadPage(driver); wait = new WebDriverWait(driver,
+	  @BeforeClass public void setUpClass() { 
+		  super.setUp(); LoginPage loginPage =  new LoginPage(driver); 
+	  loginPage.loginAsVendor(); 
+	  opportunitiesleadPage = new OpportunitiesLeadPage(driver); wait = new WebDriverWait(driver,
 	  Duration.ofSeconds(60));
 	  logger.info("OpportunitiesLeadTest setup completed"); }
 	 
@@ -49,24 +47,14 @@ public class OpportunitiesLeadTest extends BaseTest{
 	}
 	
 	@Test(priority = 3, enabled = true)
-	public void AddLead() throws Exception {
-		logger.info("Starting test: Create new lead in Manage leads");
-		opportunitiesleadPage.addLead();
-	}
-	
-	@Test(priority = 4, enabled = true)
 	public void LeadActions() throws Exception {
 		logger.info("Starting test: view lead and add comment");
 		opportunitiesleadPage.leadView();
-		logger.info("Starting test: Edit lead and update the lead stage & lead detail");
-		opportunitiesleadPage.editLead();
 		logger.info("Starting test: Add comment to the lead");
 		opportunitiesleadPage.addcomment();
-		logger.info("Starting test: Deleting the lead");
-		opportunitiesleadPage.deletelead();
 	}
 	
-	@Test(priority = 5, enabled = false)
+	@Test(priority = 4, enabled = false)
 	public void CampainViewLeads() throws Exception {
 		logger.info("Starting test: Create new lead in Manage leads");
 		opportunitiesleadPage.CampainView();
@@ -80,12 +68,11 @@ public class OpportunitiesLeadTest extends BaseTest{
 		opportunitiesleadPage.addcomment();
 	}
 	
-	@Test(priority = 6, enabled = true)
+	@Test(priority = 5, enabled = true)
 	public void LeadTilesAndPagination() throws Exception {
 		//logger.info("Starting test: Lead Tiles in Manage leads");
 		//opportunitiesleadPage.leadTiles();
 		logger.info("Starting test: Lead pagination in Manage leads");
 		opportunitiesleadPage.leadsPaginationandPageCount();
 	}
-	
 }

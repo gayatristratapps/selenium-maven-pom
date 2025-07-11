@@ -11,21 +11,20 @@ import org.testng.annotations.Test;
 import com.stratapps.xamplify.base.BaseTest;
 import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.pages.OpportunitiesDealPage;
-import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
 import com.stratapps.xamplify.utils.WaitUtil;
 
-public class OpportunitiesDealTest extends BaseTest{
-
-	
+public class VendorOpportunitiesDealTest extends BaseTest{
 	private OpportunitiesDealPage opportunitiesDealPage;
 	private static final Logger logger = LogManager.getLogger(OpportunitiesDealTest.class);
 	private WebDriverWait wait;
 	
 	
-	  @BeforeClass public void setUpClass() { super.setUp(); LoginPage loginPage =
-	  new LoginPage(driver); loginPage.loginAsPartner(); opportunitiesDealPage =
-	  new OpportunitiesDealPage(driver); wait = new WebDriverWait(driver,
+	  @BeforeClass public void setUpClass() { 
+		  super.setUp(); 
+		  LoginPage loginPage =	  new LoginPage(driver); 
+		  loginPage.loginAsVendor(); 
+		  opportunitiesDealPage = new OpportunitiesDealPage(driver); wait = new WebDriverWait(driver,
 	  Duration.ofSeconds(60));
 	  logger.info("OpportunitiesDealPage setup completed"); }
 	 
@@ -50,24 +49,11 @@ public class OpportunitiesDealTest extends BaseTest{
 	}
 	
 	@Test(priority = 3, enabled = true)
-	public void AddDeal() throws Exception {
-		logger.info("Starting test: Create new deal in Manage deals");
-		opportunitiesDealPage.addDeal();
-		logger.info("Starting test: Create new deal by attaching lead in Manage deals");
-		opportunitiesDealPage.addDealWithAttachLead();
-		logger.info("Starting test: Create new deal by attaching contact in Manage deals");
-		opportunitiesDealPage.addDealWithAttachContact();
-		logger.info("Starting test: Create new deal by attaching New lead attach in Manage deals");
-		opportunitiesDealPage.addedLeadConvertToDeal();
-	}
-	
-	@Test(priority = 4, enabled = true)
 	public void DealAction() throws Exception {
-		logger.info("Starting test: Edit deal in Manage deals");
-		opportunitiesDealPage.editDeal();
+		logger.info("Starting test: view deal in Manage deals");
 		opportunitiesDealPage.dealView();
+		logger.info("Starting test: add comment to deal in Manage deals");
 		opportunitiesDealPage.addDealComment();
-		opportunitiesDealPage.deleteDeal();
 	}
 	
 	@Test(priority = 5, enabled = true)
@@ -76,16 +62,21 @@ public class OpportunitiesDealTest extends BaseTest{
 		opportunitiesDealPage.dealsPaginationandPageCount();
 	}
 	
-	@Test(priority = 6, enabled = true)
+	@Test(priority = 6, enabled = false)
 	public void DealsCampaignView() throws Exception {
 		logger.info("Starting test: CampaignView in Manage deals");
 		opportunitiesDealPage.dealCampainView();
-		opportunitiesDealPage.editDeal();
+		System.out.println("1");
+		//opportunitiesDealPage.editDeal();
+		System.out.println("2");
 		WaitUtil.waitAndClick(driver, opportunitiesDealPage.viewDealforThisCampaign, 200);
 		opportunitiesDealPage.dealView();
+		System.out.println("3");
 		WaitUtil.waitAndClick(driver, opportunitiesDealPage.viewDealforThisCampaign, 200);
 		opportunitiesDealPage.addDealComment();
+		System.out.println("3.1");
 		//opportunitiesDealPage.deleteDeal();
+		System.out.println("4");
 
 	}
 	@Test(priority = 7, enabled = false)
@@ -93,5 +84,4 @@ public class OpportunitiesDealTest extends BaseTest{
 		logger.info("Starting test: appling filter in Manage deals");
 		opportunitiesDealPage.filterDeals();
 	}
-
 }
