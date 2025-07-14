@@ -62,23 +62,20 @@ public class VendorOpportunitiesDealTest extends BaseTest{
 		opportunitiesDealPage.dealsPaginationandPageCount();
 	}
 	
-	@Test(priority = 6, enabled = false)
+	@Test(priority = 6, enabled = true)
 	public void DealsCampaignView() throws Exception {
 		logger.info("Starting test: CampaignView in Manage deals");
-		opportunitiesDealPage.dealCampainView();
-		System.out.println("1");
-		//opportunitiesDealPage.editDeal();
-		System.out.println("2");
-		WaitUtil.waitAndClick(driver, opportunitiesDealPage.viewDealforThisCampaign, 200);
+		opportunitiesDealPage.VendordealCampainView();
 		opportunitiesDealPage.dealView();
-		System.out.println("3");
-		WaitUtil.waitAndClick(driver, opportunitiesDealPage.viewDealforThisCampaign, 200);
-		opportunitiesDealPage.addDealComment();
+		Thread.sleep(2000);
+		WaitUtil.waitAndClick(driver, opportunitiesDealPage.vendorViewCampDeal, 10);
+		WaitUtil.waitAndClick(driver, opportunitiesDealPage.vendorViewDealCount, 200);
+		opportunitiesDealPage.addDealCommentCampaignView();
 		System.out.println("3.1");
-		//opportunitiesDealPage.deleteDeal();
-		System.out.println("4");
-
+		opportunitiesDealPage.dealEmailReport();
 	}
+	
+	//pending 
 	@Test(priority = 7, enabled = false)
 	public void DealsFilter() throws Exception {
 		logger.info("Starting test: appling filter in Manage deals");

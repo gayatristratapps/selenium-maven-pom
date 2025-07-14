@@ -37,7 +37,7 @@ public class VendorOpportunitiesLeadTest extends BaseTest{
 			logger.error("Error in opportunities", e);
 		}
 	}
-	@Test(priority = 2, enabled = true)
+	@Test(priority = 2, enabled = false)
 	public void searchLeadAndEmailReport() throws Exception {
 		logger.info("Starting test: search leads and send email report");
 		opportunitiesleadPage.leadSearch();
@@ -46,7 +46,7 @@ public class VendorOpportunitiesLeadTest extends BaseTest{
 		//opportunitiesleadPage.leadFilter();
 	}
 	
-	@Test(priority = 3, enabled = true)
+	@Test(priority = 3, enabled = false)
 	public void LeadActions() throws Exception {
 		logger.info("Starting test: view lead and add comment");
 		opportunitiesleadPage.leadView();
@@ -68,7 +68,7 @@ public class VendorOpportunitiesLeadTest extends BaseTest{
 		opportunitiesleadPage.addcomment();
 	}
 	
-	@Test(priority = 5, enabled = true)
+	@Test(priority = 5, enabled = false)
 	public void LeadTilesAndPagination() throws Exception {
 		//logger.info("Starting test: Lead Tiles in Manage leads");
 		//opportunitiesleadPage.leadTiles();

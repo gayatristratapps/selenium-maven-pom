@@ -41,8 +41,7 @@ public class OpportunitiesDealPage {
 	public static final By addLeadPipeline = By.xpath("//select[@id='pipelineId']");
 	public static final By addLeadPipelineStage = By.xpath("(//select[@id='createdForPipelineStageId'])[3]");
 	public static final By saveLeadButton = By.xpath("(//button[@id='saveLead' and @class='button bgcolor-unset'])[2]");
-	public static final By dealCommentSubmit = By
-			.xpath("//button[contains(@class,'btn btn-primary transition mb') and contains(text(),'Submit')]");
+	public static final By dealCommentSubmit = By.xpath("//button[contains(@class,'btn btn-primary transition mb') and contains(text(),'Submit')]");
 //	    public static final By = By.xpath("");
 	// # below xpath, if we update the numeric value, corresponding record will we
 	// get
@@ -95,6 +94,7 @@ public class OpportunitiesDealPage {
 			.xpath("//button[contains(text(),'Cancel') and @class='swal2-cancel styled']");
 	public static final By acceptDeleteDeal = By.xpath("//button[contains(text(),'Yes, delete it!')]");
 	public static final By commentDeal = By.xpath("(//a[@class='custom-icon' and @data-rel='fancybox-button'])[4]");
+	public static final By campaignCommentDeal = By.xpath("(//a[@class='custom-icon' and @data-rel='fancybox-button'])[2]");
 	public static final By commentHistoryDeal = By.xpath("//textarea[@placeholder='Write your comment here' and @name='comment']");
 	public static final By editDealStage = By.xpath("(//a[@data-rel='fancybox-button'])[1]");
 	public static final By dealStageValue = By.xpath("//select[contains(@class,'form-control ng-')]");
@@ -158,8 +158,7 @@ public class OpportunitiesDealPage {
 	public static final By campViewDealSearchIcon = By.xpath("// button[contains(@class,'search-box-item-click')]");
 	public static final By campViewDealSearchclear = By
 			.xpath("//button[@class='glyphicon glyphicon-remove search-box-item-clear']");
-	public static final By viewDealforThisCampaign = By
-			.xpath("(//i[@class='circled-number fa fa-users IconCustomization'])[1]");
+	public static final By viewDealforThisCampaign = By.xpath("(//i[@class='circled-number fa fa-users IconCustomization'])[1]");
 	public static final By editDealStageStatus = By.xpath("(//span[@class='fa fa-edit IconCustomization'])[1]");
 	public static final By campViewEditDealStage = By.xpath("//select[@id='createdForPipelineStageId']");
 	public static final By campViewEditAddComment = By.xpath("//textarea[@id='dealComment']");
@@ -322,7 +321,6 @@ public class OpportunitiesDealPage {
 	}
 	
 	/*** @addDealWithAttachLead written by Ganesh */
-	/*** @addDealWithAttachLead written by Ganesh */
 	public void addDealWithAttachLead() throws InterruptedException {
 		WaitUtil.waitAndClick(driver, addDealButton, 10);
 		Thread.sleep(4000);
@@ -355,7 +353,6 @@ public class OpportunitiesDealPage {
 	}
 	
 	/*** @addDealWithAttachContact written by Ganesh */
-	/*** @addDealWithAttachContact written by Ganesh */
 	public void addDealWithAttachContact() throws InterruptedException {
 		WaitUtil.waitAndClick(driver, addDealButton, 10);
 		Thread.sleep(4000);
@@ -372,7 +369,6 @@ public class OpportunitiesDealPage {
 	}
 
 	/*** @dealView written by Ganesh */
-	/*** @dealView written by Ganesh */
 	public void dealView() throws InterruptedException {
 		WaitUtil.waitAndClick(driver, viewDeal, 10);
 		Thread.sleep(2000);
@@ -388,32 +384,47 @@ public class OpportunitiesDealPage {
 	}
 
 	/*** @editDeal written by Ganesh */
-	/*** @editDeal written by Ganesh */
 	public void editDeal() throws InterruptedException {
 		WaitUtil.waitAndClick(driver, editDeal, 10);
 		WaitUtil.waitForDropdownToBeReady(driver, dealPipeLineStage, 10);
 		Thread.sleep(4000);
 		DropdownUtil.selectByValue(driver, dealPipeLineStage, "88671");
-		WaitUtil.waitAndSendKeys(driver, dealComment, "comment added in edit", 10);
+		WaitUtil.waitAndSendKeys(driver, dealComment, "comment added in edit deal", 10);
 		WaitUtil.waitAndClick(driver, saveDeal, 5);
 		Thread.sleep(3000);
 		ScreenshotUtil.captureScreenshot(driver, "editDealUpdated");
 	}
 
 	/*** @addDealComment written by Ganesh */
-	/*** @addDealComment written by Ganesh */
 	public void addDealComment() throws InterruptedException {
 		WaitUtil.waitAndClick(driver, commentDeal, 10);
+		WaitUtil.waitAndSendKeys(driver, commentHistoryDeal, "comment added in edit comment", 10);
 		Thread.sleep(2000);
-		// WaitUtil.waitAndSendKeys(driver,commentHistoryDeal, "comment added through
-		// automation", 10);
-		// WaitUtil.waitAndClick(driver, dealCommentSubmit, 10);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, 800);");		
+		WaitUtil.waitAndClick(driver, dealCommentSubmit, 10);
 		WaitUtil.waitAndClick(driver, dealCloseCommentWindow, 10);
 		Thread.sleep(3000);
-		ScreenshotUtil.captureScreenshot(driver, "AddedCommentToLead");
+		ScreenshotUtil.captureScreenshot(driver, "AddedCommentToDead");
+	}
+	
+	/*** @addDealCommentCampaignView written by Ganesh */
+	public void addDealCommentCampaignView() throws InterruptedException {
+		WaitUtil.waitAndClick(driver, campaignCommentDeal, 10);
+		
+//		JavascriptExecutor js = (JavascriptExecutor) driver;
+//		js.executeScript("window.scrollTo(0, 800);");
+//		WebElement element = driver.findElement(commentHistoryDeal);
+//		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", element);
+		Thread.sleep(3000);
+		WaitUtil.waitAndSendKeys(driver, commentHistoryDeal, "comment added in edit comment", 10);
+		Thread.sleep(2000);
+		WaitUtil.waitAndClick(driver, dealCommentSubmit, 10);
+		WaitUtil.waitAndClick(driver, dealCloseCommentWindow, 10);
+		Thread.sleep(3000);
+		ScreenshotUtil.captureScreenshot(driver, "AddedCommentToDead");
 	}
 
-	/*** @deleteDeal written by Ganesh */
 	/*** @deleteDeal written by Ganesh */
 	public void deleteDeal() throws InterruptedException {
 		WaitUtil.waitAndClick(driver, deleteDeal, 10);
@@ -421,8 +432,6 @@ public class OpportunitiesDealPage {
 		Thread.sleep(3000);
 		ScreenshotUtil.captureScreenshot(driver, "DeleteLead");
 	}
-
-	/*** @dealCampainView written by Ganesh */
 
 	/*** @dealCampainView written by Ganesh */
 	public void dealCampainView() throws InterruptedException {
@@ -435,8 +444,19 @@ public class OpportunitiesDealPage {
 		ScreenshotUtil.captureScreenshot(driver, "campaignViewleadslist");
 	}		
 	
-    public static final By addedbyfil = By.xpath("(//select[@id=\"ddlelement_hidden\"])[3]");
+    public static final By vendorViewCampDeal = By.xpath("(//table[@aria-describedby='leadTable']//tr//td[4])[1]//a[2]");   
+    public static final By vendorViewDealCount = By.xpath("(//div[@class='portlet light']//i[@class='circled-number IconCustomization fontStyleNormal'])[1]");
 
+	/*** @VendordealCampainView written by Ganesh */
+	public void VendordealCampainView() throws InterruptedException {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, 0);");
+		WaitUtil.waitAndClick(driver, dealCampaignView, 10);
+		WaitUtil.waitAndClick(driver, vendorViewCampDeal, 10);
+		WaitUtil.waitAndClick(driver, vendorViewDealCount, 200);
+		Thread.sleep(3000);
+		ScreenshotUtil.captureScreenshot(driver, "campaignViewleadslist");
+	}
 	
 	/*** @filterDeals written by Ganesh */
 	public void filterDeals() throws InterruptedException {
@@ -455,7 +475,6 @@ public class OpportunitiesDealPage {
 		ScreenshotUtil.captureScreenshot(driver, "filterDeals");
 	}
 	
-	/*** @dealsPaginationandPageCount written by Ganesh */
 
 	/*** @leadsPaginationandPageCount written by Ganesh */
 	public void dealsPaginationandPageCount() throws InterruptedException {
