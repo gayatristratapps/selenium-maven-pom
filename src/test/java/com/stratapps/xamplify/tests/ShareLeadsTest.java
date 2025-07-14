@@ -90,9 +90,10 @@ public class ShareLeadsTest extends BaseTest {
 
 	@Test(priority = 5, enabled = true)
 	public void shareleadsDropdown() throws Exception {
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
-
+		/*
+		 * WaitUtil.waitForPageToLoad(driver, 60);
+		 * WaitUtil.waitForLoaderToDisappear(driver, 40); // optional, after search
+		 */
 		shareleadsPage.sortAllOptions(driver);
 
 	}
@@ -125,7 +126,7 @@ public class ShareLeadsTest extends BaseTest {
 		logger.info("✅ Delete icon was clicked successfully.");
 	}
 
-	@Test(priority = 9, enabled = false)
+	@Test(priority = 9, enabled = true)
 	public void testManageShareleadsAllTilesFilterSearch() throws Exception {
 		shareleadsPage.navigateToManageShareLeads();
 		// Thread.sleep(55000); // Optional: Replace with explicit wait if needed
@@ -137,7 +138,7 @@ public class ShareLeadsTest extends BaseTest {
 		shareleadsPage.applyFilter();
 	}
 
-	@Test(priority = 10, enabled = false)
+	@Test(priority = 10, enabled = true)
 	public void manageShareleadsAlltilesSortEmailreports() throws Exception {
 
 		shareleadsPage.sortByIndex(1); // Use appropriate index for email sorting
@@ -145,7 +146,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 11, enabled = false)
+	@Test(priority = 11, enabled = true)
 	public void manageShareleadsAlltileCreateList() throws Exception {
 
 		shareleadsPage.gearIconFromTiles();
@@ -158,7 +159,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 12, enabled = false)
+	@Test(priority = 12, enabled = true)
 	public void manageShareleadsValidtiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -181,7 +182,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 13, enabled = false)
+	@Test(priority = 13, enabled = true)
 	public void manageShareleadsExcludetiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -207,7 +208,7 @@ public class ShareLeadsTest extends BaseTest {
 		}
 	}
 
-	@Test(priority = 14, enabled = false)
+	@Test(priority = 14, enabled = true)
 	public void manageShareleadsUndeliverabletiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -224,7 +225,7 @@ public class ShareLeadsTest extends BaseTest {
 
 	}
 
-	@Test(priority = 15, enabled = false)
+	@Test(priority = 15, enabled = true)
 	public void manageShareleadsUnsubscribetiles() throws Exception {
 		// Navigate to Manage Share Leads and wait for page to load
 		shareleadsPage.navigateToManageShareLeads();
@@ -244,6 +245,25 @@ public class ShareLeadsTest extends BaseTest {
 	@AfterClass
 	public void tearDownClass() {
 		super.tearDown();
+    //	logoutIfLoggedIn();
+
 		logger.info("ShareleadsTest teardown completed");
+
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

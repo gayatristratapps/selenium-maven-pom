@@ -5,10 +5,10 @@ on:
     - cron: '30 9 * * *'  # ⏰ Runs every day at 3:00 PM IST (9:30 AM UTC)
   push:
     branches:
-      - master
+      - main
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   test:

@@ -7,6 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.*;
 
+import com.stratapps.xamplify.utils.ConfigReader;
+
+import io.opentelemetry.api.internal.ConfigUtil;
+
 import java.time.Duration;
 
 public class LoginPage {
@@ -29,7 +33,7 @@ public class LoginPage {
         try {
             logger.info("Attempting to login with email: {}", email);
 
-            driver.findElement(emailField).clear();
+            //driver.findElement(emailField).clear();
             driver.findElement(emailField).sendKeys(email);
             logger.debug("Entered email.");
 
@@ -57,7 +61,21 @@ public class LoginPage {
             throw e;
         }
     }
+    
+    
+    
+    
 
+    // Role-based convenience methods
+
+
+    public void loginAsVendor() {
+        login(ConfigReader.getProperty("username"), ConfigReader.getProperty("password"));
+    }
+
+    public void loginAsPartner() {
+        login(ConfigReader.getProperty("partner.username"), ConfigReader.getProperty("partner.password"));
+    }
     public boolean isWelcomeDisplayed() {
         boolean visible = driver.findElement(welcomeMessage).isDisplayed();
         logger.info("Welcome message is displayed: {}", visible);
