@@ -114,7 +114,14 @@ public class ElementUtil {
         throw new RuntimeException("❌ Click failed after " + maxRetries + " attempts for: " + locator);
     }
 
-    
+    public static void safeClick(WebDriver driver, WebElement element) {
+        try {
+            element.click();
+        } catch (Exception e) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
+        }
+    }
+
     
     
     

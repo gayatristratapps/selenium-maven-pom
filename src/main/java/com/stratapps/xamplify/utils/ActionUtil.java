@@ -120,6 +120,23 @@ public class ActionUtil {
 	
 	
 	
+	public static void jsClick(WebDriver driver, WebElement addCompanyBtn) {
+	    ((JavascriptExecutor) driver).executeScript("arguments[0].click();", addCompanyBtn);
+	}
+
+	public static void scrollToElement(WebDriver driver, WebElement element) {
+	    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 // ✅ NEW METHOD: Click with retry logic and better wait handling
