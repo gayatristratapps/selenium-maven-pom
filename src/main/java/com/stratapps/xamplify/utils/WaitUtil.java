@@ -12,20 +12,6 @@ public class WaitUtil {
 	
 	
 	
-	
-	
-	/*
-	 * public static WebElement waitForElementToBeClickable(WebDriver driver, By
-	 * locator, int seconds) { return new WebDriverWait(driver,
-	 * seconds).until(ExpectedConditions.elementToBeClickable(locator)); }
-	 */
-    
-	
-	
-	
-	
-	
-	
     
     /**
      * Wait for element to be clickable
@@ -40,11 +26,19 @@ public class WaitUtil {
     }
     
     
+   
+    
     
     public static WebElement waitForVisibility(WebDriver driver, By locator, int timeoutInSeconds) {
         return new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds)).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
     
+    
+    public static void waitForInvisibilityOfElement(By locator, WebDriver driver, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(locator));
+    }
+
     
     /**
      * Wait for element to be visible
@@ -128,4 +122,39 @@ public class WaitUtil {
         wait.until(webDriver -> ((org.openqa.selenium.JavascriptExecutor) webDriver)
                 .executeScript("return jQuery.active == 0"));
     }
+
+
+    public static void waitForDropdownToBeReady(WebDriver driver, By locator, int timeoutSeconds) {
+        new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds))
+            .until(ExpectedConditions.elementToBeClickable(locator));
+    }
+
+
+    
+    public static void waitForLoaderToDisappear(WebDriver driver, int timeoutSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutSeconds));
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("backdrop")));
+    }
+    public static WebElement waitForPresence(WebDriver driver, By locator, int timeoutInSeconds) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
+        return wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+   
+    public static void waitAndClick(WebDriver driver, By locator, By backdropLocator, int timeout) {
+        // Wait for full page load
+        waitForPageToLoad(driver, timeout);
+
+        // Wait for the backdrop/spinner (if any) to disappear
+        waitForInvisibilityOfElement(backdropLocator, driver, timeout);
+
+        // Wait for the target element to become visible
+        waitForVisibility(driver, locator, timeout);
+
+        // Perform safe click
+        ElementUtil.click(locator, driver);
+    }
+
+
+
 }
