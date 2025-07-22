@@ -218,6 +218,7 @@ public class OnboardingPartnerPage {
 			Thread.sleep(2000);
 			getMailId = "user" + System.currentTimeMillis() + "@gmail.com";
 			uniquecompany = "company" + System.nanoTime();
+			Thread.sleep(3000);
 			WaitUtil.waitAndSendKeys(driver, emailId1, getMailId, 10);
 			WaitUtil.waitAndSendKeys(driver, companyName, uniquecompany, 10);
 			WaitUtil.waitAndSendKeys(driver, firstName, "firstname", 10);
@@ -386,8 +387,8 @@ public class OnboardingPartnerPage {
 		    WaitUtil.waitAndClick(driver, checkBox1, 10);
 		    WaitUtil.waitAndClick(driver, actionBtn, 10);
 		    WaitUtil.waitAndClick(driver, addToGroup, 10);
-		//	WaitUtil.waitForPageToLoad(driver, 30);
-			Thread.sleep(9000);
+			WaitUtil.waitForPageToLoad(driver, 30);
+			//Thread.sleep(15000);
 		    WaitUtil.waitAndClick(driver, groupCheckbox, 10);
 		    WaitUtil.waitAndClick(driver, addPartnerToGroup, 10);
 			WaitUtil.waitForPageToLoad(driver, 30);

@@ -1,5 +1,6 @@
 package com.stratapps.xamplify.pages;
 
+import java.awt.Desktop.Action;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
@@ -89,6 +90,7 @@ public class OpportunitiesDealPage {
 	public static final By viewDeal = By.xpath("(//a[@id='deal'])[1]");
 	public static final By closeViewDeal = By.xpath("//a[contains(@class,'pull-right close-circle')]");
 	public static final By editDeal = By.xpath("(//a[@id='deal'])[2]");
+	public static final By deletedeal1 = By.xpath("//tr[2]//a[@data-original-title='Delete Deal']");
 	public static final By deleteDeal = By.xpath("(//a[@id='deal'])[9]");
 	public static final By cancelDeleteDeal = By
 			.xpath("//button[contains(text(),'Cancel') and @class='swal2-cancel styled']");
@@ -427,7 +429,11 @@ public class OpportunitiesDealPage {
 
 	/*** @deleteDeal written by Ganesh */
 	public void deleteDeal() throws InterruptedException {
-		WaitUtil.waitAndClick(driver, deleteDeal, 10);
+		Thread.sleep(10000);
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, 0);");
+		WaitUtil.waitAndClick(driver, deleteDeal, 20);
+		Thread.sleep(4000);
 		WaitUtil.waitAndClick(driver, acceptDeleteDeal, 10);
 		Thread.sleep(3000);
 		ScreenshotUtil.captureScreenshot(driver, "DeleteLead");
@@ -489,6 +495,10 @@ public class OpportunitiesDealPage {
 		Thread.sleep(5000);
 		System.out.println("check12");
 		ScreenshotUtil.captureScreenshot(driver, "leadPreviousPage");
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        //js.executeScript("arguments[0].scrollIntoView(true);", driver.findElement(dealFirstPg));
+        js.executeScript("window.scrollTo(0, 200);");
+        Thread.sleep(3000);
 		WaitUtil.waitAndClick(driver, dealFirstPg, 10);
 		Thread.sleep(5000);
 		System.out.println("check123");

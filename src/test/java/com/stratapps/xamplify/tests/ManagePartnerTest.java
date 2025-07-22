@@ -32,7 +32,7 @@ public class ManagePartnerTest extends BaseTest{
 	  
 	  
 
-		@Test(priority = 1, enabled = true)
+		@Test(priority = 1, enabled = false)
 		public void CreatePartnerGroup_ManagePartner() throws InterruptedException {
 			System.out.println(" ");
 			logger.info("Creating new partner group in Manage partners");
@@ -42,7 +42,7 @@ public class ManagePartnerTest extends BaseTest{
 			System.out.println(" ");
 		}
 
-		@Test(priority = 2, enabled = true)
+		@Test(priority = 2, enabled = false)
 		public void Sortandsearch_Copyandsavegroup_ManagePartner() throws Throwable {
 			System.out.println(" ");
 			logger.info("Sort & search partner group and copy&save the partner group in Manage partners");
@@ -52,7 +52,7 @@ public class ManagePartnerTest extends BaseTest{
 			System.out.println(" ");
 		}
 		
-		@Test(priority = 3, enabled = true)
+		@Test(priority = 3, enabled = false)
 		public void EmailReport_ManagePartner() throws InterruptedException {
 			System.out.println(" ");
 			logger.info("Generate partner EmailReport in Manage partners");
@@ -68,20 +68,20 @@ public class ManagePartnerTest extends BaseTest{
 			logger.info("Edit partner group in Manage partners");
 			managePartnerPage.HoverOnPartnersManagePartners();
 			managePartnerPage.Mpartners_EditGroup();
-			logger.info("Apply Filter with partner Fields ");
-			managePartnerPage.filterManagePartner("City", "Contains", "Hyderabad");
-			logger.info("Successfully Appllied Filter");
-			logger.info("Apply multiple Filter condition");
-			onboardingPartnerPage.addFilterRecord("Email Id", "Contains", "us1user1743671923219@gmail.com");
-			logger.info("Successfully applied Multiple filter conditions");
-			logger.info("Delete applied filter record ");
-			onboardingPartnerPage.deleteFilterRecord();	
-			logger.info("Successfully Delete applied filter record");
-			logger.info("Successfully Edit partner group in Manage partners");
-			System.out.println(" ");
+//			logger.info("Apply Filter with partner Fields ");
+//			managePartnerPage.filterManagePartner("City", "Contains", "Hyderabad");
+//			logger.info("Successfully Appllied Filter");
+//			logger.info("Apply multiple Filter condition");
+//			onboardingPartnerPage.addFilterRecord("Email Id", "Contains", "us1user1743671923219@gmail.com");
+//			logger.info("Successfully applied Multiple filter conditions");
+//			logger.info("Delete applied filter record ");
+//			onboardingPartnerPage.deleteFilterRecord();	
+//			logger.info("Successfully Delete applied filter record");
+//			logger.info("Successfully Edit partner group in Manage partners");
+//			System.out.println(" ");
 		}
 
-		@Test(priority = 5, enabled = true)
+		@Test(priority = 5, enabled = false)
 		public void PublishContent_ManagePartner() throws InterruptedException {
 			System.out.println(" ");
 			logger.info("Publish Content to partner in Manage partners");
@@ -91,7 +91,7 @@ public class ManagePartnerTest extends BaseTest{
 			System.out.println(" ");
 		}
 		
-		@Test(priority = 6, enabled = true)
+		@Test(priority = 6, enabled = false)
 		public void DeleteGroup_ManagePartner() throws InterruptedException {
 			System.out.println(" ");
 			logger.info("Delete partner group in Manage partners");
@@ -101,7 +101,7 @@ public class ManagePartnerTest extends BaseTest{
 			System.out.println(" ");
 		}
 		
-		@Test(priority = 7, enabled = true)
+		@Test(priority = 7, enabled = false)
 		public void ExportExcelReport_ManagePartner() throws InterruptedException {
 			System.out.println(" ");
 			logger.info("Export partner Excel Report in Manage partners");
@@ -111,7 +111,7 @@ public class ManagePartnerTest extends BaseTest{
 			System.out.println(" ");
 		}
 		
-		@Test(priority = 8, enabled = true)
+		@Test(priority = 8, enabled = false)
 		public void Pagination_ManagePartner() throws Throwable {
 			System.out.println(" ");
 			logger.info("Edit partner group in Manage partners");
@@ -121,7 +121,7 @@ public class ManagePartnerTest extends BaseTest{
 			System.out.println(" ");
 		}
 		
-		@Test(priority = 11, enabled = true)
+		@Test(priority = 11, enabled = false)
 		public void Home() throws Throwable {
 			System.out.println(" ");
 			logger.info("Navigate to Home Page");

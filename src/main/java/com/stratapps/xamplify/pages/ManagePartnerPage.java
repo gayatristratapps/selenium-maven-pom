@@ -20,12 +20,13 @@ public class ManagePartnerPage {
 	WebDriver driver;
 	private WebDriverWait wait;
 	long timestamp = System.currentTimeMillis();
+	OnboardingPartnerPage onboardingPartnerPage; 
 
 	public ManagePartnerPage(WebDriver driver) {
 		this.driver = driver;
 		this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+		this.onboardingPartnerPage = new OnboardingPartnerPage(this.driver);
 	}
-    OnboardingPartnerPage onboardingPartnerPage = new OnboardingPartnerPage(this.driver);
 
 	
 	public static final By managepartner = By.xpath("//div/div/ul/li[2]/ul/li[2]/a/span");
@@ -74,7 +75,7 @@ public class ManagePartnerPage {
 	public static final By legalInput = By.xpath("//*[@id='multiselectelement']/div/div/span[3]/input");
 	public static final By actionCSVBtn = By.xpath("//button[@id='save&delete_button']");
 	public static final By saveCSVBtn = By.xpath("//a[@id='save_button']");
-	public static final By continueBtn = By.xpath("//button[@type='submit']/span[text()='Continue']");
+	public static final By continueBtn = By.xpath("(//button[@type='submit'])[5]");
 	public static final By acceptTCBtn = By.xpath("//span[text()='Accept']");
 
 	public static final By editGroupBtn = By.xpath("(//table[@id='partner_contact_list']//tr)[2]/td/div/a");
@@ -163,6 +164,8 @@ public class ManagePartnerPage {
 	    WaitUtil.waitForElementClickable(driver, saveNameChangesButton, 10).click();
 	    ScreenshotUtil.captureScreenshot(driver, "CopyandsaveGroup");
 	}
+	
+	
 
 	public  void oneAtATime_EditGroup() throws InterruptedException {
 	    // Step 1: Fill the partner form
@@ -187,10 +190,13 @@ public class ManagePartnerPage {
 	    WaitUtil.waitAndSendKeys(driver, legalInput, "Legitimate interest - prospect/lead", 10);
 		driver.findElement(legalInput).sendKeys(Keys.ENTER);
 	    // Click action and save buttons
+		Thread.sleep(5000);
 	    WaitUtil.waitForElementClickable(driver, actionCSVBtn, 10).click();
 	    WaitUtil.waitForElementClickable(driver, saveCSVBtn, 10).click();
 	    // Click Continue and Accept T&C
+		Thread.sleep(2000);
 	    WaitUtil.waitForElementClickable(driver, continueBtn, 10).click();
+		Thread.sleep(2000);
 	    WaitUtil.waitForElementClickable(driver, acceptTCBtn, 10).click();
 	    Thread.sleep(3000);
 	    ScreenshotUtil.captureScreenshot(driver, "Upload CSV EditGroup");
@@ -199,16 +205,16 @@ public class ManagePartnerPage {
 	
 	public void Mpartners_EditGroup() throws InterruptedException {
 	    WaitUtil.waitForElementClickable(driver, editGroupBtn, 10).click();
+	    Thread.sleep(5000);
 	    WaitUtil.waitForElementClickable(driver, oneAtATimeBtn, 10).click();
-	    // Upload One At a Time in edit Group
-	    oneAtATime_EditGroup();
-	    HoverOnPartnersManagePartners();
+	   oneAtATime_EditGroup();
+	   // HoverOnPartnersManagePartners();
 	    WaitUtil.waitForElementClickable(driver, editGroupBtn, 10).click();
-	    // Upload Csv in edit Group
 	    uploadCsv_EditGroup();
 	    // Edit and update the partner
 	    WaitUtil.waitForElementClickable(driver, editGroupBtn, 10).click();
 	    WaitUtil.waitForElementClickable(driver, editPartnerIcon, 10).click();
+	    System.out.println("c1");
 	    onboardingPartnerPage.updatepartnerForm();
 	    WaitUtil.waitForElementClickable(driver, updatePartnerBtn, 10).click();
 	    Thread.sleep(3000);
@@ -300,10 +306,12 @@ public class ManagePartnerPage {
 	
 	public void Mpartners_DeleteGroup() throws InterruptedException {
 	    WaitUtil.waitAndClick(driver, searchManageInput, 10);
-	    WaitUtil.waitAndSendKeys(driver, searchManageInput, "groupName", 10);
+	    WaitUtil.waitAndSendKeys(driver, searchManageInput, "group", 10);
 	    driver.findElement(searchManageInput).sendKeys(Keys.ENTER);
+	    Thread.sleep(4000);
 	    WaitUtil.waitAndClick(driver, deleteManageBtn, 15);
 	    WaitUtil.waitAndClick(driver, deleteManageListConfirmBtn, 10);
+	    Thread.sleep(8000);
 	    ScreenshotUtil.captureScreenshot(driver, "DeleteManagePartner");
 	}
 
