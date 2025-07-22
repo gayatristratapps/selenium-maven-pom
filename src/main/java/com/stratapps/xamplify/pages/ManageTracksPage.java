@@ -86,19 +86,19 @@ public class ManageTracksPage {
 	}
 
 	public void editTrackDetails() {
-	    WaitUtil.waitForPageToLoad(driver, 70);
-	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		WaitUtil.waitForPageToLoad(driver, 70);
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 
-	    WaitUtil.waitForVisibility(driver, editTrack, 60);
-	    ElementUtil.click(editTrack, driver);
+		WaitUtil.waitForVisibility(driver, editTrack, 60);
+		ElementUtil.click(editTrack, driver);
 
-	    // Wait until the Edit Track UI is fully rendered (use a unique identifier)
-	    //WaitUtil.waitForVisibility(driver, editTrackTitle, 60); // This is the actual readiness
+		// Wait until the Edit Track UI is fully rendered (use a unique identifier)
+		// WaitUtil.waitForVisibility(driver, editTrackTitle, 60); // This is the actual
+		// readiness
 
-	    // Only after UI is ready, proceed to interact
-	    WaitUtil.waitForElementVisible(driver, clearEndDate, 60);
-	    ElementUtil.clickWithRetry(clearEndDate, driver, 3); // Use robust click
-	
+		// Only after UI is ready, proceed to interact
+		WaitUtil.waitForElementVisible(driver, clearEndDate, 60);
+		ElementUtil.clickWithRetry(clearEndDate, driver, 3); // Use robust click
 
 		WaitUtil.waitAndClick(driver, endDateInput, 60);
 		ElementUtil.click(selectEndDate, driver);
@@ -168,7 +168,7 @@ public class ManageTracksPage {
 		WaitUtil.waitForVisibility(driver, companyAnalytics, 60);
 		ElementUtil.click(companyAnalytics, driver);
 		ElementUtil.sendText(analyticsSearch, "Automate", driver);
-		ElementUtil.sendKey(analyticsSearch, Keys.ENTER, driver);	
+		ElementUtil.sendKey(analyticsSearch, Keys.ENTER, driver);
 		WaitUtil.waitForPageToLoad(driver, 70);
 		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 		WaitUtil.waitForVisibility(driver, partnerAnalytics, 60);
@@ -188,25 +188,23 @@ public class ManageTracksPage {
 		ElementUtil.sendKey(searchTrack, Keys.ENTER, driver);
 		WaitUtil.waitAndClick(driver, deleteTrack, 70);
 		WaitUtil.waitForVisibility(driver, confirmDelete, 60);
-		WaitUtil.waitAndClick(driver, confirmDelete, 70);	
-	    WaitUtil.waitForElementVisible(driver, clearSearch, 60);
-		 ElementUtil.clickWithRetry(clearSearch, driver, 3); 
+		WaitUtil.waitAndClick(driver, confirmDelete, 70);
+		WaitUtil.waitForElementVisible(driver, clearSearch, 60);
+		ElementUtil.clickWithRetry(clearSearch, driver, 3);
 	}
 
 	public void trackViews(String localFilePath) {
 		WaitUtil.waitForPageToLoad(driver, 70);
 		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 		ElementUtil.click(trackGroupDropdown, driver);
-		
+
 		WaitUtil.waitForElementVisible(driver, gridViewBtn, 60);
-	    ElementUtil.clickWithRetry(gridViewBtn, driver, 3); // Use robust click
-	
-		//WaitUtil.waitAndClick(driver, gridViewBtn, 70);
+		ElementUtil.clickWithRetry(gridViewBtn, driver, 3); // Use robust click
 		WaitUtil.waitForVisibility(driver, gridAsset, 70);
 		ElementUtil.click(gridAsset, driver);
 		ElementUtil.click(editGridTrack, driver);
-	    WaitUtil.waitForElementVisible(driver, thumbnailIcon, 60);
-	    ElementUtil.clickWithRetry(thumbnailIcon, driver, 3); // Use robust click
+		WaitUtil.waitForElementVisible(driver, thumbnailIcon, 60);
+		ElementUtil.clickWithRetry(thumbnailIcon, driver, 3); // Use robust click
 		WaitUtil.waitForVisibility(driver, uploadButton, 70);
 
 		// ✅ Directly upload using file input
