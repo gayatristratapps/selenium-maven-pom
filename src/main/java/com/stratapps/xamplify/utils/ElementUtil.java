@@ -135,7 +135,19 @@ public class ElementUtil {
 
     
     
-    
+    //Mounika
+    public static void clickWhenReady(WebDriver driver, By locator, int timeout) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
+            WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            wait.until(ExpectedConditions.elementToBeClickable(element)).click();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to click on element: " + locator, e);
+        }
+    }
+
     
     
     

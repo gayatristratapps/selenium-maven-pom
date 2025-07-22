@@ -1,6 +1,7 @@
 package com.stratapps.xamplify.pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -85,6 +86,7 @@ public class AddTracksPage {
 	private By backdrop = By.cssSelector("div.backdrop");
 
 	public void openContentMenu() {
+		WaitUtil.waitForElementVisible(driver, contentMenu, 60);
 		ElementUtil.click(contentMenu, driver);
 	}
 
@@ -169,60 +171,80 @@ public class AddTracksPage {
 	}
 
 	public void enterDescription(String description) {
-		// Wait for page load
-		WaitUtil.waitForPageToLoad(driver, 60);
-		driver.switchTo().frame(0);
-		WaitUtil.waitForElementClickable(driver, descriptionField, 60);
-		ElementUtil.click(descriptionField, driver);
-		ElementUtil.sendText(descriptionField, description, driver);
-		driver.switchTo().defaultContent();
-		ActionUtil.clickWithRetry(driver, nextButton, 3);
+	    // Wait for page load
+	    WaitUtil.waitForPageToLoad(driver, 60);
+
+	    // Interact with iframe content
+	    driver.switchTo().frame(0);
+	    WaitUtil.waitForElementClickable(driver, descriptionField, 60);
+	    ElementUtil.click(descriptionField, driver);
+	    ElementUtil.sendText(descriptionField, description, driver);
+	    driver.switchTo().defaultContent();
+
+	    // Wait for nextButton to be present in DOM
+	    WaitUtil.waitForVisibility(driver, nextButton, 30);
+
+	    // Scroll and pause to let it settle
+	    WebElement nextBtnElement = driver.findElement(nextButton);
+	    ElementUtil.scrollToElement(nextBtnElement, driver);
+	    // Optional hard scroll up in case button is covered
+	    ((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -150);");
+
+	    ElementUtil.click(nextButton, driver);
 	}
 
+
 	public void selectAssetsAndQuiz() {
+	    // Asset Selection - jpg
+	    WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
+	    ElementUtil.sendText(searchAssetBox, "jpg", driver);
+	    ElementUtil.sendKey(searchAssetBox, Keys.ENTER, driver);
 
-		// Asset Selection - jpg
-		WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
-		ElementUtil.sendText(searchAssetBox, "jpg", driver);
-		ElementUtil.sendKey(searchAssetBox, Keys.ENTER, driver);
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// ✅ Locate freshly to avoid stale element
-		WebElement jpgAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-		jpgAsset.click();
-		WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
-		WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 
-		// Asset Selection - pdf
-		WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
-		ElementUtil.sendText(searchAssetBox, "pdf", driver);
-		ElementUtil.sendKey(searchAssetBox, Keys.ENTER, driver);
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// ✅ Locate freshly to avoid stale element
-		WebElement pdfAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-		pdfAsset.click();
-		WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
-		WaitUtil.waitForPageToLoad(driver, 60);
+	    WebElement jpgAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
+	    jpgAsset.click();
 
-		// Asset Type Dropdown - ppt
-		WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
-		DropdownUtil.selectByValue(driver, assetTypeDropdown, "11: ppt");
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// ✅ Locate freshly to avoid stale element
-		WebElement pptAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-		pptAsset.click();
-		WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
+	    WaitUtil.waitForPageToLoad(driver, 60);
 
-		// Asset Type Dropdown - mp4
-		WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
-		DropdownUtil.selectByVisibleText(driver, assetTypeDropdown, "mp4");
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// ✅ Locate freshly to avoid stale element
-		WebElement mp4Asset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-		mp4Asset.click();
+	    // Asset Selection - pdf
+	    WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
+	    ElementUtil.sendText(searchAssetBox, "pdf", driver);
+	    ElementUtil.sendKey(searchAssetBox, Keys.ENTER, driver);
+
+	    WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+	    WebElement pdfAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
+	    pdfAsset.click();
+
+	    WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
+	    WaitUtil.waitForPageToLoad(driver, 60);
+
+	    // Asset Type Dropdown - ppt
+	    WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
+	    DropdownUtil.selectByValue(driver, assetTypeDropdown, "11: ppt");
+	    WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+	    WebElement pptAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
+	    pptAsset.click();
+
+	    WaitUtil.waitForPageToLoad(driver, 60);
+
+	    // Asset Type Dropdown - mp4
+	    WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
+	    DropdownUtil.selectByVisibleText(driver, assetTypeDropdown, "mp4");
+	    WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+
+	    WebElement mp4Asset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
+	    mp4Asset.click();
+
+	    WaitUtil.waitForPageToLoad(driver, 60);
+	
 
 		// Reset Dropdown
 		WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
@@ -271,10 +293,9 @@ public class AddTracksPage {
 		ElementUtil.sendText(searchPublishInput, "automate", driver);
 		ElementUtil.sendKey(searchPublishInput, Keys.ENTER, driver);
 		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// Wait for the tile to be visible
-		
-		WaitUtil.waitAndClick(driver, arrowClickTrack, 70);
+		WaitUtil.waitForElementVisible(driver, arrowClickTrack, 60);
+		ElementUtil.clickWithRetry(arrowClickTrack, driver, 3); // Use robust click
+		//WaitUtil.waitAndClick(driver, arrowClickTrack, 70);
 
 		WaitUtil.waitAndClick(driver, partnerSelectTrack, 70);
 		ElementUtil.click(saveAndPublishButton, driver);
