@@ -103,13 +103,10 @@ public class AddTracksPage {
 
 	public void selectFolder(String folderName) {
 		WaitUtil.waitForPageToLoad(driver, 70);
-		// Wait for backdrop (overlay/spinner) to disappear
 		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// Wait for the tile to be visible
 		WaitUtil.waitForVisibility(driver, folderDropdown, 60);
 
 		WaitUtil.waitAndClick(driver, folderDropdown, 80);
-		// ElementUtil.click(folderDropdown, driver);
 		ElementUtil.sendText(folderSearchField, folderName, driver);
 		WaitUtil.waitAndClick(driver, folderSelectOption, 80);
 
@@ -120,7 +117,6 @@ public class AddTracksPage {
 		WaitUtil.waitAndClick(driver, tagPlusIcon, 60);
 		WaitUtil.waitAndClick(driver, addTagButton, 90);
 		WaitUtil.waitForPageToLoad(driver, 70);
-		//WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 		WaitUtil.waitForElementVisible(driver, tagInputField, 90);
 		ElementUtil.sendText(tagInputField, tagName + "_" + System.currentTimeMillis(), driver);
 		ElementUtil.sendKey(tagInputField, Keys.ENTER, driver);
@@ -143,7 +139,6 @@ public class AddTracksPage {
 
 		WaitUtil.waitAndClick(driver, addMediaButton, 60);
 		WaitUtil.waitForPageToLoad(driver, 70);
-		// WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 		WaitUtil.waitForVisibility(driver, firstAssetClick, 60);
 
 		if (driver.findElement(firstAssetClick).isDisplayed()) {
@@ -252,7 +247,6 @@ public class AddTracksPage {
 				WaitUtil.waitForPageToLoad(driver, 60);
 				WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 				WaitUtil.waitAndClick(driver, closeQuizPopup1, 70);
-				// ElementUtil.click(closeQuizPopup1, driver);
 				ElementUtil.click(closeQuizPopup, driver);
 			} else {
 				ElementUtil.click(closeQuizPopup, driver);
@@ -262,12 +256,7 @@ public class AddTracksPage {
 			ElementUtil.click(previewOrderAsset, driver);
 			WaitUtil.waitAndClick(driver, closeOrderAssetPreview, 70);
 			
-			WaitUtil.waitAndClick(driver, removeOrderAsset, 70);
-
-			//ElementUtil.click(removeOrderAsset, driver);
-//			WaitUtil.waitForPageToLoad(driver, 60);
-//			WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-//			
+			WaitUtil.waitAndClick(driver, removeOrderAsset, 70);	
 			WaitUtil.waitAndClick(driver, removeAsset, 70);
 			ElementUtil.click(followSequenceToggle, driver);
 			WaitUtil.waitAndClick(driver, closeOrderAssetSection, 70);

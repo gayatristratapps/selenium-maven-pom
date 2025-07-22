@@ -19,18 +19,18 @@ public class ElementUtil {
 	    }
 	}
 
-	/*
-	 * //Mounika public static void clickWithRetry(By locator, WebDriver driver, int
-	 * retries) { for (int i = 0; i < retries; i++) { try { WebElement element =
-	 * driver.findElement(locator); new WebDriverWait(driver,
-	 * Duration.ofSeconds(10))
-	 * .until(ExpectedConditions.elementToBeClickable(element)); element.click();
-	 * return; } catch (Exception e) {
-	 * System.out.println("Retrying click... Attempt: " + (i + 1));
-	 * 
-	 * } } throw new RuntimeException("Unable to click after retries: " + locator);
-	 * }
-	 */
+	
+	  //Mounika
+	public static void clickWithRetry(By locator, WebDriver driver, int retries) { for (int i = 0; i < retries; i++) { try { WebElement element =
+	  driver.findElement(locator); new WebDriverWait(driver,
+	  Duration.ofSeconds(10))
+	  .until(ExpectedConditions.elementToBeClickable(element)); element.click();
+	  return; } catch (Exception e) {
+	  System.out.println("Retrying click... Attempt: " + (i + 1));
+	  
+	  } } throw new RuntimeException("Unable to click after retries: " + locator);
+	  }
+	 
 	
 	
     public static WebElement getById(WebDriver driver, String id) {
@@ -107,29 +107,24 @@ public class ElementUtil {
     }
     
     
-    public static void clickWithRetry(By locator, WebDriver driver, int maxRetries) {
-        int attempts = 0;
-        while (attempts < maxRetries) {
-            try {
-                WebElement element = driver.findElement(locator);
-
-                // ✅ Scroll into view to avoid hidden/intercepted clicks
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", element);
-
-                // ✅ Attempt regular click
-                element.click();
-                return; // success
-            } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
-                attempts++;
-                System.out.println("Attempt " + attempts + " failed for: " + locator + " - Retrying...");
-                try {
-                    Thread.sleep(300); // ✅ Optional short pause
-                } catch (InterruptedException ignored) {}
-            }
-        }
-        throw new RuntimeException("❌ Click failed after " + maxRetries + " attempts for: " + locator);
-    }
-
+	/*
+	 * public static void clickWithRetry(By locator, WebDriver driver, int
+	 * maxRetries) { int attempts = 0; while (attempts < maxRetries) { try {
+	 * WebElement element = driver.findElement(locator);
+	 * 
+	 * // ✅ Scroll into view to avoid hidden/intercepted clicks
+	 * ((JavascriptExecutor)
+	 * driver).executeScript("arguments[0].scrollIntoView({block: 'center'});",
+	 * element);
+	 * 
+	 * // ✅ Attempt regular click element.click(); return; // success } catch
+	 * (StaleElementReferenceException | ElementClickInterceptedException e) {
+	 * attempts++; System.out.println("Attempt " + attempts + " failed for: " +
+	 * locator + " - Retrying..."); try { Thread.sleep(300); // ✅ Optional short
+	 * pause } catch (InterruptedException ignored) {} } } throw new
+	 * RuntimeException("❌ Click failed after " + maxRetries + " attempts for: " +
+	 * locator); }
+	 */
     public static void safeClick(WebDriver driver, WebElement element) {
         try {
             element.click();
