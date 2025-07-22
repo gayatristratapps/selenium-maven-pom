@@ -70,9 +70,9 @@ public class AddTracksPage {
 	private By previewOrderAsset = By
 			.xpath("(//*[@id='actions-row ']/div/a[1]/i[@class='fa fa-eye IconCustomization'])[1]");
 	private By closeOrderAssetPreview = By.xpath("//button[@class='btn Btn-Gray']");
-	private By removeOrderAsset = By
-			.xpath("(//*[@id='actions-row ']/div/a[2]/i[@class='fa fa-times remove-button IconCustomization'])[1]");
+	private By removeOrderAsset = By.xpath("(//*[@id='actions-row ']/div/a[2]/i[@class='fa fa-times remove-button IconCustomization'])[1]");
 	private By followSequenceToggle = By.xpath("//span[@class='labels']");
+	private By  removeAsset = By.xpath("//button[contains(text(), 'Yes, Remove')]");
 	private By closeOrderAssetSection = By.xpath("//div[@id='order-assets']//span[contains(text(),'Close')]");
 
 	private By searchPublishInput = By.xpath("(//input[@id='sort-text'])[1]");
@@ -118,10 +118,10 @@ public class AddTracksPage {
 	public void addTags(String tagName) {
 
 		WaitUtil.waitAndClick(driver, tagPlusIcon, 60);
-		WaitUtil.waitAndClick(driver, addTagButton, 60);
+		WaitUtil.waitAndClick(driver, addTagButton, 90);
 		WaitUtil.waitForPageToLoad(driver, 70);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		WaitUtil.waitForElementVisible(driver, tagInputField, 60);
+		//WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		WaitUtil.waitForElementVisible(driver, tagInputField, 90);
 		ElementUtil.sendText(tagInputField, tagName + "_" + System.currentTimeMillis(), driver);
 		ElementUtil.sendKey(tagInputField, Keys.ENTER, driver);
 		WaitUtil.waitAndClick(driver, tagSaveButton, 60);
@@ -196,6 +196,7 @@ public class AddTracksPage {
 		WebElement jpgAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
 		jpgAsset.click();
 		WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
+		WaitUtil.waitForPageToLoad(driver, 60);
 
 		// Asset Selection - pdf
 		WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
@@ -207,6 +208,7 @@ public class AddTracksPage {
 		WebElement pdfAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
 		pdfAsset.click();
 		WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
+		WaitUtil.waitForPageToLoad(driver, 60);
 
 		// Asset Type Dropdown - ppt
 		WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
@@ -259,7 +261,14 @@ public class AddTracksPage {
 			ElementUtil.click(orderAssetsButton, driver);
 			ElementUtil.click(previewOrderAsset, driver);
 			WaitUtil.waitAndClick(driver, closeOrderAssetPreview, 70);
-			ElementUtil.click(removeOrderAsset, driver);
+			
+			WaitUtil.waitAndClick(driver, removeOrderAsset, 70);
+
+			//ElementUtil.click(removeOrderAsset, driver);
+//			WaitUtil.waitForPageToLoad(driver, 60);
+//			WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+//			
+			WaitUtil.waitAndClick(driver, removeAsset, 70);
 			ElementUtil.click(followSequenceToggle, driver);
 			WaitUtil.waitAndClick(driver, closeOrderAssetSection, 70);
 			ElementUtil.click(nextButton, driver);

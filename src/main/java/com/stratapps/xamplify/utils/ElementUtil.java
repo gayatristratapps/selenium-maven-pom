@@ -1,7 +1,11 @@
 package com.stratapps.xamplify.utils;
 
+import java.time.Duration;
+
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ElementUtil {
 
@@ -13,6 +17,23 @@ public class ElementUtil {
 	        e.printStackTrace();
 	        return null;
 	    }
+	}
+
+	//Mounika
+	public static void clickWithRetry(By locator, WebDriver driver, int retries) {
+	    for (int i = 0; i < retries; i++) {
+	        try {
+	            WebElement element = driver.findElement(locator);
+	            new WebDriverWait(driver, Duration.ofSeconds(10))
+	                .until(ExpectedConditions.elementToBeClickable(element));
+	            element.click();
+	            return;
+	        } catch (Exception e) {
+	            System.out.println("Retrying click... Attempt: " + (i + 1));
+	            
+	        }
+	    }
+	    throw new RuntimeException("Unable to click after retries: " + locator);
 	}
 
 	
