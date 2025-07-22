@@ -19,23 +19,18 @@ public class ElementUtil {
 	    }
 	}
 
-	//Mounika
-	public static void clickWithRetry(By locator, WebDriver driver, int retries) {
-	    for (int i = 0; i < retries; i++) {
-	        try {
-	            WebElement element = driver.findElement(locator);
-	            new WebDriverWait(driver, Duration.ofSeconds(10))
-	                .until(ExpectedConditions.elementToBeClickable(element));
-	            element.click();
-	            return;
-	        } catch (Exception e) {
-	            System.out.println("Retrying click... Attempt: " + (i + 1));
-	            
-	        }
-	    }
-	    throw new RuntimeException("Unable to click after retries: " + locator);
-	}
-
+	/*
+	 * //Mounika public static void clickWithRetry(By locator, WebDriver driver, int
+	 * retries) { for (int i = 0; i < retries; i++) { try { WebElement element =
+	 * driver.findElement(locator); new WebDriverWait(driver,
+	 * Duration.ofSeconds(10))
+	 * .until(ExpectedConditions.elementToBeClickable(element)); element.click();
+	 * return; } catch (Exception e) {
+	 * System.out.println("Retrying click... Attempt: " + (i + 1));
+	 * 
+	 * } } throw new RuntimeException("Unable to click after retries: " + locator);
+	 * }
+	 */
 	
 	
     public static WebElement getById(WebDriver driver, String id) {
