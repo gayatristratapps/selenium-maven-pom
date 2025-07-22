@@ -1,6 +1,5 @@
 package com.stratapps.xamplify.base;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -11,7 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 
 import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.utils.ConfigReader;
@@ -59,31 +60,6 @@ public class BaseTest {
             return false;
         }
     }
-
-	/*
-	 * @AfterClass(alwaysRun = true) public void tearDownClass(Method method) {
-	 * String className = method.getDeclaringClass().getSimpleName();
-	 * 
-	 * // Vendor if (vendorClasses.contains(className)) { vendorTestCount++;
-	 * logger.info("✅ Vendor class '{}' completed. Progress: {}/{}", className,
-	 * vendorTestCount, vendorClasses.size());
-	 * 
-	 * if (vendorTestCount == vendorClasses.size()) { logoutIfLoggedIn();
-	 * logger.info("🔒 Logged out after all vendor classes completed."); } else {
-	 * logger.
-	 * info("⏳ Waiting for remaining vendor test classes. Logout skipped for now.");
-	 * } }
-	 * 
-	 * // Partner if (partnerClasses.contains(className)) { partnerTestCount++;
-	 * logger.info("✅ Partner class '{}' completed. Progress: {}/{}", className,
-	 * partnerTestCount, partnerClasses.size());
-	 * 
-	 * if (partnerTestCount == partnerClasses.size()) { logoutIfLoggedIn();
-	 * logger.info("🔒 Logged out after all partner classes completed."); } else {
-	 * logger.
-	 * info("⏳ Waiting for remaining partner test classes. Logout skipped for now."
-	 * ); } } }
-	 */
 
     
     
