@@ -1,7 +1,5 @@
 package com.stratapps.xamplify.tests;
 
-import java.time.Duration;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -9,9 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.stratapps.xamplify.base.BaseTest;
-import com.stratapps.xamplify.pages.LoginPage;
 import com.stratapps.xamplify.pages.OpportunitiesDealPage;
-import com.stratapps.xamplify.utils.ConfigReader;
 import com.stratapps.xamplify.utils.ScreenshotUtil;
 import com.stratapps.xamplify.utils.WaitUtil;
 
@@ -36,8 +32,7 @@ private WebDriverWait wait;
 
 @BeforeClass
 public void setUp() {
-    // Assuming you have a constructor like new OpportunitiesDealPage(driver) or (page)
-    opportunitiesDealPage = new OpportunitiesDealPage(driver); // or `new OpportunitiesDealPage(page);` if you're using Playwright
+    opportunitiesDealPage = new OpportunitiesDealPage(driver); 
 }
 
 

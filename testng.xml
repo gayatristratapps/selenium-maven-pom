@@ -28,11 +28,11 @@
       <!--<class name="com.stratapps.xamplify.tests.SharedLeadsTest"/>
       
       
-            <class name="com.stratapps.xamplify.tests.ContactsTest"/>
+         
 
        <class name="com.stratapps.xamplify.tests.TeamPartnerTest"/>-->
       
-      
+         <class name="com.stratapps.xamplify.tests.ContactsTest"/>
       <class name="com.stratapps.xamplify.tests.OpportunitiesLeadTest"/>
             <class name="com.stratapps.xamplify.tests.OpportunitiesDealTest"/>
 
