@@ -3,6 +3,7 @@ package com.stratapps.xamplify.pages;
 import java.awt.AWTException;
 import java.util.Calendar;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -52,7 +53,7 @@ public class ManageTracksPage {
 
 	private By sortByDropdown = By.xpath("//div[contains(@class, 'float-left')]/select");
 	private By searchTrack = By.xpath("//input[@placeholder='search...']");
-	private By deleteTrack = By.xpath("(//i[@class='fa fa-trash-o trashIconCustomization'])[2]");
+	private By deleteTrack = By.xpath("(//i[@class='fa fa-trash-o trashIconCustomization'])[1]");
 	private By confirmDelete = By.xpath("//button[normalize-space()='Yes, delete it!']");
 	private By clearSearch = By.xpath("//button[@class='glyphicon glyphicon-remove search-box-item-clear']");
 
@@ -205,15 +206,32 @@ public class ManageTracksPage {
 	}
 
 	public void trackViews(String localFilePath) {
-	    WaitUtil.waitForPageToLoad(driver, 70);
-	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		WaitUtil.waitForPageToLoad(driver, 70);
+		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+		ElementUtil.click(trackGroupDropdown, driver);
 
-	    ElementUtil.clickWhenReady(driver, trackGroupDropdown, 30);
-	    ElementUtil.clickWhenReady(driver, gridViewBtn, 30);
-	    WaitUtil.waitForVisibility(driver, gridAsset, 70);
+		WaitUtil.waitForElementVisible(driver, gridViewBtn, 60);
+		ElementUtil.clickWithRetry(gridViewBtn, driver, 3); // Use robust click
+		WaitUtil.waitForVisibility(driver, gridAsset, 70);
+		ElementUtil.click(gridAsset, driver);
+		ElementUtil.click(editGridTrack, driver);
+		WaitUtil.waitForElementVisible(driver, thumbnailIcon, 60);
 
-	    ElementUtil.clickWhenReady(driver, gridAsset, 30);
-	    ElementUtil.clickWhenReady(driver, editGridTrack, 30);
+
+//		WaitUtil.waitForVisibility(driver, editGridTrack, 60);
+//
+//		// Scroll directly to the element
+//		WebElement editIcon = driver.findElement(editGridTrack);
+//		ElementUtil.scrollToElement(editIcon, driver);
+//
+//		// Additional scroll to handle sticky headers if needed
+//		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});", editIcon);
+//		//Thread.sleep(500); // Give time for scroll animation if needed
+//
+//		// Ensure clickable and then click
+//		WaitUtil.waitForElementClickable(driver, editGridTrack, 30);
+//		ElementUtil.click(editGridTrack, driver);
+	    
 	    WaitUtil.waitForElementVisible(driver, thumbnailIcon, 60);
 
 	    ElementUtil.clickWhenReady(driver, thumbnailIcon, 30);
@@ -271,4 +289,3 @@ public class ManageTracksPage {
 
 
 }
-

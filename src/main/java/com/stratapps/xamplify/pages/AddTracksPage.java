@@ -193,18 +193,14 @@ public class AddTracksPage {
 	    ElementUtil.click(nextButton, driver);
 	}
 
-
 	public void selectAssetsAndQuiz() {
 	    // Asset Selection - jpg
 	    WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
 	    ElementUtil.sendText(searchAssetBox, "jpg", driver);
 	    ElementUtil.sendKey(searchAssetBox, Keys.ENTER, driver);
-
 	    WaitUtil.waitForPageToLoad(driver, 60);
 	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-	    WebElement jpgAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-	    jpgAsset.click();
+	    ElementUtil.safeClickFirstAsset(firstAssetSelect, driver);
 
 	    WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
 	    WaitUtil.waitForPageToLoad(driver, 60);
@@ -213,12 +209,9 @@ public class AddTracksPage {
 	    WaitUtil.waitForElementClickable(driver, searchAssetBox, 60);
 	    ElementUtil.sendText(searchAssetBox, "pdf", driver);
 	    ElementUtil.sendKey(searchAssetBox, Keys.ENTER, driver);
-
 	    WaitUtil.waitForPageToLoad(driver, 60);
 	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-	    WebElement pdfAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-	    pdfAsset.click();
+	    ElementUtil.safeClickFirstAsset(firstAssetSelect, driver);
 
 	    WaitUtil.waitAndClick(driver, clearSearchIcon, 60);
 	    WaitUtil.waitForPageToLoad(driver, 60);
@@ -228,9 +221,7 @@ public class AddTracksPage {
 	    DropdownUtil.selectByValue(driver, assetTypeDropdown, "11: ppt");
 	    WaitUtil.waitForPageToLoad(driver, 60);
 	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-	    WebElement pptAsset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-	    pptAsset.click();
+	    ElementUtil.safeClickFirstAsset(firstAssetSelect, driver);
 
 	    WaitUtil.waitForPageToLoad(driver, 60);
 
@@ -239,53 +230,47 @@ public class AddTracksPage {
 	    DropdownUtil.selectByVisibleText(driver, assetTypeDropdown, "mp4");
 	    WaitUtil.waitForPageToLoad(driver, 60);
 	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-
-	    WebElement mp4Asset = WaitUtil.waitForVisibility(driver, firstAssetSelect, 60);
-	    mp4Asset.click();
+	    ElementUtil.safeClickFirstAsset(firstAssetSelect, driver);
 
 	    WaitUtil.waitForPageToLoad(driver, 60);
-	
 
-		// Reset Dropdown
-		WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
-		DropdownUtil.selectByVisibleText(driver, assetTypeDropdown, "Select Asset Type");
-		WaitUtil.waitForPageToLoad(driver, 60);
-		WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-		// Wait for the tile to be visible
+	    // Reset Dropdown
+	    WaitUtil.waitForDropdownToBeReady(driver, assetTypeDropdown, 60);
+	    DropdownUtil.selectByVisibleText(driver, assetTypeDropdown, "Select Asset Type");
+	    WaitUtil.waitForPageToLoad(driver, 60);
+	    WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
 
-		// Quiz selection
-		WaitUtil.waitForVisibility(driver, selectQuizBtn, 60);
-		ElementUtil.click(selectQuizBtn, driver);
-		WaitUtil.waitForDropdownToBeReady(driver, quizSortBy, 60);
-		DropdownUtil.selectByVisibleText(driver, quizSortBy, "Created On (DESC)");
-		ElementUtil.sendText(quizSearchBox, "quiz", driver);
-		WebElement quiz = WaitUtil.waitForElementPresent(driver, firstQuizClick, 60);
+	    // Quiz selection
+	    WaitUtil.waitForVisibility(driver, selectQuizBtn, 60);
+	    ElementUtil.click(selectQuizBtn, driver);
+	    WaitUtil.waitForDropdownToBeReady(driver, quizSortBy, 60);
+	    DropdownUtil.selectByVisibleText(driver, quizSortBy, "Created On (DESC)");
+	    ElementUtil.sendText(quizSearchBox, "quiz", driver);
+	    
+	    WebElement quiz = WaitUtil.waitForElementPresent(driver, firstQuizClick, 60);
+	    if (quiz.isDisplayed()) {
+	        if (ElementUtil.isElementVisible(firstQuizClick, driver)) {
+	            ElementUtil.click(firstQuizClick, driver);
+	            ElementUtil.click(previewQuiz, driver);
+	            WaitUtil.waitForPageToLoad(driver, 60);
+	            WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
+	            WaitUtil.waitAndClick(driver, closeQuizPopup1, 70);
+	            ElementUtil.click(closeQuizPopup, driver);
+	        } else {
+	            ElementUtil.click(closeQuizPopup, driver);
+	        }
 
-		if (quiz.isDisplayed()) {
-
-			if (driver.findElement(firstQuizClick).isDisplayed()) {
-				ElementUtil.click(firstQuizClick, driver);
-				ElementUtil.click(previewQuiz, driver);
-				WaitUtil.waitForPageToLoad(driver, 60);
-				WaitUtil.waitForInvisibilityOfElement(backdrop, driver, 60);
-				WaitUtil.waitAndClick(driver, closeQuizPopup1, 70);
-				ElementUtil.click(closeQuizPopup, driver);
-			} else {
-				ElementUtil.click(closeQuizPopup, driver);
-			}
-
-			ElementUtil.click(orderAssetsButton, driver);
-			ElementUtil.click(previewOrderAsset, driver);
-			WaitUtil.waitAndClick(driver, closeOrderAssetPreview, 70);
-			
-			WaitUtil.waitAndClick(driver, removeOrderAsset, 70);	
-			WaitUtil.waitAndClick(driver, removeAsset, 70);
-			ElementUtil.click(followSequenceToggle, driver);
-			WaitUtil.waitAndClick(driver, closeOrderAssetSection, 70);
-			ElementUtil.click(nextButton, driver);
-
-		}
+	        ElementUtil.click(orderAssetsButton, driver);
+	        ElementUtil.click(previewOrderAsset, driver);
+	        WaitUtil.waitAndClick(driver, closeOrderAssetPreview, 70);
+	        WaitUtil.waitAndClick(driver, removeOrderAsset, 70);    
+	        WaitUtil.waitAndClick(driver, removeAsset, 70);
+	        ElementUtil.click(followSequenceToggle, driver);
+	        WaitUtil.waitAndClick(driver, closeOrderAssetSection, 70);
+	        ElementUtil.click(nextButton, driver);
+	    }
 	}
+
 
 	public void publishTrack() {
 		WaitUtil.waitForPageToLoad(driver, 60);

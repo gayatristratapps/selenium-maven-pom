@@ -135,7 +135,9 @@ public class ElementUtil {
 
     
     
-    //Mounika
+    
+
+  //Mounika
     public static void clickWhenReady(WebDriver driver, By locator, int timeout) {
         try {
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeout));
@@ -148,7 +150,37 @@ public class ElementUtil {
         }
     }
 
-    
+    public static boolean isElementVisible(By locator, WebDriver driver) {
+        try {
+            WebElement element = driver.findElement(locator);
+            return element.isDisplayed();
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
+            return false;
+        }
+    }
+
+    public static void safeClickFirstAsset(By locator, WebDriver driver) {
+        for (int i = 0; i < 3; i++) {
+            try {
+                WebElement el = WaitUtil.waitForVisibility(driver, locator, 30);
+                // Optional: scroll if overlay issue
+                // ActionUtil.scrollToElement(el, driver);
+                el.click();
+                return;
+            } catch (StaleElementReferenceException | ElementClickInterceptedException e) {
+                System.out.println("Retrying asset click: " + e.getMessage());
+               // WaitUtil.sleep(1000);
+            }
+        }
+        throw new RuntimeException("Failed to click first asset after 3 attempts: " + locator);
+    }
+
+
+
+public static void scrollIntoView(WebDriver driver, By locator) {
+    WebElement element = driver.findElement(locator);
+    ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", element);
+}
     
     
 }
