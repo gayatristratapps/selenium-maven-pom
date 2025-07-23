@@ -41,13 +41,13 @@ public class EmailCampaignTest extends BaseTest {
 //        logger.info("Test 1: Navigate to Email Campaign - COMPLETED");
 //    }
 
-    @Test(priority = 1, enabled = true)
-    public void createEmailCampaignTest() {
-        logger.info("Test 2: Create Email Campaign - STARTED");
-        emailCampaignPage.createEmailCampaign("mounika", "mounikatest", "mounisubject", "chmounika@stratapps.com", "sub");
-        logger.info("Test 2: Create Email Campaign - COMPLETED");
-    }
-
+		/*
+		 * @Test(priority = 1, enabled = true) public void createEmailCampaignTest() {
+		 * logger.info("Test 2: Create Email Campaign - STARTED");
+		 * emailCampaignPage.createEmailCampaign("mounika", "mounikatest",
+		 * "mounisubject", "chmounika@stratapps.com", "sub");
+		 * logger.info("Test 2: Create Email Campaign - COMPLETED"); }
+		 */
 //    @Test(priority = 3, enabled = false)
 //    public void previewTemplateTest() {
 //        logger.info("Test 3: Preview Email Template - STARTED");

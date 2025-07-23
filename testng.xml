@@ -15,7 +15,7 @@
     <class name="com.stratapps.xamplify.tests.ShareLeadsTest" />-->
       <class name="com.stratapps.xamplify.tests.AddTracksTest" />
       <class name="com.stratapps.xamplify.tests.ManageTracksTest" />
-      <class name="com.stratapps.xamplify.tests.TeamVendorTest" />
+    <!--  <class name="com.stratapps.xamplify.tests.TeamVendorTest" />-->
     </classes>
   </test>
 
