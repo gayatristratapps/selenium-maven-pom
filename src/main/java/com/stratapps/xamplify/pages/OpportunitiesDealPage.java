@@ -228,6 +228,9 @@ WaitUtil.waitAndClick(driver, dealCloseDate, 10);
 /*** @attachLeadInDealForm written by Ganesh */
 public void attachLeadInDealForm() throws InterruptedException {
 // DropdownUtil.selectByVisibleText(driver, dealCompany, "xAmplify");
+	
+	Thread.sleep(80000);
+	
 WaitUtil.waitAndClick(driver, dealAttachdrpDwn, 10);
 WaitUtil.waitAndClick(driver, attachLead, 10);
 Thread.sleep(2000);
@@ -249,6 +252,8 @@ Thread.sleep(2000);
 /*** @attachContactInDealForm written by Ganesh */
 public void attachContactInDealForm() throws InterruptedException {
 // DropdownUtil.selectByVisibleText(driver, dealCompany, "xAmplify");
+	Thread.sleep(80000);
+
 WaitUtil.waitAndClick(driver, dealAttachdrpDwn, 10);
 WaitUtil.waitAndClick(driver, attachContact, 10);
 WaitUtil.waitAndClick(driver, dealAttachaContact, 10);
@@ -266,7 +271,7 @@ Thread.sleep(2000);
 
 /*** @attachLeadInDealForm written by Ganesh */
 public void addLeadAndAttachLeadInDealForm() throws InterruptedException {
-Thread.sleep(2000);
+Thread.sleep(80000);
 WaitUtil.waitAndClick(driver, dealAttachdrpDwn, 10);
 WaitUtil.waitAndClick(driver, attachLead, 10);
 Thread.sleep(2000);
