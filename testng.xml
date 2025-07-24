@@ -22,21 +22,21 @@
 
 
 
- <!--  ✅ Partner block can remain separate 
+   ✅ Partner block can remain separate 
   <test name="Partner Account Tests">
     <classes>
       <class name="com.stratapps.xamplify.tests.SharedLeadsTest"/>
-      
+     <!-- 
       
          
 
        <class name="com.stratapps.xamplify.tests.TeamPartnerTest"/>
-      
+      -->
          <class name="com.stratapps.xamplify.tests.ContactsTest"/>
       <class name="com.stratapps.xamplify.tests.OpportunitiesLeadTest"/>
             <class name="com.stratapps.xamplify.tests.OpportunitiesDealTest"/>
 
       
     </classes>
-  </test>-->
+  </test>
 </suite>
