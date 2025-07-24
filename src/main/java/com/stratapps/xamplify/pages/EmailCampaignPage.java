@@ -5,11 +5,14 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.stratapps.xamplify.utils.ActionUtil;
 import com.stratapps.xamplify.utils.ElementUtil;
 import com.stratapps.xamplify.utils.WaitUtil;
 import com.stratapps.xamplify.utils.DropdownUtil;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 public class EmailCampaignPage {
@@ -32,7 +35,7 @@ public class EmailCampaignPage {
     private By notifyMeLinkClick = By.xpath("(//span[@class='bootstrap-switch-label'])[8]");
     private By templateSearch = By.xpath("//div[@id='campaign-details']/div[2]/div/div/fieldset/div[1]/div[1]/input");
     private By templateSelect = By.xpath("//div[@id='campaign-details']/div[2]/div/div/fieldset/div[1]/div[4]/div/form/div/div/div/div/span[1]/label/input");
-    private By clickSendTestEmail = By.xpath("//*[@id='campaign-details']/div[2]/div/div/fieldset/div[1]/div[3]/button/span");
+    private By clickSendTestEmail = By.xpath("(//button[.//span[contains(text(),'Send Test Email')]])[1]");
     private By sendTextEmail = By.xpath("//input[@placeholder='Please Enter Email Address']");
     private By sendTextEmailSubject = By.xpath("//input[@placeholder='Please Enter Email Subject']");
     private By sendEmailButton = By.xpath("//div[@id='send-test-email-modal-popup']/div/div/div[3]/button[2]/span");
@@ -54,6 +57,7 @@ public class EmailCampaignPage {
         WaitUtil.waitAndClick(driver, createCampaign, 60);
         WaitUtil.waitAndClick(driver, openEmailCampaign, 60);
 
+        WaitUtil.waitForPageToLoad(driver, 80);
         WaitUtil.waitForElementVisible(driver, campaignName, 60);
         ElementUtil.sendText(campaignName, name + System.currentTimeMillis(), driver);
 
@@ -75,9 +79,10 @@ public class EmailCampaignPage {
 
         WaitUtil.waitAndClick(driver, templateSelect, 60);
         
-        WaitUtil.waitForPageToLoad(driver, 80);
-        WaitUtil.waitForElementVisible(driver, clickSendTestEmail, 60);
-        ElementUtil.clickWhenReady(driver, clickSendTestEmail, 30);
+        WaitUtil.waitForElementClickable(driver, clickSendTestEmail, 60);
+       // ElementUtil.scrollToElement(clickSendTestEmail, driver);
+        ElementUtil.clickWithRetry(clickSendTestEmail, driver, 3);
+
         //WaitUtil.waitAndClick(driver, clickSendTestEmail, 60);
         ElementUtil.clickWhenReady(driver, sendTextEmail, 30);
 
@@ -89,28 +94,27 @@ public class EmailCampaignPage {
         WaitUtil.waitAndClick(driver, sendEmailButton, 60);
         WaitUtil.waitAndClick(driver, emailSentPopup, 60);
 
-        ElementUtil.clickWhenReady(driver, templatePreview, 30);
-
-        //ElementUtil.click(templatePreview, driver);
-
-        WaitUtil.waitForNewTabAndSwitch(driver);
-        driver.close();
-        WaitUtil.switchToMainTab(driver);
-
+        ElementUtil.previewhandlingtemplate(templatePreview, driver);
         ElementUtil.click(nextBtn, driver);
     }
 
     public void selectPartnerList() {
+    	
+    	WaitUtil.waitForPageToLoad(driver, 90);
         WaitUtil.waitForVisibility(driver, partnerDropdown, 60);
-        DropdownUtil.selectByVisibleText(driver, partnerDropdown, "Count(DESC)");
+        DropdownUtil.selectByVisibleText(driver, partnerDropdown, "Count(ASC)");
+
+        WaitUtil.waitForVisibility(driver, searchPartnerList, 60);
 
         ElementUtil.sendText(searchPartnerList, "Active", driver);
         ElementUtil.sendKey(searchPartnerList, Keys.ENTER, driver);
         WaitUtil.waitForPageToLoad(driver, 60);
+        WaitUtil.waitForVisibility(driver, partnerListPreview, 60);
 
         ElementUtil.click(partnerListPreview, driver);
         WaitUtil.waitForPageToLoad(driver, 60);
-        ElementUtil.click(closePartnerPreview, driver);
+        WaitUtil.waitAndClick(driver, closePartnerPreview, 70);
+       // ElementUtil.click(closePartnerPreview, driver);
 
         ElementUtil.click(selectPartnerGroup, driver);
 
