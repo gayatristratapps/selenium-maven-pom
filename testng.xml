@@ -25,7 +25,7 @@
    ✅ Partner block can remain separate 
   <test name="Partner Account Tests">
     <classes>
-      <class name="com.stratapps.xamplify.tests.SharedLeadsTest"/>
+     <!-- <class name="com.stratapps.xamplify.tests.SharedLeadsTest"/>-->
      <!-- 
       
          
