@@ -156,6 +156,7 @@ public class ManagePartnerPage {
 	    ScreenshotUtil.captureScreenshot(driver, "SearchManagePartner");
 	    // Sort again by index 4
 	    sortby1.selectByIndex(4);
+	    Thread.sleep(6000);
 	    // Copy and Save Partner Group
 	    WaitUtil.waitForElementClickable(driver, copyAndSaveButton, 10).click();
 	    WebElement nameField = WaitUtil.waitForElementVisible(driver, copyAndSaveNameField, 10);
@@ -214,7 +215,6 @@ public class ManagePartnerPage {
 	    // Edit and update the partner
 	    WaitUtil.waitForElementClickable(driver, editGroupBtn, 10).click();
 	    WaitUtil.waitForElementClickable(driver, editPartnerIcon, 10).click();
-	    System.out.println("c1");
 	    onboardingPartnerPage.updatepartnerForm();
 	    WaitUtil.waitForElementClickable(driver, updatePartnerBtn, 10).click();
 	    Thread.sleep(3000);
@@ -265,6 +265,7 @@ public class ManagePartnerPage {
 	    }
 
 	    // Publish tracks
+	    Thread.sleep(4000);
 	    WaitUtil.waitAndClick(driver, publishIconBtn, 15);
 	    WaitUtil.waitAndClick(driver, unpublishTracksTab, 10);
 
@@ -302,6 +303,50 @@ public class ManagePartnerPage {
 	public void filterManagePartner(String Field, String Condition, String Value) throws InterruptedException {
 	    WaitUtil.waitAndClick(driver, managePartnerFilter, 10);
 	    onboardingPartnerPage.applyFilter(Field, Condition, Value);
+	}
+	
+	public void addFilterRecord(String Field, String Condition, String Value) throws InterruptedException {
+		try {
+			Thread.sleep(8000);
+			WaitUtil.waitAndClick(driver, onboardingPartnerPage.addFilterRecord, 10);
+
+			WebElement field = driver.findElement(onboardingPartnerPage.partnerFilterFieldName2);
+			new Select(field).selectByVisibleText(Field);
+			Thread.sleep(1000);
+
+			WebElement condition = driver.findElement(onboardingPartnerPage.partnerFilterCondition2);
+			new Select(condition).selectByVisibleText(Condition);
+			Thread.sleep(1000);
+
+			WebElement valueInput = driver.findElement(onboardingPartnerPage.partnerFilterValue2);
+			valueInput.sendKeys(Value);
+			Thread.sleep(2000);
+
+			WaitUtil.waitAndClick(driver, onboardingPartnerPage.filterSubmit, 10);
+			Thread.sleep(2000);
+
+			ScreenshotUtil.captureScreenshot(driver, "MultipleFilterConditionPartner_");
+
+		} catch (Exception e) {
+			//logger.error("Error in addFilterRecord method", e);
+			throw e;
+		}
+	}
+
+
+//Delete the filter record
+	public void deleteFilterRecord() throws InterruptedException {
+		try {
+			WaitUtil.waitForPageToLoad(driver, 30);
+			WaitUtil.waitAndClick(driver, onboardingPartnerPage.deleteFilterRecord, 10);
+			WaitUtil.waitAndClick(driver, onboardingPartnerPage.filterSubmit, 10);
+			Thread.sleep(2000);
+			ScreenshotUtil.captureScreenshot(driver, "DeleteFilterConditionPartner_");
+		} catch (Exception e) {
+			//logger.error("Error in deleteFilterRecord method", e);
+			System.out.println("Error in deleteFilterRecord method" + e);
+			throw e;
+		}
 	}
 	
 	public void Mpartners_DeleteGroup() throws InterruptedException {
